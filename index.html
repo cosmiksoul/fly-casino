@@ -176,6 +176,8 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .fnum{width:30px;height:30px;border-radius:50%;background:var(--c);color:#1a0d3d;font-family:'Russo One',sans-serif;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 0 rgba(0,0,0,.3)}
 .fname{font-weight:900;font-size:13px;color:#fff}.fstats{font-size:10.5px;color:var(--muted);font-weight:800;line-height:1.2}
 .fodds{text-align:right}.fodds b{font-family:'Russo One',sans-serif;color:var(--yellow);font-weight:400;font-size:15px;display:block}.fodds small{color:var(--muted);font-weight:800;font-size:10px}
+.ftag{display:inline-block;padding:1px 6px;border-radius:999px;font-size:9px;font-weight:900;margin-right:5px;text-transform:uppercase;letter-spacing:.05em;vertical-align:middle}
+.ftag.safe{background:rgba(156,255,91,.25);color:#d9ffb8}.ftag.mid{background:rgba(255,210,63,.25);color:#ffe9a8}.ftag.risky{background:rgba(255,79,163,.3);color:#ffc9e3}
 .lbl.race{font-size:11px;padding:2px 8px;background:rgba(10,4,30,.7);color:#fff;box-shadow:none;border:2px solid rgba(255,255,255,.3);font-family:Nunito,sans-serif;font-weight:900}
 .lbl.race.sel{background:var(--yellow);color:#3a1d00;border-color:#fff}
 @media (max-width:900px){
@@ -309,7 +311,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   <table><thead><tr><th>Капсула</th><th>Шанс</th><th>Множитель</th></tr></thead><tbody id="info-tiers"></tbody></table>
   <p>Базовый RTP 92,4% при RTP 97%. Гарант: если 39 капсул подряд без «редкой+» (неоновая, золотая, бриллиантовая), сороковая точно редкая+. ×10 гарантирует хотя бы дрозофилу. С гарантами RTP ≈ 97–98% (симуляция на 2 млн капсул). Полная коллекция из 7 мух — разовый бонус 25 000.</p>
   <h3>🏁 Гонки</h3>
-  <p>Шесть мух со случайной статистикой. Рейтинг считается из возраста (пик формы около 14 дней), усталости, веса и скрытой мотивации; шанс победы <code>P = рейтинг / сумма рейтингов</code>, множитель <code>× = RTP / P</code>. Порядок финиша разыгрывается по модели Плакетта–Люса (победитель — ровно с вероятностью P), анимация заезда подгоняется под разыгранный результат. Победитель получает дихлофос. Волатильность зависит от выбора: фаворит — низкая, аутсайдер — экстремальная.</p>
+  <p>В каждом заезде шесть мух трёх классов: две надёжные (шанс около 30%, ×3), две тёмные лошадки (около 12%, ×7–9) и две авантюры (2–5%, ×20–45). Класс задаёт шанс, статистика (возраст, усталость, вес) рисуется под класс. Шансы нормируются к 100%, множитель всегда <code>× = RTP / P</code>. Порядок финиша разыгрывается по модели Плакетта–Люса (победитель — ровно с вероятностью P), анимация заезда подгоняется под разыгранный результат. Победитель получает дихлофос. Волатильность зависит от выбора: фаворит — низкая, аутсайдер — экстремальная.</p>
   <h3>🎚 RTP</h3>
   <p>Переключатель внизу задаёт RTP для всех игр: тапок, мухобойка и гонки — через коэффициент в формуле, гача — через долю комаров.</p>
   <h3>🧠 Мозг</h3>
@@ -1005,9 +1007,17 @@ function createRace(){
   const ui={btn:$('#race-btn'),flies:$('#race-flies'),rtp:$('#race-rtp'),vol:$('#race-vol'),hist:$('#race-hist'),msg:$('#race-msg'),sub:$('#race-sub')};
   ui.btn.addEventListener('click',()=>primary());
   ui.flies.addEventListener('click',e=>{ const c=e.target.closest('.fcard'); if(!c||S.state!=='idle') return; audio.click(); S.pick=+c.dataset.i; updateUI(); });
-  function genFlies(){ const names=RACE_NAMES.slice(); S.list=[];
-    for(let i=0;i<N;i++){ const name=names.splice(rint(names.length),1)[0]; const age=3+rint(36), fat=rint(90), w=+rr(8,15).toFixed(1), neurons=140000+rint(30000), mood=pick(RACE_MOODS);
-      const agePeak=Math.exp(-Math.pow((age-14)/12,2)); const rating=(0.35+agePeak)*(1-fat/100*0.65)*(1+(13-w)*0.03)*rr(0.75,1.3); S.list.push({i,name,age,fat,w,neurons,mood,rating}); }
+  /* три класса в каждом заезде: 2 надёжные, 2 тёмные лошадки, 2 авантюры; шанс задаётся классом, статистика — под него */
+  const TIERS_RACE=[
+    {tag:'надёжная',cls:'safe',p:()=>rr(0.27,0.35),age:()=>8+rint(13),fat:()=>5+rint(30)},
+    {tag:'надёжная',cls:'safe',p:()=>rr(0.25,0.33),age:()=>8+rint(13),fat:()=>5+rint(30)},
+    {tag:'тёмная лошадка',cls:'mid',p:()=>rr(0.10,0.16),age:()=>5+rint(26),fat:()=>30+rint(35)},
+    {tag:'тёмная лошадка',cls:'mid',p:()=>rr(0.09,0.15),age:()=>5+rint(26),fat:()=>30+rint(35)},
+    {tag:'авантюра',cls:'risky',p:()=>rr(0.025,0.05),age:()=>rand()<0.3?3+rint(2):25+rint(15),fat:()=>60+rint(36)},
+    {tag:'авантюра',cls:'risky',p:()=>rr(0.02,0.045),age:()=>rand()<0.3?3+rint(2):25+rint(15),fat:()=>60+rint(36)},
+  ];
+  function genFlies(){ const names=RACE_NAMES.slice(); S.list=[]; const tiers=TIERS_RACE.slice(); for(let i=tiers.length-1;i>0;i--){ const j=rint(i+1); [tiers[i],tiers[j]]=[tiers[j],tiers[i]]; }
+    for(let i=0;i<N;i++){ const t=tiers[i]; const name=names.splice(rint(names.length),1)[0]; S.list.push({i,name,age:t.age(),fat:t.fat(),w:+rr(8,15).toFixed(1),neurons:140000+rint(30000),mood:pick(RACE_MOODS),rating:t.p(),tag:t.tag,cls:t.cls}); }
     computeOdds(); S.pick=null; S.order=[]; S.finished=[]; S.winner=null; S.sprayed=false; S.state='idle'; killTweens('race'); placeIdle(); ui.msg.textContent=''; ui.msg.className='mult'; ui.sub.textContent='выбери муху и жми старт'; updateUI(); }
   function computeOdds(){ const tot=S.list.reduce((s,f)=>s+f.rating,0); for(const f of S.list){ f.p=f.rating/tot; f.mult=Math.floor(100*cfg.rtp/f.p)/100; } }
   function placeIdle(){ const v=new THREE.Vector3(); flies.forEach((F,i)=>{ posAt(i,0,v); v.y=0; F.mesh.visible=true; F.mesh.unsquash(); F.mesh.position.copy(v); F.mesh.rotation.set(0,Math.PI/2,0); F.mesh.userData.flap=0; }); can.visible=false; }
@@ -1040,7 +1050,7 @@ function createRace(){
     const racing=S.state==='racing'||S.state==='finishing'; betCtl.disable(racing||S.state==='ended'); ui.rtp.textContent=pct(cfg.rtp);
     const sel=S.pick!=null?S.list[S.pick]:null; ui.vol.textContent=sel?volName(Math.sqrt(Math.max(0,sel.mult/cfg.rtp-1))):'—';
     const fin=S.state==='ended';
-    ui.flies.innerHTML=S.list.map(f=>{ const rank=S.order.length?S.order.indexOf(f.i)+1:0; return `<div class="fcard ${S.pick===f.i?'sel':''} ${fin&&rank===1?'won':''}" data-i="${f.i}" style="--c:${hex(RACE_COLORS[f.i])}"><div class="fnum">${fin?rank:f.i+1}</div><div class="finfo"><div class="fname">${f.name} <span>${f.mood}</span>${fin&&rank===1?' ☠':''}</div><div class="fstats">${f.age} дн · усталость ${f.fat}% · ${f.w} мг · ${fmt(f.neurons)} нейр.</div></div><div class="fodds"><b>×${f.mult.toFixed(2)}</b><small>${(f.p*100).toFixed(0)}%</small></div></div>`; }).join('');
+    ui.flies.innerHTML=S.list.map(f=>{ const rank=S.order.length?S.order.indexOf(f.i)+1:0; return `<div class="fcard ${S.pick===f.i?'sel':''} ${fin&&rank===1?'won':''}" data-i="${f.i}" style="--c:${hex(RACE_COLORS[f.i])}"><div class="fnum">${fin?rank:f.i+1}</div><div class="finfo"><div class="fname">${f.name} <span>${f.mood}</span>${fin&&rank===1?' ☠':''}</div><div class="fstats"><span class="ftag ${f.cls}">${f.tag}</span>${f.age} дн · усталость ${f.fat}% · ${f.w} мг · ${fmt(f.neurons)} нейр.</div></div><div class="fodds"><b>×${f.mult.toFixed(2)}</b><small>${(f.p*100).toFixed(0)}%</small></div></div>`; }).join('');
     ui.btn.disabled=racing||(S.state==='idle'&&S.pick==null); ui.btn.className='btn'+(fin?' pink':'');
     ui.btn.textContent=racing?'Летят…':fin?'Новый заезд':S.pick==null?'Выбери муху':`Старт · ${fmt(betCtl.peek())} на №${S.pick+1}`;
     flies.forEach((F,i)=>{ const f=S.list[i]; if(!f) return; F.lbl.inner.className='lbl race'+(S.pick===i?' sel':''); if(!(S.winner===i&&S.sprayed)) F.lbl.inner.textContent=`${i+1} · ${f.name}`; });
