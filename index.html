@@ -1062,7 +1062,7 @@ function createRace(){
   function enter(){ if(!S.list.length) genFlies(); else updateUI(); }
   function exit(){ killTweens('race'); audio.buzzStop(); canvas.style.cursor=''; }
   genFlies();
-  return {key:'race',scene,camera,labels,bloom:0.35,S,enter,exit,update,onMove,onDown,primary,updateUI,onRtp:()=>{ if(S.state==='idle'){ computeOdds(); updateUI(); } },busy:()=>S.state==='racing'||S.state==='finishing',debug:{start,gen:genFlies,pick:i=>{ S.pick=i; updateUI(); },finish}};
+  return {key:'race',scene,camera,labels,bloom:0.35,S,enter,exit,update,onMove,onDown,primary,updateUI,onRtp:()=>{ if(S.state==='idle'){ computeOdds(); updateUI(); } },busy:()=>S.state==='racing'||S.state==='finishing',debug:{start,gen:genFlies,pick:i=>{ S.pick=i; updateUI(); },finish,sampleOrder,progress}};
 }
 
 /* ================================================================
