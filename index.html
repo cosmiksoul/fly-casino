@@ -229,7 +229,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
     <div class="wallet">
       <div class="wtext"><div class="label">Баланс: нейронов в мозгу</div><div class="bal" id="bal">166 700</div></div>
       <canvas id="spark" width="220" height="72" title="динамика баланса за сессию — кликни"></canvas>
-      <button class="btn sm ghost" id="refill" title="Кофе с коллегой: мозг восстанавливается. Наука так не умеет, но это демо">☕</button>
+      <button class="btn sm ghost" id="refill" title="Попить кофе и восстановить баланс нейронов">☕</button>
     </div>
   </header>
 
@@ -956,7 +956,6 @@ function createGacha(){
   const M1=buildMachine({body:0xff3355,panel:0xfff2d9,accent:0xffd23f},36); scene.add(M1.group);
   const M2=buildMachine({body:0x2f7bff,panel:0xfff2d9,accent:0xffd23f},18); M2.group.position.set(-5.2,0,-3.5); M2.group.rotation.y=0.35; M2.group.scale.setScalar(0.9); scene.add(M2.group);
   const M3=buildMachine({body:0x36c26b,panel:0xfff2d9,accent:0xff4fa3},18); M3.group.position.set(5.2,0,-3.5); M3.group.rotation.y=-0.35; M3.group.scale.setScalar(0.9); scene.add(M3.group);
-  const sign=makeLabel('sign','МУХОГАЧА'); sign.position.set(0,3.2,1.6); scene.add(sign);
   const spot=new THREE.PointLight(0xfff4e0,0,12); spot.position.set(1.2,3.6,4.8); scene.add(spot);
   let dimK=0; function dim(on){ const from=dimK,to=on?1:0; return tween({tag:'gacha',dur:450,update:e=>{ dimK=lerp(from,to,e); key.intensity=lerp(2.0,0.35,dimK); hemi.intensity=lerp(0.6,0.12,dimK); fill.intensity=lerp(40,8,dimK); rim.intensity=lerp(40,8,dimK); scene.environmentIntensity=lerp(0.35,0.45,dimK); spot.intensity=lerp(0,9,dimK); wall.material.uniforms.uDim.value=dimK; }}); }
   const outCaps=[]; for(let i=0;i<10;i++){ const c=makeCapsule(0xffffff); c.visible=false; scene.add(c); outCaps.push(c); }
@@ -1029,7 +1028,7 @@ function createGacha(){
     time+=dt; wall.material.uniforms.uT.value=time; bokeh.uniforms.uT.value=time; camera.position.copy(cam.pos); camera.lookAt(cam.look);
     if(S.jig>0){ S.jig-=dt; const k=Math.min(1,S.jig); for(const c of M1.caps){ c.position.copy(c.userData.base); c.position.y+=Math.abs(Math.sin(time*25+c.userData.base.x*7))*0.12*k; c.position.x+=Math.sin(time*19+c.userData.base.z*5)*0.05*k; c.rotation.x+=dt*4*k; c.rotation.z+=dt*3*k; } }
     for(const n of S.neurons){ n.rotation.y+=dt*0.8; if(n.tick) n.tick(dt); if(n.userData.baseY!=null) n.position.y=n.userData.baseY+Math.sin(time*2.2)*0.06; n.traverse(o=>{ if(o.userData.twinkle) o.material.opacity=0.35+0.65*Math.abs(Math.sin(time*6+o.id)); }); }
-    particles.update(dt); confetti.update(dt); sign.inner.style.filter=`brightness(${1+0.15*Math.sin(time*4)})`;
+    particles.update(dt); confetti.update(dt);
   }
   function crankHit(){ ray.setFromCamera(ndc,camera); return ray.intersectObjects(M1.crank.children,false).length>0; }
   function onDown(){ if(!S.busy&&crankHit()) pull(1); }
@@ -1352,7 +1351,7 @@ async function init(){
   canvas.addEventListener('pointerdown',e=>{ audio.resume(); setNdc(e); if(active) active.onDown(); });
   document.addEventListener('pointerdown',()=>audio.resume());
   $$('.tabs button').forEach(b=>b.addEventListener('click',()=>{ audio.resume(); audio.click(); setGame(b.dataset.game); }));
-  $('#refill').addEventListener('click',()=>{ audio.resume(); wallet.set(START); toast('☕ Кофе с коллегой. Мозг восстановлен. Наука так не умеет.'); audio.win(false); });
+  $('#refill').addEventListener('click',()=>{ audio.resume(); wallet.set(START); toast('☕ Ты додепнул: попил кофе и восстановил баланс нейронов в мозгу.'); audio.win(false); });
   $('#info-btn').addEventListener('click',()=>$('#info').classList.add('open'));
   $('#info .close').addEventListener('click',()=>$('#info').classList.remove('open'));
   $('#info').addEventListener('click',e=>{ if(e.target.id==='info') e.target.classList.remove('open'); });
