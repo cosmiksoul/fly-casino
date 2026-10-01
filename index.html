@@ -1160,12 +1160,12 @@ function makeGoose(){
 function makeHand(){
   /* кулак, обхватывающий шею спереди: четыре пальца-капсулы горизонтально перед шеей, большой сверху, ладонь справа, рукав уходит вправо */
   const g=new THREE.Group(); const skin=new THREE.MeshStandardMaterial({color:0xffd1a8,roughness:0.6});
-  for(let i=0;i<4;i++){ const f=new THREE.Mesh(new THREE.CapsuleGeometry(0.075,0.4,4,10),skin); f.rotation.z=Math.PI/2; f.position.set(0.02,0.17-i*0.115,0.24); g.add(f); }
-  const thumb=new THREE.Mesh(new THREE.CapsuleGeometry(0.07,0.26,4,10),skin); thumb.position.set(-0.1,0.3,0.12); thumb.rotation.set(0,0,0.95); g.add(thumb);
-  const palm=new THREE.Mesh(new THREE.SphereGeometry(0.26,18,14),skin); palm.scale.set(1.1,1.15,0.8); palm.position.set(0.3,0,0.02); g.add(palm);
-  const cuff=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,0.18,16),new THREE.MeshStandardMaterial({color:0xfff2d9,roughness:0.6})); cuff.rotation.z=Math.PI/2; cuff.position.set(0.62,0,0); g.add(cuff);
-  const sleeve=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.34,5.4,18),new THREE.MeshStandardMaterial({color:0xff4fa3,roughness:0.55})); sleeve.rotation.z=Math.PI/2; sleeve.position.set(3.4,0.02,0.02); g.add(sleeve);
-  const stripe=new THREE.Mesh(new THREE.CylinderGeometry(0.31,0.31,0.22,18),new THREE.MeshStandardMaterial({color:0xfff2d9,roughness:0.55})); stripe.rotation.z=Math.PI/2; stripe.position.set(1.4,0.02,0.02); g.add(stripe);
+  for(let i=0;i<4;i++){ const f=new THREE.Mesh(new THREE.CapsuleGeometry(0.075,0.4,4,10),skin); f.rotation.z=Math.PI/2; f.position.set(0.02,0.17-i*0.115,0.44); g.add(f); }
+  const thumb=new THREE.Mesh(new THREE.CapsuleGeometry(0.07,0.26,4,10),skin); thumb.position.set(-0.08,0.32,0.34); thumb.rotation.set(0,0,0.95); g.add(thumb);
+  const palm=new THREE.Mesh(new THREE.SphereGeometry(0.26,18,14),skin); palm.scale.set(1.1,1.15,0.8); palm.position.set(0.46,0.02,0.16); g.add(palm);
+  const cuff=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,0.18,16),new THREE.MeshStandardMaterial({color:0xfff2d9,roughness:0.6})); cuff.rotation.z=Math.PI/2; cuff.position.set(0.8,0.02,0.1); g.add(cuff);
+  const sleeve=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.34,5.4,18),new THREE.MeshStandardMaterial({color:0xff4fa3,roughness:0.55})); sleeve.rotation.z=Math.PI/2; sleeve.position.set(3.6,0.04,0.1); g.add(sleeve);
+  const stripe=new THREE.Mesh(new THREE.CylinderGeometry(0.31,0.31,0.22,18),new THREE.MeshStandardMaterial({color:0xfff2d9,roughness:0.55})); stripe.rotation.z=Math.PI/2; stripe.position.set(1.6,0.04,0.1); g.add(stripe);
   g.scale.setScalar(0.85); g.traverse(o=>{ if(o.isMesh) o.castShadow=true; }); return g;
 }
 function createGoose(){
@@ -1197,7 +1197,7 @@ function createGoose(){
     ui.revs.textContent=Math.floor(S.revs);
   }
   function resetGoose(){ killTweens('goose'); G.neckG.rotation.set(0,0,0); G.neck.rotation.set(0,0,0); G.neck.scale.set(1,1,1); G.neck.position.y=0.8; G.headG.position.y=1.6; G.headG.rotation.set(0,0,0); G.eyes.forEach(e=>e.visible=true); G.xeyes.forEach(x=>x.visible=false); G.tongue.visible=false; G.beakLow.rotation.x=0; goose.position.set(0,0.5,0); goose.rotation.set(0,0,0); goose.visible=true; hand.visible=false; ui.mult.className='mult'; ui.sub.className='sub'; }
-  const gripWorld=out=>{ out.copy(goose.position).add(new THREE.Vector3(0,1.95+0.3,0.75)); return out; };
+  const gripWorld=out=>{ out.copy(goose.position).add(new THREE.Vector3(-0.05,1.95+0.03,0.75)); return out; };
   /* голова всегда смотрит в камеру: гасим поворот шеи обратным кватернионом */
   const _q=new THREE.Quaternion(), _want=new THREE.Quaternion().setFromEuler(new THREE.Euler(0.12,0,0));
   function faceCamera(){ G.neckG.getWorldQuaternion(_q); _q.invert(); G.headG.quaternion.copy(_q).multiply(_want); }
