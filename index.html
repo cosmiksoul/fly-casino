@@ -1139,18 +1139,20 @@ function makeGoose(){
   for(const s of [-1,1]){ const w=new THREE.Mesh(new THREE.SphereGeometry(0.55,24,16),white); w.scale.set(0.35,0.7,1.1); w.position.set(s*0.8,1.35,-0.1); w.rotation.z=s*0.25; w.castShadow=true; g.add(w);
     const leg=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.95,10),orange); leg.position.set(s*0.3,0.47,-0.1); leg.castShadow=true; g.add(leg);
     const foot=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.6,3),orange); foot.scale.set(1,0.18,1); foot.rotation.x=Math.PI/2; foot.position.set(s*0.3,0.03,0.12); g.add(foot); }
+  const shoulder=new THREE.Mesh(new THREE.SphereGeometry(0.27,20,14),white); shoulder.position.set(0,1.95,0.75); shoulder.castShadow=true; g.add(shoulder);
   const neckG=new THREE.Group(); neckG.position.set(0,1.95,0.75); neckG.rotation.order='YXZ'; g.add(neckG);
   const neck=new THREE.Mesh(new THREE.CylinderGeometry(0.14,0.2,1.6,16),white); neck.position.y=0.8; neck.castShadow=true; neckG.add(neck);
   const headG=new THREE.Group(); headG.position.y=1.6; neckG.add(headG);
+  const nape=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,12),white); nape.position.set(0,-0.04,-0.02); headG.add(nape);
   const head=new THREE.Mesh(new THREE.SphereGeometry(0.34,24,16),white); head.scale.set(1,0.95,1.15); head.castShadow=true; headG.add(head);
   /* плоский утиный клюв: верхняя и нижняя створки */
   const beak=new THREE.Mesh(new RoundedBoxGeometry(0.44,0.1,0.52,3,0.04),orange); beak.position.set(0,-0.03,0.5); beak.castShadow=true; headG.add(beak);
-  const beakLow=new THREE.Mesh(new RoundedBoxGeometry(0.38,0.07,0.44,3,0.03),new THREE.MeshStandardMaterial({color:0xe6732a,roughness:0.5})); beakLow.position.set(0,-0.12,0.46); headG.add(beakLow);
+  const lowGeo=new RoundedBoxGeometry(0.38,0.07,0.44,3,0.03); lowGeo.translate(0,0,0.22); const beakLow=new THREE.Mesh(lowGeo,new THREE.MeshStandardMaterial({color:0xe6732a,roughness:0.5})); beakLow.position.set(0,-0.11,0.24); headG.add(beakLow);
   const eyes=[],xeyes=[];
   for(const s of [-1,1]){ const e=new THREE.Mesh(new THREE.SphereGeometry(0.06,12,10),black); e.position.set(s*0.17,0.1,0.27); headG.add(e); eyes.push(e);
     const xg=new THREE.Group(); xg.position.copy(e.position); xg.position.z+=0.05; xg.visible=false; for(const r of [0.785,-0.785]){ const bar=new THREE.Mesh(new THREE.BoxGeometry(0.17,0.04,0.02),black); bar.rotation.z=r; xg.add(bar); } headG.add(xg); xeyes.push(xg); }
-  const tongue=new THREE.Mesh(new THREE.CapsuleGeometry(0.05,0.24,4,8),red); tongue.position.set(0,-0.24,0.7); tongue.rotation.x=0.5; tongue.visible=false; headG.add(tongue);
-  g.userData={neckG,neck,headG,eyes,xeyes,tongue};
+  const tongue=new THREE.Mesh(new THREE.CapsuleGeometry(0.055,0.3,4,8),red); tongue.position.set(0,-0.1,0.6); tongue.rotation.x=1.15; tongue.visible=false; headG.add(tongue);
+  g.userData={neckG,neck,headG,eyes,xeyes,tongue,beakLow};
   return g;
 }
 function makeHand(){
@@ -1191,7 +1193,7 @@ function createGoose(){
     else { ui.btn.className='btn'; ui.btn.disabled=busy; ui.btn.textContent=busy?'Крутим…':`Крутить · ${fmt(betCtl.peek())}`; }
     ui.revs.textContent=Math.floor(S.revs);
   }
-  function resetGoose(){ killTweens('goose'); G.neckG.rotation.set(0,0,0); G.neck.rotation.set(0,0,0); G.neck.scale.set(1,1,1); G.neck.position.y=0.8; G.headG.position.y=1.6; G.headG.rotation.set(0,0,0); G.eyes.forEach(e=>e.visible=true); G.xeyes.forEach(x=>x.visible=false); G.tongue.visible=false; goose.position.set(0,0.5,0); goose.rotation.set(0,0,0); goose.visible=true; hand.visible=false; ui.mult.className='mult'; ui.sub.className='sub'; }
+  function resetGoose(){ killTweens('goose'); G.neckG.rotation.set(0,0,0); G.neck.rotation.set(0,0,0); G.neck.scale.set(1,1,1); G.neck.position.y=0.8; G.headG.position.y=1.6; G.headG.rotation.set(0,0,0); G.eyes.forEach(e=>e.visible=true); G.xeyes.forEach(x=>x.visible=false); G.tongue.visible=false; G.beakLow.rotation.x=0; goose.position.set(0,0.5,0); goose.rotation.set(0,0,0); goose.visible=true; hand.visible=false; ui.mult.className='mult'; ui.sub.className='sub'; }
   const gripWorld=out=>{ out.set(0,0.38*G.neck.scale.y,0); return G.neckG.localToWorld(out); };
   /* голова всегда смотрит в камеру: гасим поворот шеи обратным кватернионом */
   const _q=new THREE.Quaternion(), _want=new THREE.Quaternion().setFromEuler(new THREE.Euler(0.12,0,0));
@@ -1207,7 +1209,7 @@ function createGoose(){
     audio.pop(); S.state='spinning'; S.t0=performance.now(); ui.sub.textContent='крутим!'; updateUI();
   }
   function release(){ const from=hand.position.clone(); tween({tag:'goose',dur:600,ease:E.inCubic,update:e=>{ hand.position.copy(from).add(new THREE.Vector3(0.6*e,4.5*e,0)); }}).then(()=>{ hand.visible=false; }); }
-  async function honk(rid){ for(let i=0;i<3;i++){ audio.honk(); const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); popup(scene,hp.add(new THREE.Vector3(0,0.9+i*0.1,0)),'ГА','yay',900); await delay(300); if(rid!==S.rid) return; } }
+  async function honk(rid){ for(let i=0;i<3;i++){ audio.honk(); const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); popup(scene,hp.add(new THREE.Vector3(i===1?1.5:-1.5,0.3+i*0.25,0.3)),'ГА','yay',900); await delay(300); if(rid!==S.rid) return; } }
   function cashout(){
     if(S.state!=='spinning') return; const m=Math.floor(S.mult*100)/100, win=Math.round(S.bet*m); S.state='cashed'; const rid=S.rid; wallet.give(win); audio.win(m>=5); S.best=Math.max(S.best,m);
     ui.mult.textContent=fmtX(m); ui.mult.classList.add('win'); ui.sub.className='sub win'; ui.sub.textContent=`ГА-ГА-ГА! +${fmt(win)} нейронов`;
@@ -1218,10 +1220,10 @@ function createGoose(){
   async function snap(){
     const rid=S.rid; S.state='snapped'; audio.quack(); shake.hit(0.9); ui.mult.textContent=fmtX(S.crashAt); ui.mult.classList.add('crash'); ui.sub.className='sub crash'; ui.sub.textContent='КРЯ. шея не выдержала'; updateUI(); release();
     G.eyes.forEach(e=>e.visible=false); G.xeyes.forEach(x=>x.visible=true); G.tongue.visible=true;
-    const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); popup(scene,hp.add(new THREE.Vector3(0,0.7,0)),'КРЯ','shlep',1500);
+    const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); popup(scene,hp.add(new THREE.Vector3(1.6,0.2,0.3)),'КРЯ','shlep',1500);
     /* шея падает вперёд-вправо, голова остаётся лицом к камере с мёртвым наклоном */
     const tx=G.neckG.rotation.x, ty=G.neckG.rotation.y, tyEnd=Math.round(ty/(Math.PI*2))*Math.PI*2+0.75; const dead=new THREE.Euler();
-    await tween({tag:'goose',dur:650,ease:E.outBounce,update:e=>{ G.neckG.rotation.x=lerp(tx,1.5,e); G.neckG.rotation.y=lerp(ty,tyEnd,e); G.neck.rotation.z=0.35*e; dead.set(0.3*e,0,0.6*e); G.neckG.getWorldQuaternion(_q); _q.invert(); G.headG.quaternion.copy(_q).multiply(new THREE.Quaternion().setFromEuler(dead)); }}); if(rid!==S.rid) return;
+    await tween({tag:'goose',dur:650,ease:E.outBounce,update:e=>{ G.neckG.rotation.x=lerp(tx,1.5,e); G.neckG.rotation.y=lerp(ty,tyEnd,e); G.beakLow.rotation.x=0.65*e; dead.set(0.3*e,0,0.6*e); G.neckG.getWorldQuaternion(_q); _q.invert(); G.headG.quaternion.copy(_q).multiply(new THREE.Quaternion().setFromEuler(dead)); }}); if(rid!==S.rid) return;
     audio.lose(); finishRound(rid,'snapped');
   }
   function launch(){
