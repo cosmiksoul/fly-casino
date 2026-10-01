@@ -247,6 +247,24 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .edemo{flex:0 0 340px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 10px 8px}
 #edemo{width:100%;height:auto;display:block}
 .edemo-cap{font-size:11px;color:var(--muted);font-weight:800;margin-top:6px;text-align:center;letter-spacing:.04em}
+.patterns{margin-top:36px}
+.patterns .ptext{font-size:14px;line-height:1.55;color:#eadfff;margin:0 0 10px;font-weight:700}
+.patterns .whyg{margin-top:16px}
+.harm{max-width:1240px;margin:34px auto 0;background:rgba(255,56,96,.08);border:1px solid rgba(255,107,138,.45);border-radius:20px;padding:20px 22px}
+.harm h2{font-family:'Russo One',sans-serif;font-size:22px;margin:0 0 12px;color:#ff8aa6}
+.harm p{font-size:14px;line-height:1.55;color:#fbe9ee;margin:0 0 12px;font-weight:700}
+.harm p b{color:#ff8aa6}
+.harm .attn{background:rgba(0,0,0,.28);border-radius:12px;padding:12px 14px;border-left:4px solid var(--yellow);color:#fff}
+.harm .attn b{color:var(--yellow)}
+.harm .help{background:rgba(255,56,96,.16);border-radius:12px;padding:12px 14px;border-left:4px solid #ff6b8a;margin-bottom:0}
+.harm a{color:var(--cyan)}
+.loop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 8px}
+.loop .n{flex:1 1 150px;background:rgba(0,0,0,.3);border:1px solid rgba(255,107,138,.35);border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.35;color:#fbe9ee;font-weight:700;min-width:0}
+.loop .n b{display:block;font-family:'Russo One',sans-serif;font-weight:400;font-size:13px;color:#ff8aa6;margin-bottom:3px}
+.loop em{font-style:normal;color:#ff8aa6;font-family:'Russo One',sans-serif;font-size:20px}
+.loop em.back{font-size:12px;color:var(--yellow);white-space:nowrap}
+.loop-cap{font-size:12.5px;color:#f3c7d2;font-weight:800;margin:0 0 14px}
+.note a{color:var(--cyan)}
 @media (max-width:900px){
   .engine-row{flex-direction:column}.edemo{flex:none;width:100%}
   #home{padding:14px 14px 50px}
@@ -321,9 +339,15 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
           <div class="skins bottom"><span>движок — один и тот же: генератор → вероятность → проверка</span></div>
           <div class="engine-row">
             <p class="engine-text">Тапок, мухобойка, гача, гонки и гусь — пять разных картинок поверх одной схемы: число из генератора, таблица вероятностей, сравнение с порогом, выплата. Слот, лутбокс и краш-игра устроены точно так же. Меняется контент, не меняется генератор, расчёт вероятности и проверка. Поэтому «понять игру» здесь означает понять таблицу выплат, а не научиться играть.<br><br>Справа — весь движок целиком: раз в секунду генератор бросает число от 0 до 1. Попало ниже порога P — выплата <code>RTP / P</code>, нет — ноль. Счётчик внизу сходится к RTP сам, без всякой стратегии.</p>
-            <div class="edemo"><canvas id="edemo" width="680" height="300"></canvas><div class="edemo-cap">генератор → порог → выплата · живой прогон</div></div>
+            <div class="edemo"><canvas id="edemo" width="680" height="300"></canvas><div class="edemo-cap">генератор → порог → выплата · показан один бросок в секунду, в счётчик идут 30</div></div>
           </div>
         </div>
+      </div>
+      <div class="why patterns" id="patterns">
+        <h2>Механики и паттерны дизайна в азартных играх</h2>
+        <p class="lead">Сама по себе игра должна быть простой: одна кнопка, одно правило, пара секунд на раунд. Порог входа минимальный — объяснять нечего, учиться нечему. Всё остальное дизайн тратит на удержание внимания.</p>
+        <p class="ptext">Основной приём — короткий цикл с непредсказуемой наградой. Раунд длится секунды, следующий начинается одним кликом, а выигрыш приходит нерегулярно: это вариативное подкрепление, самая стойкая из известных схем закрепления поведения. Крупные множители всегда на виду — ×100, ×25, «до солнца», — хотя вероятность их увидеть измеряется долями процента: якорь задаёт ожидания. Автоигра и автозабор убирают паузы, в которых можно передумать.</p>
+        <p class="ptext">Вторая группа приёмов — работа с восприятием результата. Общий итог за сессию не показывают, зато каждую выплату показывают крупно. Проигрыш проходит тихо, выигрыш — громко и долго. Серии, коллекции, гаранты и «до редкой осталось 25» превращают случайность в прогресс, которого нет. Выбор момента, мухи или числа тапков создаёт ощущение контроля, не меняя ожидания. Ниже — эти приёмы по отдельности; почти все они есть и в этом демо.</p>
         <div class="whyg">
           <div class="w"><b>Чистая вероятность</b><p>Исход каждого раунда определяет генератор случайных чисел до того, как вы увидите анимацию. Муха прыгает, гусь крутится, капсула падает — это кино про уже принятое решение. Навык, реакция и «чувство момента» не влияют ни на что.</p></div>
           <div class="w"><b>Отрицательное матожидание</b><p>RTP 97% означает: с каждой тысячи поставленных нейронов в среднем уходит 30. Не иногда, а в среднем всегда. За тысячу раундов — тридцать тысяч. Переключатель RTP внизу показывает, как это выглядит при 70% и 40%: быстрее, но принцип тот же.</p></div>
@@ -334,6 +358,21 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
           <div class="w"><b>«Почти выиграл»</b><p>Тапок оказался на соседней клетке, муха сломалась через секунду после забора, а после выхода написано «мухобойка ждала на ×12». Near miss — отдельная механика: мозг считает «почти» за «близко», хотя у случайности нет понятия «близко». Мы её оставили, чтобы было видно, как она работает.</p></div>
           <div class="w"><b>Додеп в один клик</b><p>Кнопка ☕ стоит рядом с балансом не случайно: пополнение должно быть быстрее, чем мысль остановиться. В настоящих приложениях рядом ещё и бонус на депозит. Здесь кофе бесплатный, а на графике сессии каждый додеп отмечен — видно, сколько «бесплатных» нейронов ушло.</p></div>
         </div>
+      </div>
+      <div class="harm" id="harm">
+        <h2>Где это становится проблемой</h2>
+        <p><b>Деньги.</b> У любой азартной игры отрицательное математическое ожидание: при RTP 97% каждая поставленная тысяча в среднем возвращает 970. Это не риск, а свойство. Чем дольше и чаще игра, тем ближе результат к среднему, а среднее всегда меньше ставки. На длинной дистанции выиграть невозможно — можно только медленнее проигрывать.</p>
+        <p><b>Зависимость.</b> У части людей есть предрасположенность: особенности дофаминовой системы, импульсивность, тяга к острым ощущениям, стресс или депрессия, которые хочется заглушить. Дизайн азартных игр не создаёт эту предрасположенность, но целенаправленно её усиливает: эмоциональные качели от «почти» к «есть», ожидание результата, которое само по себе выделяет дофамин, и непредсказуемая награда закрепляют поведение быстрее любой регулярной. Так замыкается петля:</p>
+        <div class="loop">
+          <div class="n"><b>Триггер</b>скука, стресс, уведомление, «бонус на депозит»</div><em>→</em>
+          <div class="n"><b>Ставка</b>короткая, в один клик, деньги уже не ощущаются как деньги</div><em>→</em>
+          <div class="n"><b>Ожидание</b>дофамин растёт до результата, а не после — сам процесс уже награда</div><em>→</em>
+          <div class="n"><b>Результат</b>выигрыш — громкое подкрепление; проигрыш — «почти», которое хочется доиграть</div><em>→</em>
+          <div class="n"><b>Ещё раз</b>пауза убрана дизайном: следующий раунд ближе, чем мысль остановиться</div><em class="back">↺ к триггеру</em>
+        </div>
+        <p class="loop-cap">Вариативное подкрепление: когда награда непредсказуема, поведение закрепляется сильнее и держится дольше, чем при регулярной награде. Та же схема работает в ленте соцсетей и в лутбоксах.</p>
+        <p class="attn"><b>Во время игры в демки</b> обратите внимание на блок «📈 Сессия» внизу экрана: там видно, сколько раундов сыграно, сколько поставлено, сколько вернулось и сколько раз нажат кофе. Это ровно та информация, которую настоящее казино не показывает. <a data-sess="1">Открыть сессию</a>.</p>
+        <p class="help">Если вы замечаете у себя признаки проблемы — играете дольше, чем собирались, ставите больше, чтобы отыграться, скрываете игру от близких, думаете о ней вне игры, — обратитесь за помощью к специалистам: психотерапевту или в службу помощи при игровой зависимости. Это лечится, и чем раньше, тем проще.</p>
       </div>
       <p class="homefoot">Вся математика — в кнопке «ⓘ математика» внизу. Случайность: <code>crypto.getRandomValues</code>. Код открыт: <a href="https://github.com/cosmiksoul/fly-casino" target="_blank" rel="noopener">github.com/cosmiksoul/fly-casino</a>. Откуда муха: эксплейнер <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">«Муха в машине»</a>.</p>
     </section>
@@ -470,7 +509,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   <h2>📈 Сессия: как тает баланс</h2>
   <canvas id="sess-chart" width="760" height="270"></canvas>
   <div class="sgrid" id="sess-stats"></div>
-  <div class="row" style="gap:14px;align-items:flex-start"><p class="note" style="margin:0;flex:1">В настоящем казино такого графика обычно нет: чем хуже видна история, тем легче продолжать. Здесь он есть — вместе с додепами ☕, линией старта и теоретическим ожиданием.</p><button class="btn sm ghost" id="sess-reset" style="font-size:13px;white-space:nowrap">сбросить статистику</button></div>
+  <div class="row" style="gap:14px;align-items:flex-start"><p class="note" style="margin:0;flex:1">В настоящем казино такого графика обычно нет: чем хуже видна история, тем легче продолжать. Здесь он есть — вместе с додепами ☕, линией старта и теоретическим ожиданием. <a data-home="harm">Почему это важно →</a></p><button class="btn sm ghost" id="sess-reset" style="font-size:13px;white-space:nowrap">сбросить статистику</button></div>
   <h3>⚡ Виртуальный прогон</h3>
   <p>Та же математика, что в игре, без анимации и без списания нейронов. Стратегия: <b id="sess-strat"></b>. Пунктиром — куда ушёл бы баланс.</p>
   <div class="three"><button class="btn sm" data-n="100">100 раундов</button><button class="btn sm" data-n="1000">1 000</button><button class="btn sm" data-n="10000">10 000</button></div>
@@ -1485,6 +1524,8 @@ async function init(){
   setInterval(ironyNext,25000);
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-info]'); if(!a) return; $('#info').classList.add('open'); const h=document.getElementById(a.dataset.info); if(h) h.scrollIntoView({block:'start',behavior:'smooth'}); });
   $$('.modal').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m||e.target.closest('.close')) m.classList.remove('open'); }); });
+  document.addEventListener('click',e=>{ const a=e.target.closest('a[data-home]'); if(!a) return; $$('.modal').forEach(m=>m.classList.remove('open')); showHome(); if($('#home').classList.contains('active')){ const h=document.getElementById(a.dataset.home); if(h) setTimeout(()=>h.scrollIntoView({block:'start',behavior:'smooth'}),60); } });
+  document.addEventListener('click',e=>{ const a=e.target.closest('a[data-sess]'); if(!a) return; openSess(); });
   const sess=$('#sess'); let simPts=null;
   const openSess=()=>{ simPts=null; $('#sess-simres').textContent=''; $('#sess-strat').textContent=active&&active.simName?active.simName():'—'; renderSess(); sess.classList.add('open'); };
   $('#sess-btn').addEventListener('click',openSess); $('#spark').addEventListener('click',openSess);
@@ -1509,7 +1550,9 @@ async function init(){
       x.fillStyle='#fff'; x.font="900 26px 'Russo One', sans-serif"; x.textAlign='center'; x.fillText(`U = ${ed.U.toFixed(4)}`,W/2,52); x.font='800 19px Nunito, sans-serif'; x.fillStyle=ed.win?'#9cff5b':'#ff8ab8'; x.fillText(ed.win?`${ed.U.toFixed(2)} < ${ed.P.toFixed(2)} → выплата ×${pay.toFixed(2)}`:`${ed.U.toFixed(2)} ≥ ${ed.P.toFixed(2)} → ноль`,W/2,86); }
     else { x.fillStyle='#fff'; x.font="900 26px 'Russo One', sans-serif"; x.textAlign='center'; x.fillText('генератор думает…',W/2,52); }
     x.fillStyle='#cdbfff'; x.font='800 19px Nunito, sans-serif'; x.textAlign='center'; x.fillText(ed.n?`${fmt(ed.n)} раундов · RTP факт ${pct(ed.ret/ed.bet)} · теория ${pct(cfg.rtp)}`:`теория: RTP ${pct(cfg.rtp)}`,W/2,H-16); }
-  function edRound(){ if(!$('#home').classList.contains('active')) return; const u=rand(); const from=ed.shown; ed.U=u; ed.n++; ed.bet+=1; const win=u<ed.P; if(win) ed.ret+=cfg.rtp/ed.P; ed.win=win; tween({tag:'edemo',dur:420,ease:E.outCubic,update:e=>{ ed.shown=lerp(from,u,e); edDraw(); }}); }
+  function edRound(){ if(!$('#home').classList.contains('active')) return; if(ed.rtpAt!==cfg.rtp){ ed.rtpAt=cfg.rtp; ed.n=0; ed.bet=0; ed.ret=0; } const u=rand(); const from=ed.shown; ed.U=u; const win=u<ed.P; ed.win=win;
+    /* для сходимости: показываем один бросок, в счётчик идёт пачка из 30 */
+    for(let k=0;k<30;k++){ const uu=k===0?u:rand(); ed.n++; ed.bet+=1; if(uu<ed.P) ed.ret+=cfg.rtp/ed.P; } tween({tag:'edemo',dur:420,ease:E.outCubic,update:e=>{ ed.shown=lerp(from,u,e); edDraw(); }}); }
   edDraw(); setInterval(edRound,1100);
   window.__muha={games,setGame,wallet,audio,session,get active(){ return active; }};
   $('#loader').classList.add('hide'); requestAnimationFrame(loop);
