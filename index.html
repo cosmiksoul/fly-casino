@@ -667,7 +667,7 @@ const session={
   load(){ try{ const d=JSON.parse(sessionStorage.getItem('muhaslot.session')||'null'); if(d&&Array.isArray(d.points)) Object.assign(this,d); }catch(e){} },
   save(){ try{ sessionStorage.setItem('muhaslot.session',JSON.stringify({points:this.points.slice(-3000),wagered:this.wagered,won:this.won,refills:this.refills,rounds:this.rounds})); }catch(e){} },
   reset(){ this.points=[]; this.wagered=0; this.won=0; this.refills=0; this.rounds=0; this.save(); if(typeof drawSpark==='function') drawSpark(); },
-  record(k,d,b){ this.points.push({k,d,b,g:active?active.key:''}); if(k==='bet'){ this.wagered+=d; this.rounds++; } if(k==='win') this.won+=d; if(k==='refill') this.refills+=d; this.save(); if(typeof drawSpark==='function') drawSpark(); },
+  record(k,d,b){ this.points.push({k,d,b,g:active?active.key:''}); if(this.points.length>3000) this.points.splice(0,this.points.length-3000); if(k==='bet'){ this.wagered+=d; this.rounds++; } if(k==='win') this.won+=d; if(k==='refill') this.refills+=d; this.save(); if(typeof drawSpark==='function') drawSpark(); },
 };
 session.load();
 const wallet={
@@ -709,6 +709,8 @@ const shake={amt:0,off:new THREE.Vector3(),hit(a){ this.amt=Math.max(this.amt,a)
 const ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
 function makeLabels(){ const el=document.createElement('div'); el.style.display='none'; $('#labels').appendChild(el); const r=new CSS2DRenderer({element:el}); r.setSize(innerWidth,innerHeight); return r; }
 function makeLabel(cls,html=''){ const wrap=document.createElement('div'); const inner=document.createElement('div'); inner.className='lbl '+cls; inner.innerHTML=html; wrap.appendChild(inner); const o=new CSS2DObject(wrap); o.inner=inner; return o; }
+/* освободить геометрии и материалы временного объекта (общие геометрии мухи не трогаем) */
+function disposeObj(o){ o.traverse(c=>{ if(c.geometry&&c.geometry!==wingGeo) c.geometry.dispose(); if(c.material){ (Array.isArray(c.material)?c.material:[c.material]).forEach(m=>{ if(m.map&&m.map!==stripesTex&&m.map!==glowTex&&m.map!==questionTex&&m.map!==cloudTex&&m.map!==swatTex) m.map.dispose(); m.dispose(); }); } }); }
 function popup(scene,pos,text,cls='plus',ms=1400){ const l=makeLabel(cls,text); l.position.copy(pos); scene.add(l); setTimeout(()=>{ scene.remove(l); },ms); return l; }
 function canvasTex(size,draw){ const c=document.createElement('canvas'); c.width=c.height=size; draw(c.getContext('2d'),size); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; }
 let glowTex,cloudTex,questionTex,stripesTex;
@@ -935,7 +937,7 @@ function createMines(){
     particles.burst(new THREE.Vector3(t.position.x,0.5,t.position.z),[0xffffff,0xffd23f,0x9cff5b],2.2,1.1,6);
     const l=makeLabel('mint',`${tr.emoji} ${fmtX(S.mult)}`); l.position.set(t.position.x,0.9,t.position.z); scene.add(l); cellLabels.push(l);
     await tween({tag:'mines',dur:260,ease:E.outBack,update:e=>mesh.scale.setScalar(e)}); await delay(300);
-    await tween({tag:'mines',dur:220,ease:E.inCubic,update:e=>{ mesh.scale.setScalar(1-e); mesh.position.z=t.position.z+0.42-0.3*e; }}); scene.remove(mesh);
+    await tween({tag:'mines',dur:220,ease:E.inCubic,update:e=>{ mesh.scale.setScalar(1-e); mesh.position.z=t.position.z+0.42-0.3*e; }}); scene.remove(mesh); disposeObj(mesh);
   }
   async function slam(t){
     audio.whoosh(); slipper.visible=true; slipper.position.set(t.position.x,7.5,t.position.z); slipper.rotation.set(0,rr(0,Math.PI*2),0);
@@ -1202,11 +1204,11 @@ function createGacha(){
     tween({tag:'gacha',dur:650,ease:E.outBack,update:e=>{ nrn.scale.setScalar(e*0.6*sc); nrn.position.y=at.y+0.5*sc*e; }}).then(()=>{ nrn.userData.baseY=nrn.position.y; });
     if(idx===6) popup(scene,at.clone().add(new THREE.Vector3(0,2.2,0)),'ЛЕГЕНДАРНО!','yay',2600);
   }
-  function clearResults(){ for(const n of S.neurons){ scene.remove(n); n.traverse(o=>{ if(o.geometry&&o.geometry!==wingGeo) o.geometry.dispose(); }); } S.neurons.length=0; outCaps.forEach(c=>{ c.visible=false; c.scale.setScalar(1); }); }
+  function clearResults(){ for(const n of S.neurons){ scene.remove(n); disposeObj(n); } S.neurons.length=0; outCaps.forEach(c=>{ c.visible=false; c.scale.setScalar(1); }); }
   async function cleanup(){
     const ns=S.neurons.slice(); S.neurons.length=0; const s0=ns.map(n=>n.scale.x); const caps=outCaps.filter(c=>c.visible);
     await tween({tag:'gacha',dur:350,ease:E.inCubic,update:e=>{ ns.forEach((n,i)=>n.scale.setScalar(Math.max(0.001,s0[i]*(1-e)))); caps.forEach(c=>c.scale.setScalar(Math.max(0.001,1-e))); }});
-    ns.forEach(n=>{ scene.remove(n); n.traverse(o=>{ if(o.geometry&&o.geometry!==wingGeo) o.geometry.dispose(); }); }); caps.forEach(c=>{ c.visible=false; c.scale.setScalar(1); }); dim(false); moveCam(HOME,600);
+    ns.forEach(n=>{ scene.remove(n); disposeObj(n); }); caps.forEach(c=>{ c.visible=false; c.scale.setScalar(1); }); dim(false); moveCam(HOME,600);
   }
   function checkCollection(){ if(S.bonusPaid) return; if(TIERS.every((t,i)=>S.coll[i]>0)){ S.bonusPaid=true; wallet.give(25000); toast('Все мухи собраны! +25 000 нейронов. Можно открывать зоопарк.'); confetti.burst(new THREE.Vector3(0,5,3),[0xff4fa3,0xffd23f,0x35e6ff,0x9cff5b],8,3,5); audio.win(true); } }
   let time=0;
@@ -1600,7 +1602,7 @@ async function init(){
     /* для сходимости: показываем один бросок, в счётчик идёт пачка из 30 */
     for(let k=0;k<30;k++){ const uu=k===0?u:rand(); ed.n++; ed.bet+=1; if(uu<ed.P) ed.ret+=cfg.rtp/ed.P; } tween({tag:'edemo',dur:420,ease:E.outCubic,update:e=>{ ed.shown=lerp(from,u,e); edDraw(); }}); }
   edDraw(); setInterval(edRound,1100);
-  window.__muha={games,setGame,wallet,audio,session,get active(){ return active; }};
+  window.__muha={games,setGame,wallet,audio,session,renderer,get active(){ return active; }};
   $('#loader').classList.add('hide'); requestAnimationFrame(loop);
 }
 init().catch(err=>{ console.error(err); const l=$('#loader'); l.classList.add('err'); l.innerHTML=`<div class="fly-big">💀</div><div>Не завелось: ${err.message}<br><br>Нужен интернет — three.js и шрифты грузятся с CDN.</div>`; });
