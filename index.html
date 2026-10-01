@@ -193,7 +193,38 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .sgrid b.good{color:var(--lime)}.sgrid b.badv{color:var(--red)}
 .note{color:var(--muted);font-size:13px}
 .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:8px 0}
+#home{position:absolute;inset:0;pointer-events:auto;overflow:auto;display:none;padding:26px 40px 70px;background:radial-gradient(1100px 520px at 72% -8%,rgba(255,79,163,.28),transparent 70%),radial-gradient(800px 500px at 10% 110%,rgba(53,230,255,.14),transparent 70%),linear-gradient(#1a0d3d,#24115a)}
+#home.active{display:block}
+#home::-webkit-scrollbar{width:8px}#home::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:8px}
+.hero{max-width:1240px;margin:0 auto 26px}
+.hero h1{font-family:'Russo One',sans-serif;font-size:clamp(28px,4vw,46px);margin:0 0 10px;color:#fff;text-shadow:0 4px 0 var(--pink3),0 10px 30px rgba(255,79,163,.4);line-height:1.1}
+.hero h1 b{color:var(--yellow);font-weight:400;text-shadow:0 4px 0 var(--yellow3)}
+.hero p{font-size:16px;line-height:1.5;color:#eadfff;margin:0;max-width:860px}
+.hero p b{color:var(--yellow)}
+.gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:16px;max-width:1240px;margin:0 auto 36px}
+.gh{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;text-align:left;color:var(--text);padding:0;transition:transform .15s,box-shadow .15s;box-shadow:0 12px 30px rgba(0,0,0,.35);font-family:Nunito,sans-serif}
+.gh:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5);border-color:rgba(255,210,63,.6)}
+.gh .thumb{aspect-ratio:16/10;background:#2a1466 center/cover no-repeat;border-bottom:1px solid var(--line)}
+.gh .gt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:12px 14px 0}
+.gh .gt b{font-family:'Russo One',sans-serif;font-size:17px;font-weight:400;color:#fff}
+.gh .gt span{font-size:10.5px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+.gh p{margin:6px 14px 8px;font-size:13px;line-height:1.4;color:#eadfff;font-weight:700}
+.gh .gm{margin:0 14px 14px;font-size:11px;color:var(--muted);font-weight:800}
+.gh .gm i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lime);margin-right:6px;vertical-align:middle}
+.gh .gm i.mid{background:var(--yellow)}.gh .gm i.hi{background:var(--pink)}.gh .gm i.you{background:var(--cyan)}
+.why{max-width:1240px;margin:0 auto}
+.why h2{font-family:'Russo One',sans-serif;font-size:24px;margin:0 0 6px;color:#fff}
+.why .lead{color:var(--muted);font-weight:800;margin:0 0 14px;font-size:14px}
+.whyg{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.why .w{background:rgba(0,0,0,.26);border-radius:16px;padding:16px 18px;border:1px solid rgba(255,255,255,.08)}
+.why .w b{display:block;font-family:'Russo One',sans-serif;font-size:15px;font-weight:400;color:var(--yellow);margin-bottom:6px}
+.why .w p{margin:0;font-size:13.5px;line-height:1.45;color:#eadfff;font-weight:700}
+.why .w p a{color:var(--cyan)}
+.homefoot{max-width:1240px;margin:26px auto 0;font-size:12.5px;color:var(--muted);font-weight:800;line-height:1.6}
+.homefoot a{color:var(--cyan)}
+.logo{cursor:pointer}
 @media (max-width:900px){
+  #home{padding:14px 14px 50px}
   .top{flex-wrap:wrap;gap:10px;padding:10px 12px}
   .brand{min-width:0}.tag{display:none}.logo{font-size:22px}
   .tabs{order:3;width:100%;justify-content:space-between}.tabs button{padding:8px 10px;font-size:12px;flex:1;justify-content:center}
@@ -234,6 +265,33 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   </header>
 
   <div class="main">
+    <!-- ===== ГЛАВНАЯ ===== -->
+    <section id="home">
+      <div class="hero">
+        <h1>МУХА<b>КАЗИК</b> — азартные игры для дрозофилы</h1>
+        <p>Учебный проект: пять классических гэмблинг-механик с честной — и по желанию нечестной — математикой, завёрнутых в муху, гуся и дихлофос. <b>Нейроны не настоящие, вероятности настоящие.</b> Каждая игра показывает свой RTP, волатильность и формулу, а «📈 Сессия» рисует, как тает баланс.</p>
+      </div>
+      <div class="gcards">
+        <button class="gh" data-game="mines"><div class="thumb" id="thumb-mines"></div><div class="gt"><b>🩴 Тапок</b><span>Mines</span></div><p>Муха прыгает по клеткам стола: под каждой вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь числом тапков</div></button>
+        <button class="gh" data-game="crash"><div class="thumb" id="thumb-crash"></div><div class="gt"><b>🏓 Мухобойка</b><span>Crash · Aviator</span></div><p>Муха летит к солнцу, множитель растёт. Забери нейроны до того, как прилетит мухобойка. Долетит до солнца — ×100.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора</div></button>
+        <button class="gh" data-game="gacha"><div class="thumb" id="thumb-gacha"></div><div class="gt"><b>🎰 Мухогача</b><span>Гачапон · лутбокс</span></div><p>Капсулы с мухами от комара (×0) до золотой и бриллиантовой (×25). Гарант, коллекция, ×10.</p><div class="gm"><i class="hi"></i>RTP ≈ 97% · волатильность высокая</div></button>
+        <button class="gh" data-game="race"><div class="thumb" id="thumb-race"></div><div class="gt"><b>🏁 Гонки</b><span>Ставки на скачки</span></div><p>Шесть мух трёх классов летят круг по столу. Первая на финише получает дихлофос. Если она твоя — выигрыш.</p><div class="gm"><i class="mid"></i>RTP 97% · от надёжной (×3) до авантюры (×40)</div></button>
+        <button class="gh" data-game="goose"><div class="thumb" id="thumb-goose"></div><div class="gt"><b>🦆 Крути гуся</b><span>Crash</span></div><p>Рука раскручивает гуся за шею, каждый оборот ×1.25. Забери до того, как шея скажет «кря».</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора</div></button>
+      </div>
+      <div class="why">
+        <h2>Чем это отличается от игр, в которые вы играли</h2>
+        <p class="lead">В Doom, Mario и даже в три-в-ряд результат зависит от того, что вы делаете. Здесь — нет.</p>
+        <div class="whyg">
+          <div class="w"><b>Чистая вероятность</b><p>Исход каждого раунда определяет генератор случайных чисел до того, как вы увидите анимацию. Муха прыгает, гусь крутится, капсула падает — это кино про уже принятое решение. Навык, реакция и «чувство момента» не влияют ни на что.</p></div>
+          <div class="w"><b>Отрицательное матожидание</b><p>RTP 97% означает: с каждой тысячи поставленных нейронов в среднем уходит 30. Не иногда, а в среднем всегда. За тысячу раундов — тридцать тысяч. Переключатель RTP внизу показывает, как это выглядит при 70% и 40%: быстрее, но принцип тот же.</p></div>
+          <div class="w"><b>Волатильность — не шанс, а качели</b><p>Фаворит в гонках и авантюра имеют одинаковое ожидание, но фаворит платит мало и часто, авантюра — много и редко. Число тапков, момент забора, цена капсулы меняют размах качелей, не их центр. Центр всегда ниже нуля.</p></div>
+          <div class="w"><b>Стратегии выигрыша нет</b><p>Когда забирать, сколько тапков, какую муху выбрать, удваивать ли после проигрыша — любая стратегия на длинной дистанции даёт ровно RTP. Проверьте сами: виртуальный прогон в «📈 Сессии» гоняет 10 000 раундов любой стратегией и сходится к теории.</p></div>
+          <div class="w"><b>Ощущение контроля — часть дизайна</b><p>«Почти долетела», «ещё один оборот», «следующая капсула точно редкая» — это не информация о будущем, это анимация и дофамин. Вероятность не помнит прошлые раунды. Баланс помнит.</p></div>
+        </div>
+      </div>
+      <p class="homefoot">Вся математика — в кнопке «ⓘ математика» внизу. Случайность: <code>crypto.getRandomValues</code>. Код открыт: <a href="https://github.com/cosmiksoul/fly-casino" target="_blank" rel="noopener">github.com/cosmiksoul/fly-casino</a>. Откуда муха: эксплейнер <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">«Муха в машине»</a>.</p>
+    </section>
+
     <!-- ===== ТАПОК (mines) ===== -->
     <section class="panel" id="p-mines">
       <div class="ph"><h2>🩴 Тапок</h2><p>Муха прыгает по столу. Под клеткой — вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p></div>
@@ -1324,7 +1382,7 @@ function drawChart(cv,real,sim){ const x=cv.getContext('2d'); const W=cv.width,H
   if(sb.length){ const off=Math.max(0,rb.length-1); x.setLineDash([6,4]); x.lineWidth=2; x.strokeStyle='#35e6ff'; x.beginPath(); sb.forEach((v,i)=>{ i?x.lineTo(X(off+i),Y(v)):x.moveTo(X(off+i),Y(v)); }); x.stroke(); x.setLineDash([]); x.fillStyle='#35e6ff'; x.font='900 12px Nunito, sans-serif'; x.fillText('виртуальный прогон',X(off)+6,Y(sb[0])-8); }
   x.fillStyle='#cdbfff'; x.font='800 11px Nunito, sans-serif'; x.fillText('события: ставки и выплаты →',W-pad.r-170,H-8); }
 function setGame(key){
-  if(active&&active.key===key) return;
+  if(active&&active.key===key){ hideHome(); return; }
   if(active&&active.busy()){ toast('Доиграй раунд — муха занята'); return; }
   if(active){ active.exit(); active.labels.domElement.style.display='none'; }
   active=games[key]; active.labels.domElement.style.display='';
@@ -1332,8 +1390,12 @@ function setGame(key){
   $$('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.game===key));
   $$('.panel').forEach(p=>p.classList.toggle('active',p.id==='p-'+key));
   $$('.stage').forEach(p=>p.classList.toggle('active',p.id==='s-'+key));
-  history.replaceState(null,'','#'+key); canvas.style.cursor='';
+  history.replaceState(null,'','#'+key); canvas.style.cursor=''; hideHome();
 }
+function hideHome(){ $('#home').classList.remove('active'); }
+function showHome(){ if(active&&active.busy()){ toast('Доиграй раунд — муха занята'); return; } if(active){ active.exit(); active.labels.domElement.style.display='none'; active=null; } $$('.tabs button').forEach(b=>b.classList.remove('active')); $$('.panel').forEach(p=>p.classList.remove('active')); $$('.stage').forEach(p=>p.classList.remove('active')); $('#home').classList.add('active'); history.replaceState(null,'','#home'); canvas.style.cursor=''; }
+/* превью для главной: рендерим каждую сцену в миниатюру настоящим рендерером */
+function snapshot(g){ const w=480,h=300; renderer.setSize(w,h,false); g.camera.aspect=w/h; g.camera.zoom=1; g.camera.clearViewOffset(); g.camera.updateProjectionMatrix(); g.update(0.016); g.camera.updateProjectionMatrix(); renderer.render(g.scene,g.camera); return renderer.domElement.toDataURL('image/jpeg',0.82); }
 function viewShift(){ return innerWidth>900?{x:-Math.round((400-22)/2),y:0}:{x:0,y:Math.round(innerHeight*0.1)}; }
 function resize(){ const w=innerWidth,h=innerHeight; renderer.setSize(w,h,false); composer.setSize(w,h); const s=viewShift(); const z=w>900?clamp((w-422)/700,0.7,1):clamp(w/h*1.2,0.55,1); for(const g of Object.values(games)){ g.camera.aspect=w/h; g.camera.zoom=z; g.camera.setViewOffset(w,h,s.x,s.y,w,h); g.labels.setSize(w,h); } }
 let last=performance.now();
@@ -1345,7 +1407,10 @@ async function init(){
   await Promise.race([document.fonts?document.fonts.ready:Promise.resolve(),delay(1800)]);
   buildTextures();
   mines=createMines(); crash=createCrash(); gacha=createGacha(); const race=createRace(), goose=createGoose(); games={mines,crash,gacha,race,goose};
+  for(const g of Object.values(games)){ try{ const t=$('#thumb-'+g.key); if(t) t.style.backgroundImage=`url(${snapshot(g)})`; }catch(e){ console.warn('thumb',g.key,e); } }
   resize(); addEventListener('resize',resize);
+  $$('.gh').forEach(b=>b.addEventListener('click',()=>{ audio.resume(); audio.click(); setGame(b.dataset.game); }));
+  $('.logo').addEventListener('click',()=>{ audio.resume(); showHome(); });
   const setNdc=e=>ndc.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
   canvas.addEventListener('pointermove',e=>{ setNdc(e); if(active) active.onMove(); });
   canvas.addEventListener('pointerdown',e=>{ audio.resume(); setNdc(e); if(active) active.onDown(); });
@@ -1369,7 +1434,7 @@ async function init(){
     if(e.key==='+'||e.key==='-'){ const inp=activeBet(); if(inp&&!inp.disabled){ const b=$(`#p-${active.key} .bet button[data-op="${e.key}"]`); if(b) b.click(); } }
   });
   wallet.el.textContent=fmt(wallet.balance); wallet.shown=wallet.balance;
-  const h=location.hash.replace('#',''); setGame(games[h]?h:'mines');
+  const h=location.hash.replace('#',''); if(games[h]) setGame(h); else showHome();
   setInterval(ironyNext,25000);
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-info]'); if(!a) return; $('#info').classList.add('open'); const h=document.getElementById(a.dataset.info); if(h) h.scrollIntoView({block:'start',behavior:'smooth'}); });
   $$('.modal').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m||e.target.closest('.close')) m.classList.remove('open'); }); });
