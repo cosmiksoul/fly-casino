@@ -265,6 +265,20 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .loop em.back{font-size:12px;color:var(--yellow);white-space:nowrap}
 .loop-cap{font-size:12.5px;color:#f3c7d2;font-weight:800;margin:0 0 14px}
 .note a{color:var(--cyan)}
+abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;border:0}
+.hero code,.ptext code{font-family:ui-monospace,Consolas,monospace;background:rgba(0,0,0,.35);padding:1px 6px;border-radius:6px;color:var(--yellow);font-size:13px}
+.why .w .gl{margin-top:10px;font-size:12.5px;font-weight:900}
+.why .w .gl a{color:var(--cyan);cursor:pointer;text-decoration:none}
+.why .w .gl a:hover{text-decoration:underline}
+.terms{margin-top:34px}
+.terms h3{font-family:'Russo One',sans-serif;font-weight:400;font-size:16px;color:var(--yellow);margin:18px 0 8px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px 18px}
+.gloss div{background:rgba(0,0,0,.22);border-radius:12px;padding:10px 12px}
+.gloss dt{font-family:'Russo One',sans-serif;color:var(--yellow);font-weight:400;font-size:13px;margin-bottom:3px}
+.gloss dd{margin:0;font-size:13px;color:#eadfff;line-height:1.45;font-weight:700}
+.gloss code{font-family:ui-monospace,Consolas,monospace;background:rgba(0,0,0,.35);padding:1px 5px;border-radius:5px;color:var(--yellow);font-size:11.5px}
+.src{font-size:12.5px;color:var(--muted);line-height:1.55;font-weight:700;padding-left:18px;margin:0}
+.src li{margin-bottom:4px}
 @media (max-width:900px){
   .engine-row{flex-direction:column}.edemo{flex:none;width:100%}
   #home{padding:14px 14px 50px}
@@ -277,7 +291,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   .stage{left:10px;right:10px;bottom:48%;padding-top:2vh}
   #s-gacha{padding:0;justify-content:flex-end;align-items:flex-end}
   .mult{font-size:15vw}
-  .foot{display:none}
+  .foot{flex-wrap:wrap;gap:6px 10px;padding:8px 12px;font-size:11px}#irony{display:none}.rtpseg button{padding:3px 6px;font-size:10px}
 }
 </style>
 <script type="importmap">
@@ -312,67 +326,91 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
     <section id="home">
       <div class="hero">
         <h1>МУХА<b>КАЗИК</b> — азартные игры для дрозофилы</h1>
-        <p>Маленькая <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">оцифрованная муха</a> попала в маленькое цифровое казино и пошла тратить свои маленькие цифровые нейроны в азартных играх. Настоящих денег у неё нет, но <b class="risk">она серьёзно рискует проиграть всё, что у неё есть</b>.</p>
-        <p>Если отставить шутки — это учебный проект. Мы обсуждали с коллегой, что было бы неплохо на волне виральности разговоров про муху собрать тематический слот. И мне стало интересно: насколько тяжело собрать с нуля азартную игру и как вообще это работает. Ставим ненастоящую валюту «нейроны», <b>а вот вероятности — настоящие.</b> Каждая игра показывает свой RTP, волатильность и формулу, а «📈 Сессия» рисует, как тает баланс.</p>
+        <p>Маленькая <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">оцифрованная муха</a> — та самая, которую научили играть в&nbsp;Doom, — попала в маленькое цифровое казино и пошла тратить свои маленькие цифровые нейроны на азартные игры. Настоящих денег у неё нет, но <b class="risk">она серьёзно рискует проиграть всё, что у неё есть</b>.</p>
+        <p>Если без шуток — это учебный проект. Мы с коллегой решили: раз все обсуждают муху, которая играет в Doom, ей нужен свой слот. А мне стало интересно, насколько тяжело собрать азартную игру с нуля и как она устроена. Спойлер: математика любой азартной игры — одна строка, <code>×&nbsp;=&nbsp;RTP&nbsp;/&nbsp;P</code>. Всё остальное — обёртка, и вся работа уходит на неё. Ставим ненастоящую валюту «нейроны», <b>а вот вероятности — настоящие.</b> Каждая игра показывает свой <abbr class="t" title="Return to player — доля ставок, которая в среднем возвращается игрокам. RTP 95% = в среднем минус 5% с каждой ставки">RTP</abbr>, <abbr class="t" title="Разброс результатов вокруг среднего: низкая — часто и помалу, высокая — редко и помногу. На среднее не влияет">волатильность</abbr> и формулу, а «📈&nbsp;Сессия» рисует, как тает баланс.</p>
       </div>
       <div class="gcards">
-        <button class="gh" data-game="mines"><div class="thumb" id="thumb-mines"></div><div class="gt"><b>🩴 Тапок</b><span>Mines</span></div><p>Муха прыгает по клеткам стола: под каждой вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь числом тапков · <a data-info="info-mines">формула</a></div></button>
-        <button class="gh" data-game="crash"><div class="thumb" id="thumb-crash"></div><div class="gt"><b>🏓 Мухобойка</b><span>Crash · Aviator</span></div><p>Муха летит к солнцу, множитель растёт. Забери нейроны до того, как прилетит мухобойка. Долетит до солнца — ×100.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора · <a data-info="info-crash">формула</a></div></button>
-        <button class="gh" data-game="gacha"><div class="thumb" id="thumb-gacha"></div><div class="gt"><b>🎰 Мухогача</b><span>Гачапон · лутбокс</span></div><p>Капсулы с мухами от комара (×0) до золотой и бриллиантовой (×25). Гарант, коллекция, ×10.</p><div class="gm"><i class="hi"></i>RTP ≈ 97% · волатильность высокая · <a data-info="info-gacha">формула</a></div></button>
-        <button class="gh" data-game="race"><div class="thumb" id="thumb-race"></div><div class="gt"><b>🏁 Гонки</b><span>Ставки на скачки</span></div><p>Шесть мух трёх классов летят круг по столу. Первая на финише получает дихлофос. Если она твоя — выигрыш.</p><div class="gm"><i class="mid"></i>RTP 97% · от надёжной (×3) до авантюры (×40) · <a data-info="info-race">формула</a></div></button>
-        <button class="gh" data-game="goose"><div class="thumb" id="thumb-goose"></div><div class="gt"><b>🦆 Крути гуся</b><span>Crash</span></div><p>Рука раскручивает гуся за шею, каждый оборот ×1.25. Забери до того, как шея скажет «кря».</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора · <a data-info="info-goose">формула</a></div></button>
+        <button class="gh" data-game="mines"><div class="thumb" id="thumb-mines"></div><div class="gt"><b>🩴 Тапок</b><span>Mines</span></div><p>Муха прыгает по клеткам стола: под каждой вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p><div class="gm"><i class="you"></i>RTP&nbsp;95% · волатильность задаёшь числом тапков · <a data-info="info-mines">формула</a></div></button>
+        <button class="gh" data-game="crash"><div class="thumb" id="thumb-crash"></div><div class="gt"><b>🏓 Мухобойка</b><span>Crash · Aviator</span></div><p>Муха летит к солнцу, множитель растёт. Забери нейроны до того, как прилетит мухобойка. Долетит до солнца — ×100.</p><div class="gm"><i class="you"></i>RTP&nbsp;95% · волатильность задаёшь моментом забора · <a data-info="info-crash">формула</a></div></button>
+        <button class="gh" data-game="gacha"><div class="thumb" id="thumb-gacha"></div><div class="gt"><b>🎰 Мухогача</b><span>Гачапон · лутбокс</span></div><p>Капсулы с мухами от комара (×0) до бриллиантовой (×25). Редкая — не позже 40-й капсулы, полная коллекция — бонус.</p><div class="gm"><i class="hi"></i>RTP&nbsp;≈&nbsp;95% · волатильность высокая · <a data-info="info-gacha">формула</a></div></button>
+        <button class="gh" data-game="race"><div class="thumb" id="thumb-race"></div><div class="gt"><b>🏁 Гонки</b><span>Ставки на скачки</span></div><p>Шесть мух трёх классов летят круг по столу. Первая на финише получает дихлофос. Если она твоя — выигрыш.</p><div class="gm"><i class="mid"></i>RTP&nbsp;95% · от надёжной (×3) до авантюры (×20–45) · <a data-info="info-race">формула</a></div></button>
+        <button class="gh" data-game="goose"><div class="thumb" id="thumb-goose"></div><div class="gt"><b>🦆 Крути гуся</b><span>Crash</span></div><p>Рука раскручивает гуся за шею, каждый оборот ×1.25. Забери до того, как шея скажет «кря».</p><div class="gm"><i class="you"></i>RTP&nbsp;95% · волатильность задаёшь моментом забора · <a data-info="info-goose">формула</a></div></button>
       </div>
       <div class="why">
         <h2>Чем это отличается от игр, в которые вы играли</h2>
-        <p class="lead">В Doom, Mario и даже в три-в-ряд результат зависит от того, что вы делаете. Здесь — нет.</p>
+        <p class="lead">В <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">Doom</a>, Mario и даже в три в ряд результат зависит от того, что вы делаете. Здесь — нет.</p>
         <div class="engine">
           <h3>Как устроена любая азартная игра</h3>
           <div class="skins">🩴 Тапок · 🏓 Мухобойка · 🎰 Мухогача · 🏁 Гонки · 🦆 Гусь · 🎰 слот · 📦 лутбокс · ✈️ краш<span>дизайн и контент — меняются</span></div>
           <div class="pipe">
             <div class="st"><i>1</i><b>Дизайн</b><p>Муха, гусь, капсула, барабан, лошадь — обёртка. Решает, как долго и красиво вам покажут результат. На сам результат не влияет.</p></div><em>→</em>
-            <div class="st"><i>2</i><b>Ставка</b><p>Вы всегда делаете ставку перед расчётом события. Это единственное ваше действие, и оно влияет только на потенциальный размер проигрыша или выигрыша.</p></div><em>→</em>
-            <div class="st"><i>3</i><b>Генератор случайных чисел</b><p>Выдаёт число <code>U</code> от 0 до 1. Здесь <code>crypto.getRandomValues</code>, в казино сертифицированный ГСЧ. Принцип тот же.</p></div><em>→</em>
-            <div class="st"><i>4</i><b>Шансы и выплаты</b><p>Вероятности исходов заданы заранее, а выплаты посчитаны так, чтобы в среднем вернуть RTP: <code>× = RTP / P</code>. Здесь 97%, бывает 85%, бывает 40%.</p></div><em>→</em>
+            <div class="st"><i>2</i><b>Ставка</b><p>Вы всегда делаете ставку до расчёта события. Ставка и момент забора — всё, что вы решаете. Оба решения меняют размер выигрыша, но не среднее.</p></div><em>→</em>
+            <div class="st"><i>3</i><b>Генератор случайных чисел</b><p>Выдаёт число <code>U</code> от 0 до 1. Здесь <code>crypto.getRandomValues</code>, в казино сертифицированный <abbr class="t" title="Генератор случайных чисел">ГСЧ</abbr>. Принцип тот же.</p></div><em>→</em>
+            <div class="st"><i>4</i><b>Шансы и выплаты</b><p>Вероятности исходов заданы заранее, а выплаты посчитаны так, чтобы в среднем вернуть RTP: <code>×&nbsp;=&nbsp;RTP&nbsp;/&nbsp;P</code>. Здесь 95%; у онлайн-слотов обычно 94–97%, у лотерей — около 50%.</p></div><em>→</em>
             <div class="st"><i>5</i><b>Проверка</b><p>Число сравнивают с порогом: попало — выиграли, нет — нет. Муха ещё не взлетела, а результат уже известен.</p></div><em>→</em>
-            <div class="st"><i>6</i><b>Выплата или ноль</b><p>И кнопка «ещё раз». Между раундами анимация, звук, конфетти: они занимают время, пока вы не ушли.</p></div><em class="loop">↻ ещё раз</em>
+            <div class="st"><i>6</i><b>Выплата или ноль</b><p>И кнопка «ещё раз». Анимация, звук и конфетти между раундами заполняют паузу, в которую вы могли бы уйти.</p></div><em class="loop">↻ ещё раз</em>
           </div>
           <div class="skins bottom"><span>движок — один и тот же: генератор → вероятность → проверка</span></div>
           <div class="engine-row">
-            <p class="engine-text">Тапок, мухобойка, гача, гонки и гусь — пять разных картинок поверх одной схемы: число из генератора, таблица вероятностей, сравнение с порогом, выплата. Слот, лутбокс и краш-игра устроены точно так же. Меняется контент, не меняется генератор, расчёт вероятности и проверка. Поэтому «понять игру» здесь означает понять таблицу выплат, а не научиться играть.<br><br>Справа — весь движок целиком: раз в секунду генератор бросает число от 0 до 1. Попало ниже порога P — выплата <code>RTP / P</code>, нет — ноль. Счётчик внизу сходится к RTP сам, без всякой стратегии.</p>
+            <p class="engine-text">Тапок, мухобойка, гача, гонки и гусь — пять разных картинок поверх одной схемы: число из генератора, таблица вероятностей, сравнение с порогом, выплата. Слот, лутбокс и краш-игра устроены точно так же. Меняется контент, а генератор, расчёт вероятностей и проверка остаются прежними. Поэтому «понять игру» здесь означает понять таблицу выплат, а не научиться играть.<br><br>Рядом — весь движок целиком: раз в секунду генератор бросает число от 0 до 1. Попало ниже порога P — выплата <code>RTP&nbsp;/&nbsp;P</code>, нет — ноль. Счётчик внизу сходится к RTP сам, без всякой стратегии.</p>
             <div class="edemo"><canvas id="edemo" width="680" height="300"></canvas><div class="edemo-cap">генератор → порог → выплата · показан один бросок в секунду, в счётчик идут 30</div></div>
           </div>
         </div>
       </div>
       <div class="why patterns" id="patterns">
         <h2>Механики и паттерны дизайна в азартных играх</h2>
-        <p class="lead">Сама по себе игра должна быть простой: одна кнопка, одно правило, пара секунд на раунд. Порог входа минимальный — объяснять нечего, учиться нечему. Всё остальное дизайн тратит на удержание внимания.</p>
-        <p class="ptext">Основной приём — короткий цикл с непредсказуемой наградой. Раунд длится секунды, следующий начинается одним кликом, а выигрыш приходит нерегулярно: это вариативное подкрепление, самая стойкая из известных схем закрепления поведения. Крупные множители всегда на виду — ×100, ×25, «до солнца», — хотя вероятность их увидеть измеряется долями процента: якорь задаёт ожидания. Автоигра и автозабор убирают паузы, в которых можно передумать.</p>
-        <p class="ptext">Вторая группа приёмов — работа с восприятием результата. Общий итог за сессию не показывают, зато каждую выплату показывают крупно. Проигрыш проходит тихо, выигрыш — громко и долго. Серии, коллекции, гаранты и «до редкой осталось 25» превращают случайность в прогресс, которого нет. Выбор момента, мухи или числа тапков создаёт ощущение контроля, не меняя ожидания. Ниже — эти приёмы по отдельности; почти все они есть и в этом демо.</p>
+        <p class="lead">Сама по себе игра устроена просто: одна кнопка, одно правило, пара секунд на раунд. Порог входа минимальный — объяснять нечего, учиться нечему. Всё остальное дизайн тратит на удержание внимания.</p>
+        <p class="ptext">Основной приём — короткий цикл с непредсказуемой наградой. Раунд длится секунды, следующий начинается одним кликом, а выигрыш приходит нерегулярно — это <abbr class="t" title="Награда приходит непредсказуемо; такое поведение дольше не угасает, чем при регулярной награде">вариативное подкрепление</abbr>, о нём ниже, в петле закрепления. Крупные множители всегда на виду — ×100, ×25, «до солнца», — хотя вероятность их увидеть измеряется долями процента: <abbr class="t" title="Первое заметное число задаёт масштаб ожиданий">якорь</abbr> задаёт ожидания. Автоигра и автозабор убирают паузы, в которых можно передумать.</p>
+        <p class="ptext">Вторая группа приёмов — работа с восприятием результата. Каждую выплату показывают крупно; серии, коллекции, гаранты и «до редкой осталось 25» превращают случайность в прогресс, которого нет; выбор момента, мухи или числа тапков создаёт ощущение контроля, не меняя среднего. Ниже — эти приёмы по отдельности. Почти все они есть и в этом демо, у каждой карточки ссылка туда, где это видно.</p>
         <div class="whyg">
-          <div class="w"><b>Чистая вероятность</b><p>Исход каждого раунда определяет генератор случайных чисел до того, как вы увидите анимацию. Муха прыгает, гусь крутится, капсула падает — это кино про уже принятое решение. Навык, реакция и «чувство момента» не влияют ни на что.</p></div>
-          <div class="w"><b>Отрицательное матожидание</b><p>RTP 97% означает: с каждой тысячи поставленных нейронов в среднем уходит 30. Не иногда, а в среднем всегда. За тысячу раундов — тридцать тысяч. Переключатель RTP внизу показывает, как это выглядит при 70% и 40%: быстрее, но принцип тот же.</p></div>
-          <div class="w"><b>Волатильность — не шанс, а качели</b><p>Фаворит в гонках и авантюра имеют одинаковое ожидание, но фаворит платит мало и часто, авантюра — много и редко. Число тапков, момент забора, цена капсулы меняют размах качелей, не их центр. Центр всегда ниже нуля.</p></div>
-          <div class="w"><b>Стратегии выигрыша нет</b><p>Когда забирать, сколько тапков, какую муху выбрать, удваивать ли после проигрыша — любая стратегия на длинной дистанции даёт ровно RTP. Проверьте сами: виртуальный прогон в «📈 Сессии» гоняет 10 000 раундов любой стратегией и сходится к теории.</p></div>
-          <div class="w"><b>Ощущение контроля — часть дизайна</b><p>«Почти долетела», «ещё один оборот», «следующая капсула точно редкая» — это не информация о будущем, это анимация и дофамин. Вероятность не помнит прошлые раунды. Баланс помнит.</p></div>
-          <div class="w"><b>Аудиовизуальное подкрепление</b><p>Каждый выигрыш — конфетти, звук, большие зелёные цифры. Проигрыш — тихо и быстро. Выплата меньше ставки тоже празднуется: капсула с обычной мухой при цене 1 000 показывает «+500» зелёным, хотя это минус 500. Слоты называют это «проигрыш, замаскированный под выигрыш». Мы честно сделали так же.</p></div>
-          <div class="w"><b>«Почти выиграл»</b><p>Тапок оказался на соседней клетке, муха сломалась через секунду после забора, а после выхода написано «мухобойка ждала на ×12». Near miss — отдельная механика: мозг считает «почти» за «близко», хотя у случайности нет понятия «близко». Мы её оставили, чтобы было видно, как она работает.</p></div>
-          <div class="w"><b>Додеп в один клик</b><p>Кнопка ☕ стоит рядом с балансом не случайно: пополнение должно быть быстрее, чем мысль остановиться. В настоящих приложениях рядом ещё и бонус на депозит. Здесь кофе бесплатный, а на графике сессии каждый додеп отмечен — видно, сколько «бесплатных» нейронов ушло.</p></div>
+          <div class="w"><b>Погоня за проигрышем</b><p>Проигрыш ощущается как долг, который нужно вернуть «вот сейчас». Ставка растёт, чтобы отыграться одним раундом, хотя следующий раунд устроен ровно так же, как предыдущий, и ничего не помнит. Это центральный признак зависимости — и именно так проигрыши превращаются в долги.</p><div class="gl"><a data-sess="1">смотреть в 📈&nbsp;Сессии →</a></div></div>
+          <div class="w"><b>Отрицательное матожидание</b><p>RTP&nbsp;95% означает: с каждой тысячи поставленных нейронов в среднем уходит 50. За тысячу раундов по 1&nbsp;000 — пятьдесят тысяч, почти треть мушиного мозга. При ставке 1&nbsp;000 стартовые 166&nbsp;700 нейронов в среднем кончатся за ~3&nbsp;300 раундов, при RTP&nbsp;70% — за ~560. Переключатель RTP внизу показывает оба варианта.</p><div class="gl"><a data-game="crash">→ Мухобойка</a></div></div>
+          <div class="w"><b>Волатильность — не шанс, а качели</b><p>Фаворит в гонках и авантюра имеют одинаковое ожидание, но фаворит платит мало и часто, авантюра — много и редко. Число тапков, момент забора, цена капсулы меняют размах качелей, не их центр. Центр всегда ниже нуля.</p><div class="gl"><a data-game="race">→ Гонки</a></div></div>
+          <div class="w"><b>Стратегии выигрыша нет</b><p>Когда забирать, сколько тапков, какую муху выбрать — любая стратегия на длинной дистанции сходится к RTP. Проверьте сами: виртуальный прогон в «📈&nbsp;Сессии» гоняет 10&nbsp;000 раундов выбранной стратегией и сходится к теории.</p><div class="gl"><a data-sess="1">смотреть в 📈&nbsp;Сессии →</a></div></div>
+          <div class="w"><b>Ощущение контроля — часть дизайна</b><p>Выбрать «счастливую» клетку, нажать «в правильный момент», сменить муху после серии неудач — действия, которые ощущаются как влияние на исход. На исход они не влияют, зато делают проигрыш «своей ошибкой», а значит исправимой — ещё одним раундом.</p><div class="gl"><a data-game="mines">→ Тапок</a></div></div>
+          <div class="w"><b>Аудиовизуальное подкрепление</b><p>Каждый выигрыш — конфетти, звук, большие зелёные цифры. Проигрыш — тихо и быстро. Выплата меньше ставки тоже празднуется: капсула с обычной мухой при цене 1&nbsp;000 показывает «+500» зелёным, хотя это минус 500. Исследователи называют это «проигрыш, замаскированный под выигрыш». Мы честно сделали так же.</p><div class="gl"><a data-game="gacha">→ Мухогача</a></div></div>
+          <div class="w"><b>«Почти выиграл»</b><p>Тапок оказался на соседней клетке, шея гуся сломалась через секунду после забора, а после выхода написано «мухобойка ждала на ×12». <abbr class="t" title="«Почти выигрыш»: исход, похожий на выигрыш, но им не являющийся">Near miss</abbr> — отдельная механика: мозг засчитывает «почти» как шаг к выигрышу, хотя у случайности нет шагов. Мы её оставили, чтобы было видно, как она работает.</p><div class="gl"><a data-game="crash">→ Мухобойка</a></div></div>
+          <div class="w"><b>Додеп в один клик</b><p>Кнопка ☕ стоит рядом с балансом не случайно: пополнение должно быть быстрее, чем мысль остановиться. В настоящих приложениях рядом ещё и бонус на депозит. Здесь кофе бесплатный, а на графике сессии каждый додеп отмечен.</p><div class="gl"><a data-sess="1">смотреть в 📈&nbsp;Сессии →</a></div></div>
         </div>
       </div>
       <div class="harm" id="harm">
         <h2>Где это становится проблемой</h2>
-        <p><b>Деньги.</b> У любой азартной игры отрицательное математическое ожидание: при RTP 97% каждая поставленная тысяча в среднем возвращает 970. Это не риск, а свойство. Чем дольше и чаще игра, тем ближе результат к среднему, а среднее всегда меньше ставки. На длинной дистанции выиграть невозможно — можно только медленнее проигрывать.</p>
-        <p><b>Зависимость.</b> У части людей есть предрасположенность: особенности дофаминовой системы, импульсивность, тяга к острым ощущениям, стресс или депрессия, которые хочется заглушить. Дизайн азартных игр не создаёт эту предрасположенность, но целенаправленно её усиливает: эмоциональные качели от «почти» к «есть», ожидание результата, которое само по себе выделяет дофамин, и непредсказуемая награда закрепляют поведение быстрее любой регулярной. Так замыкается петля:</p>
+        <p><b>Деньги.</b> У любой игры против казино отрицательное математическое ожидание, поэтому на длинной дистанции она может только забирать. Опасность не в самом минусе, а в том, что он редко остаётся маленьким: проигрыш хочется вернуть сразу, ставка растёт, «последний раунд» повторяется, и деньги, которых не было, берутся в долг. Так за вечер исчезают не 5%, а зарплата.</p>
+        <p><b>Зависимость.</b> У части людей есть предрасположенность: особенности дофаминовой системы, импульсивность, тяга к острым ощущениям, стресс или депрессия, которые хочется заглушить. Дизайн азартных игр не создаёт эту предрасположенность, но усиливает её: эмоциональные качели от «почти» к «есть» и ожидание результата, которое само по себе выделяет дофамин, замыкают петлю:</p>
         <div class="loop">
           <div class="n"><b>Триггер</b>скука, стресс, уведомление, «бонус на депозит»</div><em>→</em>
           <div class="n"><b>Ставка</b>короткая, в один клик, деньги уже не ощущаются как деньги</div><em>→</em>
-          <div class="n"><b>Ожидание</b>дофамин растёт до результата, а не после — сам процесс уже награда</div><em>→</em>
-          <div class="n"><b>Результат</b>выигрыш — громкое подкрепление; проигрыш — «почти», которое хочется доиграть</div><em>→</em>
-          <div class="n"><b>Ещё раз</b>пауза убрана дизайном: следующий раунд ближе, чем мысль остановиться</div><em class="back">↺ к триггеру</em>
+          <div class="n"><b>Ожидание</b>дофамин растёт до результата, а не только после — сам процесс уже награда</div><em>→</em>
+          <div class="n"><b>Результат</b>выигрыш — громкое подкрепление; проигрыш — «почти», которое хочется отыграть</div><em>→</em>
+          <div class="n"><b>Ещё раз</b>пауза убрана дизайном: следующий раунд начинается раньше, чем успеваешь передумать</div><em class="back">↺ к триггеру</em>
         </div>
-        <p class="loop-cap">Вариативное подкрепление: когда награда непредсказуема, поведение закрепляется сильнее и держится дольше, чем при регулярной награде. Та же схема работает в ленте соцсетей и в лутбоксах.</p>
-        <p class="attn"><b>Во время игры в демки</b> обратите внимание на блок «📈 Сессия» внизу экрана: там видно, сколько раундов сыграно, сколько поставлено, сколько вернулось и сколько раз нажат кофе. Это ровно та информация, которую настоящее казино не показывает. <a data-sess="1">Открыть сессию</a>.</p>
+        <p class="loop-cap">Вариативное подкрепление: награда непредсказуема, поэтому поведение закрепляется прочнее, чем при регулярной награде, и дольше не угасает. Та же схема работает в ленте соцсетей и в лутбоксах.</p>
+        <p class="attn"><b>Во время игры в демки</b> обратите внимание на блок «📈&nbsp;Сессия» — кнопка внизу экрана и мини-график рядом с балансом: сколько раундов сыграно, сколько поставлено, сколько вернулось и сколько раз нажат кофе. Настоящее казино эту сводку не показывает. <a data-sess="1">Открыть сессию</a>.</p>
         <p class="help">Если вы замечаете у себя признаки проблемы — играете дольше, чем собирались, ставите больше, чтобы отыграться, скрываете игру от близких, думаете о ней вне игры, — обратитесь за помощью к специалистам: психотерапевту или в службу помощи при игровой зависимости. Это лечится, и чем раньше, тем проще.</p>
+      </div>
+      <div class="why terms" id="terms">
+        <h2>Термины и источники</h2>
+        <div class="gloss">
+          <div><dt>RTP</dt><dd>Return to player — доля ставок, которая в среднем возвращается игрокам на длинной дистанции. RTP&nbsp;95% = в среднем минус 5% с каждой ставки.</dd></div>
+          <div><dt>Матожидание</dt><dd>Средний результат одной ставки при бесконечном повторении. У игр против казино оно отрицательное: RTP минус 100%.</dd></div>
+          <div><dt>Волатильность</dt><dd>Разброс результатов вокруг среднего: низкая — часто и помалу, высокая — редко и помногу. На среднее не влияет.</dd></div>
+          <div><dt>ГСЧ</dt><dd>Генератор случайных чисел. Здесь — <code>crypto.getRandomValues</code> браузера; в лицензированных казино — сертифицированный генератор.</dd></div>
+          <div><dt>Краш</dt><dd>Жанр: множитель растёт, пока не «разобьётся», забрать нужно раньше. Aviator; здесь — Мухобойка и Гусь.</dd></div>
+          <div><dt>Гачапон</dt><dd>Японский автомат с капсулами. В играх — лутбокс: случайная награда по таблице редкости, часто с гарантом.</dd></div>
+          <div><dt>Якорь</dt><dd>Первое заметное число задаёт масштаб ожиданий: «×100» на экране делает ×2 скромным, хотя ×100 почти не бывает.</dd></div>
+          <div><dt>Near miss</dt><dd>«Почти выигрыш»: исход, похожий на выигрыш, но им не являющийся. Усиливает желание продолжить.</dd></div>
+          <div><dt>Вариативное подкрепление</dt><dd>Награда приходит непредсказуемо. Поведение при таком режиме дольше не угасает, чем при регулярной награде.</dd></div>
+          <div><dt>Додеп</dt><dd>Повторное пополнение баланса после проигрыша. Здесь — кнопка ☕.</dd></div>
+        </div>
+        <h3>Источники</h3>
+        <ul class="src">
+          <li>Dixon M. J., Harrigan K. A., Sandhu R., Collins K., Fugelsang J. A. Losses disguised as wins in modern multi-line video slot machines. <i>Addiction</i>, 2010.</li>
+          <li>Reid R. L. The psychology of the near miss. <i>Journal of Gambling Behavior</i>, 1986.</li>
+          <li>Ferster C. B., Skinner B. F. <i>Schedules of Reinforcement</i>, 1957 — режимы подкрепления и устойчивость к угасанию.</li>
+          <li>Griffiths M. D. Fruit machine gambling: the importance of structural characteristics. <i>Journal of Gambling Studies</i>, 1993.</li>
+          <li>Schüll N. D. <i>Addiction by Design: Machine Gambling in Las Vegas</i>. Princeton University Press, 2012.</li>
+          <li>Типичный RTP онлайн-слотов 94–97% и возврат лотерей около половины сборов — публичные данные операторов и регуляторов; конкретные значения смотрите в правилах каждой игры.</li>
+        </ul>
       </div>
       <p class="homefoot">Вся математика — в кнопке «ⓘ математика» внизу. Случайность: <code>crypto.getRandomValues</code>. Код открыт: <a href="https://github.com/cosmiksoul/fly-casino" target="_blank" rel="noopener">github.com/cosmiksoul/fly-casino</a>. Откуда муха: эксплейнер <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">«Муха в машине»</a>.</p>
     </section>
@@ -394,7 +432,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
         <div><div class="label">след. клетка</div><div class="big" id="mines-next">×1.10</div></div>
         <div><div class="label">открыто</div><div class="big" id="mines-open">0/22</div></div>
       </div>
-      <div class="meta"><span>RTP <b id="mines-rtp">97%</b></span><span>волатильность <b id="mines-vol">низкая</b></span></div>
+      <div class="meta"><span>RTP <b id="mines-rtp">95%</b></span><span>волатильность <b id="mines-vol">низкая</b></span></div>
       <div class="hint" id="mines-hint"></div>
       <button class="btn" id="mines-btn">Ставить 1 000</button>
       <div><div class="label">последние раунды</div><div class="hist" id="mines-hist"></div></div>
@@ -410,7 +448,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
         <div class="quick"><button data-op="half">½</button><button data-op="double">×2</button><button data-op="max">max</button></div>
       </div>
       <div class="row"><label class="chk"><input type="checkbox" id="crash-auto"> автозабор на</label><div class="bet mini"><input type="text" id="crash-auto-x" value="2.00"></div></div>
-      <div class="meta"><span>RTP <b id="crash-rtp">97%</b></span><span>волатильность <b id="crash-vol">твоя</b></span></div>
+      <div class="meta"><span>RTP <b id="crash-rtp">95%</b></span><span>волатильность <b id="crash-vol">твоя</b></span></div>
       <div class="hint" id="crash-hint"></div>
       <button class="btn" id="crash-btn">Взлёт · 1 000</button>
       <div><div class="label">где ждала мухобойка</div><div class="hist" id="crash-hist"></div></div>
@@ -427,7 +465,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
       <div class="ph"><h2>🎰 Мухогача</h2><p>Автомат с капсулами. В каждой — муха: от обычной кухонной до золотой и бриллиантовой. Или комар. Комар — это не муха.</p></div>
       <div><div class="label">цена капсулы, нейронов</div><div class="seg" id="gacha-price"><button data-v="500">500</button><button data-v="1000" class="active">1 000</button><button data-v="5000">5 000</button></div></div>
       <div class="two"><button class="btn pink" id="gacha-1">Крутить</button><button class="btn" id="gacha-10">×10</button></div>
-      <div class="meta"><span>RTP <b id="gacha-rtp">≈97%</b></span><span>волатильность <b id="gacha-vol">высокая</b></span></div>
+      <div class="meta"><span>RTP <b id="gacha-rtp">≈95%</b></span><span>волатильность <b id="gacha-vol">высокая</b></span></div>
       <div class="hint" id="gacha-hint"></div>
       <div class="row"><span>до гаранта редкой+</span><b id="gacha-pity">40</b></div>
       <div><div class="label">коллекция мух <b id="gacha-collcount">0/7</b></div><div class="tiers" id="gacha-tiers"></div></div>
@@ -442,7 +480,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
         <div class="bet"><button data-op="-">−</button><input type="text" inputmode="numeric" value="1000"><button data-op="+">+</button></div>
         <div class="quick"><button data-op="half">½</button><button data-op="double">×2</button><button data-op="max">max</button></div>
       </div>
-      <div class="meta"><span>RTP <b id="race-rtp">97%</b></span><span>волатильность <b id="race-vol">—</b></span></div>
+      <div class="meta"><span>RTP <b id="race-rtp">95%</b></span><span>волатильность <b id="race-vol">—</b></span></div>
       <div class="hint" id="race-hint"></div>
       <div class="flies" id="race-flies"></div>
       <button class="btn" id="race-btn">Выбери муху</button>
@@ -459,7 +497,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
         <div class="quick"><button data-op="half">½</button><button data-op="double">×2</button><button data-op="max">max</button></div>
       </div>
       <div class="row"><label class="chk"><input type="checkbox" id="goose-auto"> автозабор на</label><div class="bet mini"><input type="text" id="goose-auto-x" value="2.00"></div></div>
-      <div class="meta"><span>RTP <b id="goose-rtp">97%</b></span><span>волатильность <b id="goose-vol">решаешь ты</b></span></div>
+      <div class="meta"><span>RTP <b id="goose-rtp">95%</b></span><span>волатильность <b id="goose-vol">решаешь ты</b></span></div>
       <div class="hint" id="goose-hint"></div>
       <button class="btn" id="goose-btn">Крутить · 1 000</button>
       <div><div class="label">где ломалась шея</div><div class="hist" id="goose-hist"></div></div>
@@ -476,7 +514,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   <footer class="foot">
     <span id="irony">166 700 нейронов. Ни одного, отвечающего за самоконтроль.</span>
     <span class="spacer"></span>
-    <span class="rtpseg" id="rtp-seg"><button data-v="0.99">RTP 99%</button><button data-v="0.97" class="active">97%</button><button data-v="0.95">95%</button><button data-v="0.9">90%</button><button data-v="0.8" class="bad">80%</button><button data-v="0.7" class="bad">70%</button><button data-v="0.4" class="bad">40%</button></span>
+    <span class="rtpseg" id="rtp-seg"><button data-v="0.99">RTP 99%</button><button data-v="0.97">97%</button><button data-v="0.95" class="active">95%</button><button data-v="0.9">90%</button><button data-v="0.8" class="bad">80%</button><button data-v="0.7" class="bad">70%</button><button data-v="0.4" class="bad">40%</button></span>
     <button class="link" id="sess-btn">📈 сессия</button>
     <button class="link" id="info-btn">ⓘ математика</button>
     <button class="link" id="sound-btn">🔊 звук</button>
@@ -488,12 +526,12 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   <h2>Как это считается</h2>
   <p>Все три механики честные — ну, как казино. Случайность: <code>crypto.getRandomValues</code>. Никакого provably fair: это демо, и это муха.</p>
   <h3 id="info-mines">🩴 Тапок (mines)</h3>
-  <p>25 клеток, <code>m</code> тапков. После <code>k</code> безопасных клеток множитель: <code>×(k) = 0.97 · Π<sub>i=0..k−1</sub> (25−i)/(25−m−i)</code>. RTP 97% при любой стратегии — забрать после первой клетки или идти до конца.</p>
+  <p>25 клеток, <code>m</code> тапков. После <code>k</code> безопасных клеток множитель: <code>×(k) = 0.97 · Π<sub>i=0..k−1</sub> (25−i)/(25−m−i)</code>. RTP равен выбранному в переключателе (по умолчанию 95%) при любой стратегии — забрать после первой клетки или идти до конца.</p>
   <h3 id="info-crash">🏓 Мухобойка (crash)</h3>
-  <p>Точка мухобойки: <code>crash = max(1, RTP / U)</code>, где <code>U</code> — равномерное на (0, 1]. Значит <code>P(crash ≥ x) = RTP / x</code>: при RTP 97% в 3% раундов мухобойка ждёт прямо на старте, до ×2 долетает 48,5% мух, до ×10 — 9,7%, до солнца (×100) — 0,97%. Множитель растёт как <code>2^(t / 5 с)</code>.</p>
+  <p>Точка мухобойки: <code>crash = max(1, RTP / U)</code>, где <code>U</code> — равномерное на (0, 1]. Значит <code>P(crash ≥ x) = RTP / x</code>: при RTP 95% в 5% раундов мухобойка ждёт прямо на старте, до ×2 долетает 47.5% мух, до ×10 — 9.5%, до солнца (×100) — 0.95%. Множитель растёт как <code>2^(t / 5 с)</code>.</p>
   <h3 id="info-gacha">🎰 Мухогача</h3>
   <table><thead><tr><th>Капсула</th><th>Шанс</th><th>Множитель</th></tr></thead><tbody id="info-tiers"></tbody></table>
-  <p>Базовый RTP 92,4% при RTP 97%. Гарант: если 39 капсул подряд без «редкой+» (неоновая, золотая, бриллиантовая), сороковая точно редкая+. ×10 гарантирует хотя бы дрозофилу. С гарантами RTP ≈ 97–98% (симуляция на 2 млн капсул). Полная коллекция из 7 мух — разовый бонус 25 000.</p>
+  <p>Доля комаров подстраивается под выбранный RTP (по умолчанию 95%). Гарант: если 39 капсул подряд без «редкой+» (неоновая, золотая, бриллиантовая), сороковая точно редкая+. ×10 гарантирует хотя бы дрозофилу. Гаранты добавляют к базовой таблице около 5 пунктов RTP (симуляция на 2 млн капсул). Полная коллекция из 7 мух — разовый бонус 25 000.</p>
   <h3 id="info-race">🏁 Гонки</h3>
   <p>В каждом заезде шесть мух трёх классов: две надёжные (шанс около 30%, ×3), две тёмные лошадки (около 12%, ×7–9) и две авантюры (2–5%, ×20–45). Класс задаёт шанс, статистика (возраст, усталость, вес) рисуется под класс. Шансы нормируются к 100%, множитель всегда <code>× = RTP / P</code>. Порядок финиша разыгрывается по модели Плакетта–Люса (победитель — ровно с вероятностью P), анимация заезда подгоняется под разыгранный результат. Победитель получает дихлофос. Волатильность зависит от выбора: фаворит — низкая, аутсайдер — экстремальная.</p>
   <h3 id="info-goose">🦆 Крути гуся</h3>
@@ -576,7 +614,7 @@ const IRONY=[
   'Победившая муха получает дихлофос. Проигравшая — ещё один заезд.',
   'Дихлофос — единственный честный способ закончить гонку.',
   'Статистика на карточке мухи честнее вашего прогноза.',
-  'RTP 97% значит, что 3% вы платите за анимацию.',
+  'Разница между RTP и 100% — это цена анимации.',
   'Мухи ставят на мух. Люди ставят на мух. Разница только в числе нейронов.',
   'Вероятность не помнит прошлые раунды. В отличие от вашего баланса.',
   'Бриллиантовая муха выпадает раз в 330 капсул. Кофе наливается чаще.',
@@ -614,8 +652,8 @@ const audio={
 const store={key:'muhaslot.v1',load(){ try{ return JSON.parse(localStorage.getItem(this.key)||'null'); }catch(e){ return null; } },save(d){ try{ localStorage.setItem(this.key,JSON.stringify(d)); }catch(e){} }};
 const saved=store.load()||{};
 const stats={rounds:saved.rounds||0};
-const cfg={rtp:[0.4,0.7,0.8,0.9,0.95,0.97,0.99].includes(saved.rtp)?saved.rtp:0.97};
-const pct=r=>(Math.round(r*1000)/10).toLocaleString('ru-RU')+'%';
+const cfg={rtp:[0.4,0.7,0.8,0.9,0.95,0.97,0.99].includes(saved.rtp)?saved.rtp:0.95};
+const pct=r=>(Math.round(r*1000)/10)+'%';
 const volName=cv=>cv<0.7?'низкая':cv<1.6?'средняя':cv<3?'высокая':'экстремальная';
 let mines,crash,gacha,games={},active=null;
 function persist(){ store.save({balance:wallet.balance,coll:gacha?gacha.S.coll:[],pity:gacha?gacha.S.pity:0,bonusPaid:gacha?gacha.S.bonusPaid:false,crashHist:crash?crash.S.hist:[],rounds:stats.rounds,rtp:cfg.rtp}); }
@@ -1526,6 +1564,8 @@ async function init(){
   $$('.modal').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m||e.target.closest('.close')) m.classList.remove('open'); }); });
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-home]'); if(!a) return; $$('.modal').forEach(m=>m.classList.remove('open')); showHome(); if($('#home').classList.contains('active')){ const h=document.getElementById(a.dataset.home); if(h) setTimeout(()=>h.scrollIntoView({block:'start',behavior:'smooth'}),60); } });
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-sess]'); if(!a) return; openSess(); });
+  document.addEventListener('click',e=>{ const a=e.target.closest('a[data-game]'); if(!a) return; audio.resume(); audio.click(); setGame(a.dataset.game); });
+  document.addEventListener('click',e=>{ const a=e.target.closest('abbr.t'); if(!a) return; const t=document.getElementById('terms'); if(t&&$('#home').classList.contains('active')) t.scrollIntoView({block:'start',behavior:'smooth'}); });
   const sess=$('#sess'); let simPts=null;
   const openSess=()=>{ simPts=null; $('#sess-simres').textContent=''; $('#sess-strat').textContent=active&&active.simName?active.simName():'—'; renderSess(); sess.classList.add('open'); };
   $('#sess-btn').addEventListener('click',openSess); $('#spark').addEventListener('click',openSess);
