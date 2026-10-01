@@ -223,6 +223,22 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .homefoot{max-width:1240px;margin:26px auto 0;font-size:12.5px;color:var(--muted);font-weight:800;line-height:1.6}
 .homefoot a{color:var(--cyan)}
 .logo{cursor:pointer}
+.gh .gm a{color:var(--cyan);text-decoration:underline dotted;cursor:pointer}
+.engine{margin:0 0 22px;background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px 18px}
+.engine h3{font-family:'Russo One',sans-serif;font-size:17px;font-weight:400;margin:0 0 10px;color:#fff}
+.skins{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-weight:900;font-size:13px;color:#fff;padding:0 4px 10px;border-bottom:1px dashed rgba(255,255,255,.22);margin-bottom:12px}
+.skins span{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.skins.bottom{border:0;border-top:1px dashed rgba(255,255,255,.22);margin:12px 0 0;padding:10px 4px 0;justify-content:center}
+.skins.bottom span{color:var(--yellow)}
+.pipe{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.st{flex:1 1 160px;background:rgba(255,255,255,.06);border-radius:12px;padding:12px;min-width:0}
+.st i{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--yellow);color:#3a1d00;font-style:normal;font-family:'Russo One',sans-serif;font-size:12px;align-items:center;justify-content:center;margin-bottom:6px}
+.st b{display:block;font-family:'Russo One',sans-serif;font-weight:400;font-size:13.5px;color:#fff;margin-bottom:4px;line-height:1.2}
+.st p{margin:0;font-size:12.5px;line-height:1.4;color:#eadfff;font-weight:700}
+.pipe em{align-self:center;font-style:normal;font-family:'Russo One',sans-serif;color:var(--yellow);font-size:20px}
+.pipe em.loop{font-size:12px;color:var(--pink);white-space:nowrap}
+.engine-text{margin:12px 0 0;font-size:13.5px;line-height:1.5;color:#eadfff;font-weight:700}
+.engine code,.st code{font-family:ui-monospace,Consolas,monospace;background:rgba(0,0,0,.35);padding:1px 6px;border-radius:6px;color:var(--yellow);font-size:12px}
 @media (max-width:900px){
   #home{padding:14px 14px 50px}
   .top{flex-wrap:wrap;gap:10px;padding:10px 12px}
@@ -272,15 +288,29 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
         <p>Учебный проект: пять классических гэмблинг-механик с честной — и по желанию нечестной — математикой, завёрнутых в муху, гуся и дихлофос. <b>Нейроны не настоящие, вероятности настоящие.</b> Каждая игра показывает свой RTP, волатильность и формулу, а «📈 Сессия» рисует, как тает баланс.</p>
       </div>
       <div class="gcards">
-        <button class="gh" data-game="mines"><div class="thumb" id="thumb-mines"></div><div class="gt"><b>🩴 Тапок</b><span>Mines</span></div><p>Муха прыгает по клеткам стола: под каждой вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь числом тапков</div></button>
-        <button class="gh" data-game="crash"><div class="thumb" id="thumb-crash"></div><div class="gt"><b>🏓 Мухобойка</b><span>Crash · Aviator</span></div><p>Муха летит к солнцу, множитель растёт. Забери нейроны до того, как прилетит мухобойка. Долетит до солнца — ×100.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора</div></button>
-        <button class="gh" data-game="gacha"><div class="thumb" id="thumb-gacha"></div><div class="gt"><b>🎰 Мухогача</b><span>Гачапон · лутбокс</span></div><p>Капсулы с мухами от комара (×0) до золотой и бриллиантовой (×25). Гарант, коллекция, ×10.</p><div class="gm"><i class="hi"></i>RTP ≈ 97% · волатильность высокая</div></button>
-        <button class="gh" data-game="race"><div class="thumb" id="thumb-race"></div><div class="gt"><b>🏁 Гонки</b><span>Ставки на скачки</span></div><p>Шесть мух трёх классов летят круг по столу. Первая на финише получает дихлофос. Если она твоя — выигрыш.</p><div class="gm"><i class="mid"></i>RTP 97% · от надёжной (×3) до авантюры (×40)</div></button>
-        <button class="gh" data-game="goose"><div class="thumb" id="thumb-goose"></div><div class="gt"><b>🦆 Крути гуся</b><span>Crash</span></div><p>Рука раскручивает гуся за шею, каждый оборот ×1.25. Забери до того, как шея скажет «кря».</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора</div></button>
+        <button class="gh" data-game="mines"><div class="thumb" id="thumb-mines"></div><div class="gt"><b>🩴 Тапок</b><span>Mines</span></div><p>Муха прыгает по клеткам стола: под каждой вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь числом тапков · <a data-info="info-mines">формула</a></div></button>
+        <button class="gh" data-game="crash"><div class="thumb" id="thumb-crash"></div><div class="gt"><b>🏓 Мухобойка</b><span>Crash · Aviator</span></div><p>Муха летит к солнцу, множитель растёт. Забери нейроны до того, как прилетит мухобойка. Долетит до солнца — ×100.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора · <a data-info="info-crash">формула</a></div></button>
+        <button class="gh" data-game="gacha"><div class="thumb" id="thumb-gacha"></div><div class="gt"><b>🎰 Мухогача</b><span>Гачапон · лутбокс</span></div><p>Капсулы с мухами от комара (×0) до золотой и бриллиантовой (×25). Гарант, коллекция, ×10.</p><div class="gm"><i class="hi"></i>RTP ≈ 97% · волатильность высокая · <a data-info="info-gacha">формула</a></div></button>
+        <button class="gh" data-game="race"><div class="thumb" id="thumb-race"></div><div class="gt"><b>🏁 Гонки</b><span>Ставки на скачки</span></div><p>Шесть мух трёх классов летят круг по столу. Первая на финише получает дихлофос. Если она твоя — выигрыш.</p><div class="gm"><i class="mid"></i>RTP 97% · от надёжной (×3) до авантюры (×40) · <a data-info="info-race">формула</a></div></button>
+        <button class="gh" data-game="goose"><div class="thumb" id="thumb-goose"></div><div class="gt"><b>🦆 Крути гуся</b><span>Crash</span></div><p>Рука раскручивает гуся за шею, каждый оборот ×1.25. Забери до того, как шея скажет «кря».</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь моментом забора · <a data-info="info-goose">формула</a></div></button>
       </div>
       <div class="why">
         <h2>Чем это отличается от игр, в которые вы играли</h2>
         <p class="lead">В Doom, Mario и даже в три-в-ряд результат зависит от того, что вы делаете. Здесь — нет.</p>
+        <div class="engine">
+          <h3>Как устроена любая азартная игра</h3>
+          <div class="skins">🩴 Тапок · 🏓 Мухобойка · 🎰 Мухогача · 🏁 Гонки · 🦆 Гусь · 🎰 слот · 🎡 рулетка · 📦 лутбокс · ✈️ краш · ⚽ ставки<span>дизайн и контент — меняются</span></div>
+          <div class="pipe">
+            <div class="st"><i>1</i><b>Ставка</b><p>Вы отдаёте нейроны вперёд. Это единственное ваше действие, которое влияет на результат — на его размер, не на знак.</p></div><em>→</em>
+            <div class="st"><i>2</i><b>Генератор случайных чисел</b><p>Выдаёт число <code>U</code> от 0 до 1. Здесь <code>crypto.getRandomValues</code>, в казино сертифицированный ГСЧ. Принцип тот же.</p></div><em>→</em>
+            <div class="st"><i>3</i><b>Шансы и выплаты</b><p>Дизайнер задаёт вероятности исходов, а выплаты считает так, чтобы в среднем вернуть RTP: <code>× = RTP / P</code>. Здесь 97%, бывает 85%, бывает 40%.</p></div><em>→</em>
+            <div class="st"><i>4</i><b>Проверка</b><p>Число сравнивают с порогом: попало — выиграли, нет — нет. Муха ещё не взлетела, а результат уже известен.</p></div><em>→</em>
+            <div class="st"><i>5</i><b>Выплата или ноль</b><p>И кнопка «ещё раз». Между раундами анимация, звук, конфетти: они занимают время, пока вы не ушли.</p></div><em class="loop">↻ ещё раз</em>
+          </div>
+          <div class="skins bottom"><span>движок — один и тот же: генератор → вероятность → проверка</span></div>
+          <p class="engine-text">Тапок, мухобойка, гача, гонки и гусь — пять разных картинок поверх одной схемы: число из генератора, таблица вероятностей, сравнение с порогом, выплата. Слот, рулетка, лутбокс, краш-игра и ставки на спорт устроены точно так же. Меняется контент — муха, самолёт, капсула, барабан, лошадь. Не меняется генератор, расчёт вероятности и проверка. Поэтому «понять игру» здесь означает понять таблицу выплат, а не научиться играть.</p>
+          <p class="engine-text">Пример из мухобойки: генератор выдал <code>U = 0.3127</code>, точка мухобойки <code>0.97 / U = ×3.10</code>. Забрали на ×2 — выигрыш, держали до ×4 — ноль. Число было известно до того, как муха оторвалась от стола; анимация полёта — просто способ показать его медленно.</p>
+        </div>
         <div class="whyg">
           <div class="w"><b>Чистая вероятность</b><p>Исход каждого раунда определяет генератор случайных чисел до того, как вы увидите анимацию. Муха прыгает, гусь крутится, капсула падает — это кино про уже принятое решение. Навык, реакция и «чувство момента» не влияют ни на что.</p></div>
           <div class="w"><b>Отрицательное матожидание</b><p>RTP 97% означает: с каждой тысячи поставленных нейронов в среднем уходит 30. Не иногда, а в среднем всегда. За тысячу раундов — тридцать тысяч. Переключатель RTP внизу показывает, как это выглядит при 70% и 40%: быстрее, но принцип тот же.</p></div>
@@ -1409,7 +1439,7 @@ async function init(){
   mines=createMines(); crash=createCrash(); gacha=createGacha(); const race=createRace(), goose=createGoose(); games={mines,crash,gacha,race,goose};
   for(const g of Object.values(games)){ try{ const t=$('#thumb-'+g.key); if(t) t.style.backgroundImage=`url(${snapshot(g)})`; }catch(e){ console.warn('thumb',g.key,e); } }
   resize(); addEventListener('resize',resize);
-  $$('.gh').forEach(b=>b.addEventListener('click',()=>{ audio.resume(); audio.click(); setGame(b.dataset.game); }));
+  $$('.gh').forEach(b=>b.addEventListener('click',e=>{ if(e.target.closest('a[data-info]')) return; audio.resume(); audio.click(); setGame(b.dataset.game); }));
   $('.logo').addEventListener('click',()=>{ audio.resume(); showHome(); });
   const setNdc=e=>ndc.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
   canvas.addEventListener('pointermove',e=>{ setNdc(e); if(active) active.onMove(); });
