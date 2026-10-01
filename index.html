@@ -239,7 +239,15 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .pipe em.loop{font-size:12px;color:var(--pink);white-space:nowrap}
 .engine-text{margin:12px 0 0;font-size:13.5px;line-height:1.5;color:#eadfff;font-weight:700}
 .engine code,.st code{font-family:ui-monospace,Consolas,monospace;background:rgba(0,0,0,.35);padding:1px 6px;border-radius:6px;color:var(--yellow);font-size:12px}
+.hero p+p{margin-top:10px}
+.hero a{color:var(--cyan)}
+.engine-row{display:flex;gap:16px;align-items:flex-start;margin-top:12px}
+.engine-row .engine-text{margin:0;flex:1}
+.edemo{flex:0 0 340px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 10px 8px}
+#edemo{width:100%;height:auto;display:block}
+.edemo-cap{font-size:11px;color:var(--muted);font-weight:800;margin-top:6px;text-align:center;letter-spacing:.04em}
 @media (max-width:900px){
+  .engine-row{flex-direction:column}.edemo{flex:none;width:100%}
   #home{padding:14px 14px 50px}
   .top{flex-wrap:wrap;gap:10px;padding:10px 12px}
   .brand{min-width:0}.tag{display:none}.logo{font-size:22px}
@@ -285,7 +293,8 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
     <section id="home">
       <div class="hero">
         <h1>МУХА<b>КАЗИК</b> — азартные игры для дрозофилы</h1>
-        <p>Учебный проект: пять классических гэмблинг-механик с честной — и по желанию нечестной — математикой, завёрнутых в муху, гуся и дихлофос. <b>Нейроны не настоящие, вероятности настоящие.</b> Каждая игра показывает свой RTP, волатильность и формулу, а «📈 Сессия» рисует, как тает баланс.</p>
+        <p>Маленькая <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">оцифрованная муха</a> попала в маленькое цифровое казино и пошла тратить свои маленькие цифровые нейроны в азартных играх. Настоящих денег у неё нет, но она серьёзно рискует проиграть все нейроны.</p>
+        <p>Если отставить шутки — это учебный проект. Мы обсуждали с коллегой, что было бы неплохо на волне виральности разговоров про муху собрать тематический слот. И мне стало интересно: насколько тяжело собрать с нуля азартную игру и как вообще это работает. Ставим ненастоящую валюту «нейроны», <b>а вот вероятности — настоящие.</b> Каждая игра показывает свой RTP, волатильность и формулу, а «📈 Сессия» рисует, как тает баланс.</p>
       </div>
       <div class="gcards">
         <button class="gh" data-game="mines"><div class="thumb" id="thumb-mines"></div><div class="gt"><b>🩴 Тапок</b><span>Mines</span></div><p>Муха прыгает по клеткам стола: под каждой вкусняшка и множитель или тапок. Забирай, пока не шлёпнули.</p><div class="gm"><i class="you"></i>RTP 97% · волатильность задаёшь числом тапков · <a data-info="info-mines">формула</a></div></button>
@@ -309,8 +318,10 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
             <div class="st"><i>6</i><b>Выплата или ноль</b><p>И кнопка «ещё раз». Между раундами анимация, звук, конфетти: они занимают время, пока вы не ушли.</p></div><em class="loop">↻ ещё раз</em>
           </div>
           <div class="skins bottom"><span>движок — один и тот же: генератор → вероятность → проверка</span></div>
-          <p class="engine-text">Тапок, мухобойка, гача, гонки и гусь — пять разных картинок поверх одной схемы: число из генератора, таблица вероятностей, сравнение с порогом, выплата. Слот, лутбокс и краш-игра устроены точно так же. Меняется контент — муха, самолёт, капсула, барабан. Не меняется генератор, расчёт вероятности и проверка. Поэтому «понять игру» здесь означает понять таблицу выплат, а не научиться играть.</p>
-          <p class="engine-text">Пример из мухобойки: генератор выдал <code>U = 0.3127</code>, точка мухобойки <code>0.97 / U = ×3.10</code>. Забрали на ×2 — выигрыш, держали до ×4 — ноль. Число было известно до того, как муха оторвалась от стола; анимация полёта — просто способ показать его медленно.</p>
+          <div class="engine-row">
+            <p class="engine-text">Тапок, мухобойка, гача, гонки и гусь — пять разных картинок поверх одной схемы: число из генератора, таблица вероятностей, сравнение с порогом, выплата. Слот, лутбокс и краш-игра устроены точно так же. Меняется контент, не меняется генератор, расчёт вероятности и проверка. Поэтому «понять игру» здесь означает понять таблицу выплат, а не научиться играть.<br><br>Справа — весь движок целиком: раз в секунду генератор бросает число от 0 до 1. Попало ниже порога P — выплата <code>RTP / P</code>, нет — ноль. Счётчик внизу сходится к RTP сам, без всякой стратегии.</p>
+            <div class="edemo"><canvas id="edemo" width="680" height="300"></canvas><div class="edemo-cap">генератор → порог → выплата · живой прогон</div></div>
+          </div>
         </div>
         <div class="whyg">
           <div class="w"><b>Чистая вероятность</b><p>Исход каждого раунда определяет генератор случайных чисел до того, как вы увидите анимацию. Муха прыгает, гусь крутится, капсула падает — это кино про уже принятое решение. Навык, реакция и «чувство момента» не влияют ни на что.</p></div>
@@ -455,7 +466,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   <h2>📈 Сессия: как тает баланс</h2>
   <canvas id="sess-chart" width="760" height="270"></canvas>
   <div class="sgrid" id="sess-stats"></div>
-  <p class="note">В настоящем казино такого графика обычно нет: чем хуже видна история, тем легче продолжать. Здесь он есть — вместе с додепами ☕, линией старта и теоретическим ожиданием.</p>
+  <div class="row" style="gap:14px;align-items:flex-start"><p class="note" style="margin:0;flex:1">В настоящем казино такого графика обычно нет: чем хуже видна история, тем легче продолжать. Здесь он есть — вместе с додепами ☕, линией старта и теоретическим ожиданием.</p><button class="btn sm ghost" id="sess-reset" style="font-size:13px;white-space:nowrap">сбросить статистику</button></div>
   <h3>⚡ Виртуальный прогон</h3>
   <p>Та же математика, что в игре, без анимации и без списания нейронов. Стратегия: <b id="sess-strat"></b>. Пунктиром — куда ушёл бы баланс.</p>
   <div class="three"><button class="btn sm" data-n="100">100 раундов</button><button class="btn sm" data-n="1000">1 000</button><button class="btn sm" data-n="10000">10 000</button></div>
@@ -570,6 +581,7 @@ const session={
   points:[],wagered:0,won:0,refills:0,rounds:0,
   load(){ try{ const d=JSON.parse(sessionStorage.getItem('muhaslot.session')||'null'); if(d&&Array.isArray(d.points)) Object.assign(this,d); }catch(e){} },
   save(){ try{ sessionStorage.setItem('muhaslot.session',JSON.stringify({points:this.points.slice(-3000),wagered:this.wagered,won:this.won,refills:this.refills,rounds:this.rounds})); }catch(e){} },
+  reset(){ this.points=[]; this.wagered=0; this.won=0; this.refills=0; this.rounds=0; this.save(); if(typeof drawSpark==='function') drawSpark(); },
   record(k,d,b){ this.points.push({k,d,b,g:active?active.key:''}); if(k==='bet'){ this.wagered+=d; this.rounds++; } if(k==='win') this.won+=d; if(k==='refill') this.refills+=d; this.save(); if(typeof drawSpark==='function') drawSpark(); },
 };
 session.load();
@@ -1472,11 +1484,29 @@ async function init(){
   const sess=$('#sess'); let simPts=null;
   const openSess=()=>{ simPts=null; $('#sess-simres').textContent=''; $('#sess-strat').textContent=active&&active.simName?active.simName():'—'; renderSess(); sess.classList.add('open'); };
   $('#sess-btn').addEventListener('click',openSess); $('#spark').addEventListener('click',openSess);
+  $('#sess-reset').addEventListener('click',()=>{ session.reset(); simPts=null; $('#sess-simres').textContent=''; renderSess(); audio.click(); toast('Статистика сессии сброшена. Баланс остался.'); });
   function renderSess(){ drawChart($('#sess-chart'),session.points,simPts); const w=session.wagered,r=session.won,net=r-w; const exp=w*(1-cfg.rtp);
     $('#sess-stats').innerHTML=`<div>раундов<b>${fmt(session.rounds)}</b></div><div>поставлено<b>${fmt(w)}</b></div><div>вернулось<b>${fmt(r)}</b></div><div>итог<b class="${net>=0?'good':'badv'}">${net>=0?'+':'−'}${fmt(Math.abs(net))}</b></div><div>RTP факт<b>${w?pct(r/w):'—'}</b></div><div>RTP теория<b>${pct(cfg.rtp)}</b></div><div>ожидаемый проигрыш<b>${fmt(exp)}</b></div><div>додепы ☕<b>${fmt(session.refills)}</b></div>`; }
   $$('#sess .three button').forEach(b=>b.addEventListener('click',()=>{ const g=active; if(!g||!g.sim) return; const n=+b.dataset.n; const bet=g.simBet?g.simBet():1000; let bal=wallet.balance,w=0,r=0; const arr=[bal]; for(let i=0;i<n;i++){ bal-=bet; w+=bet; const pay=g.sim(bet); bal+=pay; r+=pay; arr.push(bal); } simPts=arr; renderSess();
     $('#sess-simres').innerHTML=`${fmt(n)} виртуальных раундов по ${fmt(bet)}: поставлено <b>${fmt(w)}</b>, вернулось <b>${fmt(r)}</b>, RTP факт <b>${pct(r/w)}</b> при теории ${pct(cfg.rtp)}. Баланс стал бы <b>${fmt(bal)}</b>${bal<=0?' — мозг кончился':''}.`; audio.click(); }));
   drawSpark();
+  /* мини-виджет движка на главной: U ~ U(0,1), порог P, выплата RTP/P */
+  const ed={P:0.3,U:0.5,shown:0.5,win:null,n:0,bet:0,ret:0,cv:$('#edemo')};
+  function edDraw(){ const cv=ed.cv; if(!cv) return; const x=cv.getContext('2d'); const W=cv.width,H=cv.height; x.clearRect(0,0,W,H);
+    const L=40,R=W-40,by=132,bh=56; const X=u=>L+(R-L)*u; const pay=cfg.rtp/ed.P;
+    x.fillStyle='rgba(156,255,91,.3)'; x.fillRect(L,by,X(ed.P)-L,bh); x.fillStyle='rgba(255,79,163,.28)'; x.fillRect(X(ed.P),by,R-X(ed.P),bh);
+    x.strokeStyle='rgba(255,255,255,.35)'; x.lineWidth=2; x.strokeRect(L,by,R-L,bh);
+    x.strokeStyle='#ffd23f'; x.lineWidth=3; x.beginPath(); x.moveTo(X(ed.P),by-10); x.lineTo(X(ed.P),by+bh+10); x.stroke();
+    x.fillStyle='#cdbfff'; x.font='800 20px Nunito, sans-serif'; x.textAlign='left'; x.fillText('0',L,by+bh+34); x.textAlign='right'; x.fillText('1',R,by+bh+34);
+    x.textAlign='center'; x.fillStyle='#ffd23f'; x.font='900 20px Nunito, sans-serif'; x.fillText(`P = ${ed.P.toFixed(2)}`,X(ed.P),by-18);
+    x.fillStyle='#9cff5b'; x.font='900 18px Nunito, sans-serif'; x.fillText(`выигрыш ×${pay.toFixed(2)}`,X(ed.P/2),by+bh+34);
+    x.fillStyle='#ff8ab8'; x.fillText('ноль',X(ed.P+(1-ed.P)/2),by+bh+34);
+    if(ed.win!==null){ const mx=X(ed.shown); x.fillStyle=ed.win?'#9cff5b':'#ff4fa3'; x.beginPath(); x.arc(mx,by+bh/2,13,0,Math.PI*2); x.fill(); x.strokeStyle='#fff'; x.lineWidth=3; x.stroke();
+      x.fillStyle='#fff'; x.font="900 26px 'Russo One', sans-serif"; x.textAlign='center'; x.fillText(`U = ${ed.U.toFixed(4)}`,W/2,52); x.font='800 19px Nunito, sans-serif'; x.fillStyle=ed.win?'#9cff5b':'#ff8ab8'; x.fillText(ed.win?`${ed.U.toFixed(2)} < ${ed.P.toFixed(2)} → выплата ×${pay.toFixed(2)}`:`${ed.U.toFixed(2)} ≥ ${ed.P.toFixed(2)} → ноль`,W/2,86); }
+    else { x.fillStyle='#fff'; x.font="900 26px 'Russo One', sans-serif"; x.textAlign='center'; x.fillText('генератор думает…',W/2,52); }
+    x.fillStyle='#cdbfff'; x.font='800 19px Nunito, sans-serif'; x.textAlign='center'; x.fillText(ed.n?`${fmt(ed.n)} раундов · RTP факт ${pct(ed.ret/ed.bet)} · теория ${pct(cfg.rtp)}`:`теория: RTP ${pct(cfg.rtp)}`,W/2,H-16); }
+  function edRound(){ if(!$('#home').classList.contains('active')) return; const u=rand(); const from=ed.shown; ed.U=u; ed.n++; ed.bet+=1; const win=u<ed.P; if(win) ed.ret+=cfg.rtp/ed.P; ed.win=win; tween({tag:'edemo',dur:420,ease:E.outCubic,update:e=>{ ed.shown=lerp(from,u,e); edDraw(); }}); }
+  edDraw(); setInterval(edRound,1100);
   window.__muha={games,setGame,wallet,audio,session,get active(){ return active; }};
   $('#loader').classList.add('hide'); requestAnimationFrame(loop);
 }
