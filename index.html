@@ -211,6 +211,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
       <button data-game="crash">🏓 <span>Мухобойка</span></button>
       <button data-game="gacha">🎰 <span>Гача</span></button>
       <button data-game="race">🏁 <span>Гонки</span></button>
+      <button data-game="goose">🦆 <span>Гусь</span></button>
     </nav>
     <div class="wallet">
       <div class="wtext"><div class="label">Баланс: нейронов в мозгу</div><div class="bal" id="bal">166 700</div></div>
@@ -288,6 +289,26 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
     </section>
     <div class="stage" id="s-race"><div><div class="mult" id="race-msg" style="font-size:min(64px,7vw)"></div><div class="sub" id="race-sub">выбери муху и жми старт</div></div></div>
 
+    <!-- ===== КРУТИ ГУСЯ ===== -->
+    <section class="panel" id="p-goose">
+      <div class="ph"><h2>🦆 Крути гуся</h2><p>Рука берёт гуся за шею и раскручивает. Каждый оборот — ×1.25. Забери, пока шея держится. Муха рядом потирает лапки.</p></div>
+      <div>
+        <div class="label">ставка, нейронов</div>
+        <div class="bet"><button data-op="-">−</button><input type="text" inputmode="numeric" value="1000"><button data-op="+">+</button></div>
+        <div class="quick"><button data-op="half">½</button><button data-op="double">×2</button><button data-op="max">max</button></div>
+      </div>
+      <div class="row"><label class="chk"><input type="checkbox" id="goose-auto"> автозабор на</label><div class="bet mini"><input type="text" id="goose-auto-x" value="2.00"></div></div>
+      <div class="meta"><span>RTP <b id="goose-rtp">97%</b></span><span>волатильность <b id="goose-vol">решаешь ты</b></span></div>
+      <button class="btn" id="goose-btn">Крутить · 1 000</button>
+      <div><div class="label">где ломалась шея</div><div class="hist" id="goose-hist"></div></div>
+      <div class="stats">
+        <div><div class="label">рекорд</div><div class="big" id="goose-best">—</div></div>
+        <div><div class="label">оборотов</div><div class="big" id="goose-revs">0</div></div>
+        <div><div class="label">за оборот</div><div class="big">×1.25</div></div>
+      </div>
+    </section>
+    <div class="stage" id="s-goose"><div><div class="mult" id="goose-mult">×1.00</div><div class="sub" id="goose-sub">гусь спокоен. пока</div></div></div>
+
   </div>
 
   <footer class="foot">
@@ -312,8 +333,10 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
   <p>Базовый RTP 92,4% при RTP 97%. Гарант: если 39 капсул подряд без «редкой+» (неоновая, золотая, бриллиантовая), сороковая точно редкая+. ×10 гарантирует хотя бы дрозофилу. С гарантами RTP ≈ 97–98% (симуляция на 2 млн капсул). Полная коллекция из 7 мух — разовый бонус 25 000.</p>
   <h3>🏁 Гонки</h3>
   <p>В каждом заезде шесть мух трёх классов: две надёжные (шанс около 30%, ×3), две тёмные лошадки (около 12%, ×7–9) и две авантюры (2–5%, ×20–45). Класс задаёт шанс, статистика (возраст, усталость, вес) рисуется под класс. Шансы нормируются к 100%, множитель всегда <code>× = RTP / P</code>. Порядок финиша разыгрывается по модели Плакетта–Люса (победитель — ровно с вероятностью P), анимация заезда подгоняется под разыгранный результат. Победитель получает дихлофос. Волатильность зависит от выбора: фаворит — низкая, аутсайдер — экстремальная.</p>
+  <h3>🦆 Крути гуся</h3>
+  <p>Та же математика, что у мухобойки: точка слома шеи <code>max(1, RTP / U)</code>, множитель растёт ×1.25 за оборот головы, обороты ускоряются (<code>0.55·t + 0.04·t²</code>). Забрать можно в любой момент, автозабор — по множителю. ×100 — гусь улетает.</p>
   <h3>🎚 RTP</h3>
-  <p>Переключатель внизу задаёт RTP для всех игр: тапок, мухобойка и гонки — через коэффициент в формуле, гача — через долю комаров.</p>
+  <p>Переключатель внизу задаёт RTP для всех игр: тапок, мухобойка, гонки и гусь — через коэффициент в формуле, гача — через долю комаров.</p>
   <h3>🧠 Мозг</h3>
   <p>Стартовый баланс 166 700 — столько нейронов в MaleCNS v1.0, полной карте нервной системы самца дрозофилы. Кофе ☕ восстанавливает мозг. В демо. В жизни — нет.</p>
   <p><kbd>пробел</kbd> — ставка / забрать. Цифры на клавиатуре или нампаде набирают ставку без клика в поле, <kbd>Enter</kbd> — подтвердить и сыграть, <kbd>+</kbd>/<kbd>−</kbd> — шаг ставки. Клик по ручке автомата — крутить.</p>
@@ -392,6 +415,8 @@ const audio={
   pop(){ this.tone(700,'sine',0.003,0.09,0.4,0,250); },
   whoosh(){ this.noise(0.35,0.5,400); },
   hiss(){ this.noise(1.2,0.4,2600); },
+  honk(){ this.tone(200,'sawtooth',0.02,0.22,0.35,0,260); this.tone(400,'square',0.02,0.2,0.08,0,520); },
+  quack(){ this.tone(340,'square',0.01,0.3,0.35,0,140); this.noise(0.25,0.3,1200,0.03); },
   win(big=false){ const notes=big?[523,659,784,1047,1319,1568,2093]:[523,659,784,1047]; notes.forEach((f,i)=>this.tone(f,'triangle',0.005,0.18,0.35,i*0.085)); },
   lose(){ this.tone(300,'sawtooth',0.01,0.3,0.22,0,150); this.tone(200,'sawtooth',0.01,0.4,0.22,0.15,90); },
   buzzStart(){ if(!this.on||!this.ctx||this.buzz) return; const c=this.ctx; const o=c.createOscillator(); o.type='sawtooth'; o.frequency.value=160; const l=c.createOscillator(); l.frequency.value=28; const lg=c.createGain(); lg.gain.value=12; l.connect(lg); lg.connect(o.frequency); const f=c.createBiquadFilter(); f.type='lowpass'; f.frequency.value=700; const g=c.createGain(); g.gain.value=0.0001; g.gain.linearRampToValueAtTime(0.1,c.currentTime+0.3); o.connect(f); f.connect(g); g.connect(this.master); o.start(); l.start(); this.buzz={o,l,g,f}; },
@@ -496,15 +521,15 @@ function makeFly(base=1,skin=null){
   if(sk.slim){ thorax.scale.set(0.7,0.65,1.0); abd.scale.set(0.45,0.45,1.9); head.scale.setScalar(0.75); }
   for(const s of [-1,1]){ const e=sph(0.16,eyeMat,1,1.15,1); e.position.set(s*0.17,0.57,0.5); g.add(e); const hl=sph(0.05,new THREE.MeshBasicMaterial({color:0xffffff})); hl.castShadow=false; hl.position.set(s*0.21,0.65,0.62); g.add(hl); }
   for(const s of [-1,1]){ const a=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.02,0.22,6),bodyMat); a.position.set(s*0.07,0.68,0.6); a.rotation.set(-0.7,0,s*0.5); g.add(a); }
-  const legDefs=[[0.28,0.62,0.8],[0.02,0.06,-0.05],[-0.26,-0.55,-0.85]]; const lg=sk.slim?1.5:1;
-  for(const s of [-1,1]) for(const [hz,kz,fz] of legDefs){ const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(s*0.2,0.36,hz),new THREE.Vector3(s*0.52*lg,0.5*lg,kz*lg),new THREE.Vector3(s*0.7*lg,0.0,fz*lg)]); const leg=new THREE.Mesh(new THREE.TubeGeometry(curve,10,0.024,6,false),bodyMat); leg.castShadow=true; g.add(leg); }
+  const legDefs=[[0.28,0.62,0.8],[0.02,0.06,-0.05],[-0.26,-0.55,-0.85]]; const lg=sk.slim?1.5:1; const legs=[];
+  for(const s of [-1,1]) for(const [hz,kz,fz] of legDefs){ const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(s*0.2,0.36,hz),new THREE.Vector3(s*0.52*lg,0.5*lg,kz*lg),new THREE.Vector3(s*0.7*lg,0.0,fz*lg)]); const leg=new THREE.Mesh(new THREE.TubeGeometry(curve,10,0.024,6,false),bodyMat); leg.castShadow=true; g.add(leg); legs.push(leg); }
   if(!wingGeo) wingGeo=wingGeometry();
   const wingMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,uniforms:{uAlpha:{value:0.45}},
     vertexShader:`varying vec3 vN; varying vec3 vV; void main(){ vec4 mv=modelViewMatrix*vec4(position,1.0); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`,
     fragmentShader:`uniform float uAlpha; varying vec3 vN; varying vec3 vV; void main(){ float f=1.0-abs(dot(normalize(vN),normalize(vV))); f=clamp(f,0.0,1.0); vec3 irid=0.55+0.45*cos(6.28318*(f*1.4+vec3(0.0,0.33,0.67))); vec3 col=mix(vec3(0.85,0.93,1.0),irid,0.6); gl_FragColor=vec4(col,uAlpha*(0.45+0.55*f)); }`});
   const wings={};
   for(const s of [-1,1]){ const piv=new THREE.Group(); piv.position.set(s*0.14,0.74,0.05); for(let i=0;i<3;i++){ const w=new THREE.Mesh(wingGeo,wingMat); w.scale.x=s; piv.add(w); } g.add(piv); wings[s]=piv; }
-  const u=g.userData={flap:0,t:rand()*10,base,wings};
+  const u=g.userData={flap:0,t:rand()*10,base,wings,legs};
   g.tick=dt=>{ u.t+=dt; for(const s of [-1,1]){ const piv=u.wings[s]; const fast=u.flap>0.02; piv.children.forEach((w,i)=>{ if(fast){ w.visible=true; const ph=u.t*150+i*2.1; w.rotation.z=s*(0.25+Math.sin(ph)*0.8*u.flap); w.rotation.y=s*0.2; } else { w.visible=i===0; w.rotation.z=s*0.1; w.rotation.y=s*0.55; } }); } };
   g.squash=()=>{ g.scale.set(1.5*base,0.14*base,1.4*base); u.flap=0; };
   g.unsquash=()=>{ g.scale.setScalar(base); g.rotation.set(0,0,0); };
@@ -555,8 +580,8 @@ function makeParticles(scene,n=300,size=0.14){
   const pts=new THREE.Points(geo,mat); pts.visible=false; pts.frustumCulled=false; scene.add(pts);
   let life=0,dur=1.6,active=false,grav=9; const tmp=new THREE.Color();
   return {
-    burst(center,colors,power=4,d=1.6,g=9){ active=true; life=0; dur=d; grav=g; pts.visible=true; mat.opacity=1; const cs=Array.isArray(colors)?colors:[colors];
-      for(let i=0;i<n;i++){ pos[i*3]=center.x; pos[i*3+1]=center.y; pos[i*3+2]=center.z; const a=rand()*Math.PI*2,el=rand()*Math.PI*0.5,sp=power*(0.4+rand()); vel[i*3]=Math.cos(a)*Math.cos(el)*sp; vel[i*3+1]=Math.sin(el)*sp*1.3; vel[i*3+2]=Math.sin(a)*Math.cos(el)*sp; tmp.set(pick(cs)); col[i*3]=tmp.r; col[i*3+1]=tmp.g; col[i*3+2]=tmp.b; }
+    burst(center,colors,power=4,d=1.6,g=9,dir=null){ active=true; life=0; dur=d; grav=g; pts.visible=true; mat.opacity=1; const cs=Array.isArray(colors)?colors:[colors];
+      for(let i=0;i<n;i++){ pos[i*3]=center.x; pos[i*3+1]=center.y; pos[i*3+2]=center.z; let vx,vy,vz; if(dir){ const sp=power*(0.3+rand()); const sx=(rand()-.5)*0.5,sy=(rand()-.5)*0.5,sz=(rand()-.5)*0.5; vx=(dir.x+sx)*sp; vy=(dir.y+sy)*sp; vz=(dir.z+sz)*sp; } else { const a=rand()*Math.PI*2,el=rand()*Math.PI*0.5,sp=power*(0.4+rand()); vx=Math.cos(a)*Math.cos(el)*sp; vy=Math.sin(el)*sp*1.3; vz=Math.sin(a)*Math.cos(el)*sp; } vel[i*3]=vx; vel[i*3+1]=vy; vel[i*3+2]=vz; tmp.set(pick(cs)); col[i*3]=tmp.r; col[i*3+1]=tmp.g; col[i*3+2]=tmp.b; }
       geo.attributes.position.needsUpdate=true; geo.attributes.color.needsUpdate=true; },
     update(dt){ if(!active) return; life+=dt; for(let i=0;i<n;i++){ vel[i*3+1]-=grav*dt; pos[i*3]+=vel[i*3]*dt; pos[i*3+1]+=vel[i*3+1]*dt; pos[i*3+2]+=vel[i*3+2]*dt; vel[i*3]*=0.985; vel[i*3+2]*=0.985; } geo.attributes.position.needsUpdate=true; mat.opacity=clamp(1-life/dur,0,1); if(life>=dur){ active=false; pts.visible=false; } }
   };
@@ -975,7 +1000,8 @@ function makeSprayCan(){
   const label=new THREE.Mesh(new THREE.CylinderGeometry(0.305,0.305,0.5,32,1,true),new THREE.MeshStandardMaterial({map:tex,roughness:0.5,side:THREE.DoubleSide})); label.position.y=-0.05; g.add(label);
   const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.24,0.18,20),new THREE.MeshStandardMaterial({color:0xfff2d9,roughness:0.5})); cap.position.y=0.64; g.add(cap);
   const nozzle=new THREE.Mesh(new THREE.BoxGeometry(0.12,0.12,0.24),new THREE.MeshStandardMaterial({color:0x2a1d4a})); nozzle.position.set(0,0.7,-0.2); g.add(nozzle);
-  return g;
+  const tip=new THREE.Object3D(); tip.position.set(0,0.7,-0.34); g.add(tip);
+  g.userData={cap,nozzle,tip}; g.rotation.order='ZYX'; return g;
 }
 function createRace(){
   const N=6, LAP=Math.PI*2, R0=3.3, R1=5.7;
@@ -1033,13 +1059,16 @@ function createRace(){
   async function finish(w){
     const rid=S.rid; S.state='finishing'; S.winner=w; audio.buzzStop(); const F=flies[w]; const pos=F.mesh.position.clone();
     ui.msg.textContent=`${S.list[w].name} первая!`; ui.msg.className='mult'; ui.sub.textContent='и получает дихлофос';
-    can.visible=true; can.position.set(pos.x+0.9,pos.y+3.4,pos.z+0.7); can.rotation.set(0,0,0);
-    await tween({tag:'race',dur:520,ease:E.outBack,update:e=>{ can.position.y=pos.y+3.4-2.3*e; can.rotation.z=-0.95*e; }}); if(rid!==S.rid) return;
-    audio.hiss(); mist.burst(pos.clone().add(new THREE.Vector3(0.15,0.25,0.2)),[0xd9ffe0,0xffffff,0xbfffd0],1.3,2.4,-0.5); shake.hit(0.25);
-    await delay(500); if(rid!==S.rid) return; S.sprayed=true;
+    /* баллон справа от мухи, соплом к ней (ось y → поворот π/2, лёгкий наклон верхом к мухе); струя из сопла в сторону мухи */
+    const canPos=pos.clone().add(new THREE.Vector3(1.45,0.55,0.1)); can.visible=true; can.rotation.set(0,Math.PI/2,0); can.position.copy(canPos).add(new THREE.Vector3(0.5,2.8,0));
+    await tween({tag:'race',dur:520,ease:E.outBack,update:e=>{ can.position.lerpVectors(canPos.clone().add(new THREE.Vector3(0.5,2.8,0)),canPos,e); can.rotation.z=0.3*e; }}); if(rid!==S.rid) return;
+    can.updateMatrixWorld(true); const nz=new THREE.Vector3(); can.userData.tip.getWorldPosition(nz); const dir=pos.clone().add(new THREE.Vector3(0,0.05,0)).sub(nz).normalize();
+    audio.hiss(); mist.burst(nz,[0xd9ffe0,0xffffff,0xbfffd0],2.8,1.9,-0.25,dir); shake.hit(0.2);
+    tween({tag:'race',dur:160,update:(e,k)=>{ can.userData.cap.position.y=0.64-Math.sin(k*Math.PI)*0.07; }});
+    await delay(450); if(rid!==S.rid) return; mist.burst(nz,[0xd9ffe0,0xffffff,0xbfffd0],2.4,1.9,-0.25,dir); S.sprayed=true;
     await tween({tag:'race',dur:650,ease:E.inQuad,update:e=>{ F.mesh.position.y=lerp(pos.y,0.14,e); F.mesh.rotation.z=lerp(0,Math.PI,e); F.mesh.rotation.x=0; }}); if(rid!==S.rid) return;
     F.mesh.userData.flap=0; F.lbl.inner.textContent=`☠ ${S.list[w].name}`;
-    tween({tag:'race',dur:600,ease:E.outCubic,update:e=>{ can.rotation.z=lerp(-0.95,0,e); can.position.y=pos.y+1.1+1.5*e; }});
+    tween({tag:'race',dur:600,ease:E.outCubic,update:e=>{ can.rotation.z=lerp(0.3,0,e); can.position.y=canPos.y+1.5*e; }});
     const mine=S.pick===w;
     if(mine){ const win=Math.round(S.bet*S.list[w].mult); wallet.give(win); audio.win(S.list[w].mult>=5); ui.msg.textContent=`+${fmt(win)}`; ui.msg.className='mult win'; ui.sub.textContent=`${S.list[w].name} победила и умерла. Поздравляем!`; confetti.burst(pos.clone(),[0xff4fa3,0xffd23f,0x35e6ff,0x9cff5b],5,2.2,6); pushHist(`+${fmt(win)} · №${w+1} ×${S.list[w].mult.toFixed(2)}`,'ok'); }
     else { audio.lose(); const myRank=S.order.indexOf(S.pick)+1; ui.msg.textContent='мимо'; ui.msg.className='mult crash'; ui.sub.textContent=`${S.list[S.pick].name} пришла ${myRank}-й. Зато жива.`; pushHist(`−${fmt(S.bet)} · №${w+1}`,'bad'); }
@@ -1076,6 +1105,142 @@ function createRace(){
 }
 
 /* ================================================================
+   аркадный фон (стена, бокэ, свет) для сцен без неба
+   ================================================================ */
+function makeArcade(scene,colA=0x3d1a8f,colB=0xff4fa3){
+  const wall=new THREE.Mesh(new THREE.PlaneGeometry(80,50),new THREE.ShaderMaterial({uniforms:{uA:{value:new THREE.Color(colA)},uB:{value:new THREE.Color(colB)},uT:{value:0}},
+    vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+    fragmentShader:`uniform vec3 uA,uB; uniform float uT; varying vec2 vUv; void main(){ float s=0.5+0.5*sin(vUv.x*40.0+uT*0.3); vec3 c=mix(uA,uB,pow(vUv.y,1.6)*0.9); c*=0.9+0.1*s; gl_FragColor=vec4(c,1.0); }`}));
+  wall.position.set(0,12,-14); scene.add(wall);
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(30,48),new THREE.MeshStandardMaterial({color:0x2b1a63,roughness:0.55,metalness:0.15})); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
+  const n=140; const g=new THREE.BufferGeometry(); const pos=new Float32Array(n*3),col=new Float32Array(n*3),sz=new Float32Array(n); const cols=[0xff4fa3,0x35e6ff,0xffd23f,0x9cff5b,0x8a5cff,0xff8a3d]; const tmp=new THREE.Color();
+  for(let i=0;i<n;i++){ pos[i*3]=rr(-30,30); pos[i*3+1]=rr(0,24); pos[i*3+2]=rr(-13,-6); tmp.set(pick(cols)); col[i*3]=tmp.r; col[i*3+1]=tmp.g; col[i*3+2]=tmp.b; sz[i]=rr(0.4,1.6); }
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('color',new THREE.BufferAttribute(col,3)); g.setAttribute('size',new THREE.BufferAttribute(sz,1));
+  const bm=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true,uniforms:{uTex:{value:glowTex},uT:{value:0}},
+    vertexShader:`attribute float size; varying vec3 vC; varying float vA; uniform float uT; void main(){ vC=color; vec3 p=position; p.y+=sin(uT*0.5+p.x)*0.4; p.x+=cos(uT*0.3+p.y)*0.4; vec4 mv=modelViewMatrix*vec4(p,1.0); gl_PointSize=size*(220.0/-mv.z); vA=0.35+0.3*sin(uT*1.3+p.x*3.0); gl_Position=projectionMatrix*mv; }`,
+    fragmentShader:`uniform sampler2D uTex; varying vec3 vC; varying float vA; void main(){ vec4 t=texture2D(uTex,gl_PointCoord); gl_FragColor=vec4(vC*t.rgb,t.a*vA); }`});
+  const pts=new THREE.Points(g,bm); pts.frustumCulled=false; scene.add(pts);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x8a5cff,0.6));
+  const key=new THREE.DirectionalLight(0xfff0e0,2.0); key.position.set(4,9,7); key.castShadow=true; key.shadow.mapSize.set(2048,2048);
+  Object.assign(key.shadow.camera,{left:-8,right:8,top:9,bottom:-3,near:1,far:40}); key.shadow.camera.updateProjectionMatrix(); key.shadow.bias=-0.0005; scene.add(key);
+  const fill=new THREE.PointLight(0xff4fa3,40,30); fill.position.set(-5,4,5); scene.add(fill);
+  const rim=new THREE.PointLight(0x35e6ff,40,30); rim.position.set(5,6,-4); scene.add(rim);
+  return { update(t){ wall.material.uniforms.uT.value=t; bm.uniforms.uT.value=t; } };
+}
+
+/* ================================================================
+   ИГРА 5 · КРУТИ ГУСЯ — crash-механика: рука раскручивает гуся за шею
+   ================================================================ */
+function makeGoose(){
+  const g=new THREE.Group();
+  const white=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.55}), orange=new THREE.MeshStandardMaterial({color:0xff8a3d,roughness:0.5}), black=new THREE.MeshStandardMaterial({color:0x1a0d3d,roughness:0.4}), red=new THREE.MeshStandardMaterial({color:0xff3860,roughness:0.5});
+  const body=new THREE.Mesh(new THREE.SphereGeometry(0.9,32,20),white); body.scale.set(1.0,0.85,1.35); body.position.set(0,1.25,0); body.castShadow=true; g.add(body);
+  const tail=new THREE.Mesh(new THREE.ConeGeometry(0.35,0.8,16),white); tail.position.set(0,1.55,-1.3); tail.rotation.x=-Math.PI/2-0.45; tail.castShadow=true; g.add(tail);
+  for(const s of [-1,1]){ const w=new THREE.Mesh(new THREE.SphereGeometry(0.55,24,16),white); w.scale.set(0.35,0.7,1.1); w.position.set(s*0.8,1.35,-0.1); w.rotation.z=s*0.25; w.castShadow=true; g.add(w);
+    const leg=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,0.95,10),orange); leg.position.set(s*0.3,0.47,-0.1); leg.castShadow=true; g.add(leg);
+    const foot=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.6,3),orange); foot.scale.set(1,0.18,1); foot.rotation.x=Math.PI/2; foot.position.set(s*0.3,0.03,0.12); g.add(foot); }
+  const neckG=new THREE.Group(); neckG.position.set(0,1.95,0.75); neckG.rotation.order='YXZ'; g.add(neckG);
+  const neck=new THREE.Mesh(new THREE.CylinderGeometry(0.14,0.2,1.6,16),white); neck.position.y=0.8; neck.castShadow=true; neckG.add(neck);
+  const headG=new THREE.Group(); headG.position.y=1.6; neckG.add(headG);
+  const head=new THREE.Mesh(new THREE.SphereGeometry(0.34,24,16),white); head.scale.set(1,0.95,1.15); head.castShadow=true; headG.add(head);
+  const beak=new THREE.Mesh(new THREE.ConeGeometry(0.15,0.55,14),orange); beak.rotation.x=Math.PI/2; beak.position.set(0,-0.04,0.58); beak.castShadow=true; headG.add(beak);
+  const eyes=[],xeyes=[];
+  for(const s of [-1,1]){ const e=new THREE.Mesh(new THREE.SphereGeometry(0.06,12,10),black); e.position.set(s*0.17,0.1,0.27); headG.add(e); eyes.push(e);
+    const xg=new THREE.Group(); xg.position.copy(e.position); xg.position.z+=0.05; xg.visible=false; for(const r of [0.785,-0.785]){ const bar=new THREE.Mesh(new THREE.BoxGeometry(0.17,0.04,0.02),black); bar.rotation.z=r; xg.add(bar); } headG.add(xg); xeyes.push(xg); }
+  const tongue=new THREE.Mesh(new THREE.CapsuleGeometry(0.05,0.24,4,8),red); tongue.position.set(0,-0.22,0.62); tongue.rotation.x=0.35; tongue.visible=false; headG.add(tongue);
+  g.userData={neckG,neck,headG,eyes,xeyes,tongue};
+  return g;
+}
+function makeHand(){
+  const g=new THREE.Group(); const skin=new THREE.MeshStandardMaterial({color:0xffd1a8,roughness:0.6});
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(0.3,0.13,12,28),skin); ring.rotation.x=Math.PI/2; g.add(ring);
+  const palm=new THREE.Mesh(new THREE.SphereGeometry(0.33,20,14),skin); palm.scale.set(1,0.75,0.8); palm.position.set(0.3,0.05,-0.25); g.add(palm);
+  for(let i=0;i<4;i++){ const k=new THREE.Mesh(new THREE.SphereGeometry(0.11,12,10),skin); const a=-0.5+i*0.55; k.position.set(Math.sin(a)*0.42,0.08,Math.cos(a)*0.42); g.add(k); }
+  const thumb=new THREE.Mesh(new THREE.CapsuleGeometry(0.09,0.25,4,10),skin); thumb.position.set(-0.25,0.12,-0.3); thumb.rotation.set(0.9,0,0.6); g.add(thumb);
+  const cuff=new THREE.Mesh(new THREE.CylinderGeometry(0.27,0.27,0.2,16),new THREE.MeshStandardMaterial({color:0xfff2d9,roughness:0.6})); cuff.position.set(0.52,0.55,-0.35); cuff.rotation.z=-0.6; g.add(cuff);
+  const sleeve=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.26,4.4,16),new THREE.MeshStandardMaterial({color:0x8a5cff,roughness:0.6})); sleeve.position.set(1.75,2.35,-0.6); sleeve.rotation.z=-0.6; g.add(sleeve);
+  g.traverse(o=>{ if(o.isMesh) o.castShadow=true; }); return g;
+}
+function createGoose(){
+  const scene=new THREE.Scene(); scene.environment=envTex; scene.environmentIntensity=0.35;
+  const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,0.1,100); camera.position.set(0,3.9,10.8); camera.lookAt(0,2.5,0);
+  const arcade=makeArcade(scene,0x3d1a8f,0xff4fa3);
+  const podium=new THREE.Mesh(new THREE.CylinderGeometry(3.6,3.9,0.5,48),new THREE.MeshStandardMaterial({color:0x6a3ff0,roughness:0.5})); podium.position.y=0.25; podium.receiveShadow=true; podium.castShadow=true; scene.add(podium);
+  const rim=new THREE.Mesh(new THREE.TorusGeometry(3.6,0.08,12,64),new THREE.MeshStandardMaterial({color:0xffd23f,roughness:0.3})); rim.rotation.x=Math.PI/2; rim.position.y=0.5; scene.add(rim);
+  const goose=makeGoose(); goose.position.y=0.5; scene.add(goose); const G=goose.userData;
+  const hand=makeHand(); hand.visible=false; scene.add(hand);
+  const fly=makeFly(0.7); fly.position.set(2.5,0.5,1.5); fly.rotation.y=-0.9; scene.add(fly);
+  const confetti=makeParticles(scene,300,0.16), labels=makeLabels();
+  const S={state:'idle',bet:0,t0:0,mult:1,revs:0,crashAt:1,revsBreak:0,auto:0,rid:0,hist:[],best:0};
+  const PER=1.25, LN=Math.log(PER);
+  const revsAt=t=>0.55*t+0.04*t*t, multAt=t=>Math.pow(PER,revsAt(t));
+  const sampleCrash=()=>{ const u=rand(); return clamp(Math.floor(100*cfg.rtp/(1-u))/100,1,100); };
+  const P=$('#p-goose'); const betCtl=betControl($('.bet',P),()=>updateUI());
+  const ui={btn:$('#goose-btn'),auto:$('#goose-auto'),autoX:$('#goose-auto-x'),hist:$('#goose-hist'),best:$('#goose-best'),revs:$('#goose-revs'),mult:$('#goose-mult'),sub:$('#goose-sub'),rtp:$('#goose-rtp'),vol:$('#goose-vol')};
+  ui.btn.addEventListener('click',()=>primary());
+  ui.autoX.addEventListener('change',()=>{ let v=parseFloat(String(ui.autoX.value).replace(',','.')); if(!isFinite(v)||v<1.01) v=1.01; ui.autoX.value=v.toFixed(2); updateUI(); }); ui.auto.addEventListener('change',()=>updateUI());
+  function primary(){ if(S.state==='spinning') cashout(); else if(S.state==='idle'||S.state==='ended') start(); }
+  const chipCls=m=>m<2?'lo':m<10?'mid':'hi';
+  function renderHist(){ ui.hist.innerHTML=S.hist.slice(0,14).map(m=>`<span class="chip ${chipCls(m)}">${fmtX(m)}</span>`).join(''); ui.best.textContent=S.best?fmtX(S.best):'—'; }
+  function updateUI(){
+    const sp=S.state==='spinning', busy=sp||['grab','snapped','cashed'].includes(S.state); betCtl.disable(busy); ui.auto.disabled=busy; ui.autoX.disabled=busy; ui.rtp.textContent=pct(cfg.rtp);
+    const ax=parseFloat(String(ui.autoX.value).replace(',','.'))||2; ui.vol.textContent=ui.auto.checked?(ax<1.5?'низкая':ax<3?'средняя':ax<10?'высокая':'экстремальная'):'решаешь ты';
+    if(sp){ ui.btn.className='btn cash'; ui.btn.disabled=false; ui.btn.textContent=`Забрать ${fmt(Math.round(S.bet*Math.floor(S.mult*100)/100))}`; }
+    else { ui.btn.className='btn'; ui.btn.disabled=busy; ui.btn.textContent=busy?'Крутим…':`Крутить · ${fmt(betCtl.peek())}`; }
+    ui.revs.textContent=Math.floor(S.revs);
+  }
+  function resetGoose(){ killTweens('goose'); G.neckG.rotation.set(0,0,0); G.neck.rotation.set(0,0,0); G.neck.scale.set(1,1,1); G.neck.position.y=0.8; G.headG.position.y=1.6; G.headG.rotation.set(0,0,0); G.eyes.forEach(e=>e.visible=true); G.xeyes.forEach(x=>x.visible=false); G.tongue.visible=false; goose.position.set(0,0.5,0); goose.rotation.set(0,0,0); goose.visible=true; hand.visible=false; ui.mult.className='mult'; ui.sub.className='sub'; }
+  const gripWorld=out=>{ out.set(0,1.15*G.neck.scale.y,0); return G.neckG.localToWorld(out); };
+  function pose(revs){ const k=Math.min(1,revs/12); const tilt=0.35+0.55*k, st=1+0.3*k; G.neckG.rotation.x=tilt; G.neckG.rotation.y=revs*Math.PI*2; G.neck.scale.y=st; G.neck.position.y=0.8*st; G.headG.position.y=1.6*st; G.headG.rotation.x=-tilt*0.6; }
+  async function start(){
+    const bet=betCtl.value; if(!wallet.can(bet)) return toast('Не хватает нейронов. Выпей кофе ☕');
+    audio.resume(); audio.click(); wallet.take(bet); stats.rounds++; S.bet=bet; S.rid++; const rid=S.rid; S.crashAt=sampleCrash(); S.revsBreak=Math.log(S.crashAt)/LN; S.mult=1; S.revs=0;
+    S.auto=ui.auto.checked?Math.max(1.01,parseFloat(String(ui.autoX.value).replace(',','.'))||0):0;
+    resetGoose(); S.state='grab'; ui.mult.textContent='×1.00'; ui.sub.textContent='рука тянется к гусю…'; updateUI();
+    const grip=gripWorld(new THREE.Vector3()); hand.visible=true; hand.position.copy(grip).add(new THREE.Vector3(0,4.5,0));
+    await tween({tag:'goose',dur:700,ease:E.outCubic,update:e=>{ hand.position.copy(grip).add(new THREE.Vector3(0,4.5*(1-e),0)); }}); if(rid!==S.rid) return;
+    audio.pop(); S.state='spinning'; S.t0=performance.now(); ui.sub.textContent='крутим!'; updateUI();
+  }
+  function release(){ const from=hand.position.clone(); tween({tag:'goose',dur:600,ease:E.inCubic,update:e=>{ hand.position.copy(from).add(new THREE.Vector3(0.6*e,4.5*e,0)); }}).then(()=>{ hand.visible=false; }); }
+  async function honk(rid){ for(let i=0;i<3;i++){ audio.honk(); const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); popup(scene,hp.add(new THREE.Vector3(0,0.9+i*0.1,0)),'ГА','yay',900); await delay(300); if(rid!==S.rid) return; } }
+  function cashout(){
+    if(S.state!=='spinning') return; const m=Math.floor(S.mult*100)/100, win=Math.round(S.bet*m); S.state='cashed'; const rid=S.rid; wallet.give(win); audio.win(m>=5); S.best=Math.max(S.best,m);
+    ui.mult.textContent=fmtX(m); ui.mult.classList.add('win'); ui.sub.className='sub win'; ui.sub.textContent=`ГА-ГА-ГА! +${fmt(win)} нейронов`;
+    const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); confetti.burst(hp,[0xff4fa3,0xffd23f,0x35e6ff,0x9cff5b],5,2.2,6); honk(rid); release();
+    const r0=S.revs, tilt0=G.neckG.rotation.x; tween({tag:'goose',dur:1600,ease:E.outCubic,update:e=>{ pose(r0+1.3*e); G.neckG.rotation.x=lerp(tilt0,0.12,e); G.headG.rotation.x=lerp(-tilt0*0.6,0,e); }});
+    finishRound(rid,'cashed');
+  }
+  async function snap(){
+    const rid=S.rid; S.state='snapped'; audio.quack(); shake.hit(0.9); ui.mult.textContent=fmtX(S.crashAt); ui.mult.classList.add('crash'); ui.sub.className='sub crash'; ui.sub.textContent='КРЯ. шея не выдержала'; updateUI(); release();
+    G.eyes.forEach(e=>e.visible=false); G.xeyes.forEach(x=>x.visible=true); G.tongue.visible=true;
+    const hp=new THREE.Vector3(); G.headG.getWorldPosition(hp); popup(scene,hp.add(new THREE.Vector3(0,0.7,0)),'КРЯ','shlep',1500);
+    const tx=G.neckG.rotation.x, hx=G.headG.rotation.x;
+    await tween({tag:'goose',dur:600,ease:E.outBounce,update:e=>{ G.neckG.rotation.x=lerp(tx,1.55,e); G.neck.rotation.z=0.45*e; G.headG.rotation.x=lerp(hx,1.4,e); }}); if(rid!==S.rid) return;
+    audio.lose(); finishRound(rid,'snapped');
+  }
+  function launch(){
+    if(S.state!=='spinning') return; S.state='cashed'; const rid=S.rid; const win=S.bet*100; wallet.give(win); audio.win(true); flash(); S.best=100;
+    ui.mult.textContent='×100.00'; ui.mult.classList.add('win'); ui.sub.className='sub win'; ui.sub.textContent=`ГУСЬ УЛЕТЕЛ! +${fmt(win)}`; release();
+    const p0=goose.position.clone(); tween({tag:'goose',dur:1300,ease:E.inCubic,update:e=>{ goose.position.y=p0.y+14*e; goose.rotation.y+=0.25; }}).then(()=>{ if(rid===S.rid) goose.visible=false; });
+    finishRound(rid,'cashed');
+  }
+  function finishRound(rid,how){ S.hist.unshift(S.crashAt); S.hist.length=Math.min(S.hist.length,20); renderHist(); ironyNext(); persist();
+    setTimeout(()=>{ if(rid===S.rid){ S.state='ended'; updateUI(); if(how==='cashed'&&S.crashAt<100){ ui.sub.className='sub'; ui.sub.textContent=`шея сломалась бы на ${fmtX(S.crashAt)}`; } } },how==='cashed'?1500:600); }
+  let time=0; const tmp=new THREE.Vector3();
+  function update(dt){
+    time+=dt; arcade.update(time);
+    if(S.state==='spinning'){ const t=(performance.now()-S.t0)/1000; S.revs=revsAt(t); S.mult=multAt(t);
+      if(S.revs>=S.revsBreak){ S.mult=S.crashAt; S.revs=S.revsBreak; pose(S.revs); if(S.crashAt>=100) launch(); else snap(); }
+      else { pose(S.revs); if(S.auto&&S.mult>=S.auto) cashout(); else { ui.mult.textContent=fmtX(Math.floor(S.mult*100)/100); ui.btn.textContent=`Забрать ${fmt(Math.round(S.bet*Math.floor(S.mult*100)/100))}`; ui.revs.textContent=Math.floor(S.revs); } }
+      if(S.state==='spinning'){ gripWorld(tmp); hand.position.copy(tmp); } }
+    const L=fly.userData.legs; if(L&&L.length>=4){ const s=Math.sin(time*9); L[0].scale.x=1+0.16*s; L[3].scale.x=1-0.16*s; } fly.position.y=0.5+Math.abs(Math.sin(time*4))*0.02; fly.rotation.z=Math.sin(time*2)*0.04; fly.tick(dt);
+    confetti.update(dt);
+  }
+  function enter(){ renderHist(); updateUI(); if(S.state==='idle') resetGoose(); } function exit(){ killTweens('goose'); }
+  return {key:'goose',scene,camera,labels,bloom:0.45,S,enter,exit,update,onMove(){},onDown(){},primary,updateUI,onRtp:updateUI,busy:()=>['grab','spinning','snapped'].includes(S.state),debug:{start,cashout}};
+}
+
+/* ================================================================
    app: переключение игр, цикл, инициализация
    ================================================================ */
 function setGame(key){
@@ -1099,7 +1264,7 @@ function loop(now){
 async function init(){
   await Promise.race([document.fonts?document.fonts.ready:Promise.resolve(),delay(1800)]);
   buildTextures();
-  mines=createMines(); crash=createCrash(); gacha=createGacha(); const race=createRace(); games={mines,crash,gacha,race};
+  mines=createMines(); crash=createCrash(); gacha=createGacha(); const race=createRace(), goose=createGoose(); games={mines,crash,gacha,race,goose};
   resize(); addEventListener('resize',resize);
   const setNdc=e=>ndc.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
   canvas.addEventListener('pointermove',e=>{ setNdc(e); if(active) active.onMove(); });
