@@ -284,7 +284,11 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
   #home{padding:14px 14px 50px}
   .top{flex-wrap:wrap;gap:10px;padding:10px 12px}
   .brand{min-width:0}.tag{display:none}.logo{font-size:22px}
-  .tabs{order:3;width:100%;justify-content:space-between}.tabs button{padding:8px 10px;font-size:12px;flex:1;justify-content:center}
+  .tabs{order:3;width:100%;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}.tabs::-webkit-scrollbar{display:none}.tabs button{padding:8px 14px;font-size:12px;flex:none;scroll-snap-align:center}
+  .main.busy .panel{top:auto;bottom:10px;max-height:none;padding:10px 12px;gap:0;background:rgba(36,16,86,.72)}
+  .main.busy .panel>*:not([data-main]){display:none}
+  .main.busy .panel .two{display:none}
+  .main.busy .stage{bottom:96px}
   .wallet{margin-left:auto}.bal{font-size:18px}.wtext{min-width:0}
   .panel{left:10px;right:10px;width:auto;top:auto;bottom:10px;max-height:46%;padding:14px;gap:10px;border-radius:18px}
   .ph p{display:none}.ph h2{font-size:18px;margin:0}
@@ -434,7 +438,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
       </div>
       <div class="meta"><span>RTP <b id="mines-rtp">95%</b></span><span>волатильность <b id="mines-vol">низкая</b></span></div>
       <div class="hint" id="mines-hint"></div>
-      <button class="btn" id="mines-btn">Ставить 1 000</button>
+      <button class="btn" data-main="1" id="mines-btn">Ставить 1 000</button>
       <div><div class="label">последние раунды</div><div class="hist" id="mines-hist"></div></div>
     </section>
     <div class="stage" id="s-mines"></div>
@@ -450,7 +454,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
       <div class="row"><label class="chk"><input type="checkbox" id="crash-auto"> автозабор на</label><div class="bet mini"><input type="text" id="crash-auto-x" value="2.00"></div></div>
       <div class="meta"><span>RTP <b id="crash-rtp">95%</b></span><span>волатильность <b id="crash-vol">твоя</b></span></div>
       <div class="hint" id="crash-hint"></div>
-      <button class="btn" id="crash-btn">Взлёт · 1 000</button>
+      <button class="btn" data-main="1" id="crash-btn">Взлёт · 1 000</button>
       <div><div class="label">где ждала мухобойка</div><div class="hist" id="crash-hist"></div></div>
       <div class="stats">
         <div><div class="label">рекорд</div><div class="big" id="crash-best">—</div></div>
@@ -464,7 +468,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
     <section class="panel" id="p-gacha">
       <div class="ph"><h2>🎰 Мухогача</h2><p>Автомат с капсулами. В каждой — муха: от обычной кухонной до золотой и бриллиантовой. Или комар. Комар — это не муха.</p></div>
       <div><div class="label">цена капсулы, нейронов</div><div class="seg" id="gacha-price"><button data-v="500">500</button><button data-v="1000" class="active">1 000</button><button data-v="5000">5 000</button></div></div>
-      <div class="two"><button class="btn pink" id="gacha-1">Крутить</button><button class="btn" id="gacha-10">×10</button></div>
+      <div class="two"><button class="btn pink" data-main="1" id="gacha-1">Крутить</button><button class="btn" id="gacha-10">×10</button></div>
       <div class="meta"><span>RTP <b id="gacha-rtp">≈95%</b></span><span>волатильность <b id="gacha-vol">высокая</b></span></div>
       <div class="hint" id="gacha-hint"></div>
       <div class="row"><span>до гаранта редкой+</span><b id="gacha-pity">40</b></div>
@@ -483,7 +487,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
       <div class="meta"><span>RTP <b id="race-rtp">95%</b></span><span>волатильность <b id="race-vol">—</b></span></div>
       <div class="hint" id="race-hint"></div>
       <div class="flies" id="race-flies"></div>
-      <button class="btn" id="race-btn">Выбери муху</button>
+      <button class="btn" data-main="1" id="race-btn">Выбери муху</button>
       <div><div class="label">последние заезды</div><div class="hist" id="race-hist"></div></div>
     </section>
     <div class="stage" id="s-race"><div><div class="mult" id="race-msg" style="font-size:min(64px,7vw)"></div><div class="sub" id="race-sub">выбери муху и жми старт</div></div></div>
@@ -499,7 +503,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
       <div class="row"><label class="chk"><input type="checkbox" id="goose-auto"> автозабор на</label><div class="bet mini"><input type="text" id="goose-auto-x" value="2.00"></div></div>
       <div class="meta"><span>RTP <b id="goose-rtp">95%</b></span><span>волатильность <b id="goose-vol">решаешь ты</b></span></div>
       <div class="hint" id="goose-hint"></div>
-      <button class="btn" id="goose-btn">Крутить · 1 000</button>
+      <button class="btn" data-main="1" id="goose-btn">Крутить · 1 000</button>
       <div><div class="label">где ломалась шея</div><div class="hist" id="goose-hist"></div></div>
       <div class="stats">
         <div><div class="label">рекорд</div><div class="big" id="goose-best">—</div></div>
@@ -1511,7 +1515,7 @@ function setGame(key){
   if(active){ active.exit(); active.labels.domElement.style.display='none'; }
   active=games[key]; active.labels.domElement.style.display='';
   renderPass.scene=active.scene; renderPass.camera=active.camera; bloom.strength=active.bloom; active.enter();
-  $$('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.game===key));
+  $$('.tabs button').forEach(b=>{ const on=b.dataset.game===key; b.classList.toggle('active',on); if(on&&innerWidth<=900) b.scrollIntoView({inline:'center',block:'nearest'}); });
   $$('.panel').forEach(p=>p.classList.toggle('active',p.id==='p-'+key));
   $$('.stage').forEach(p=>p.classList.toggle('active',p.id==='s-'+key));
   history.replaceState(null,'','#'+key); canvas.style.cursor=''; hideHome();
@@ -1575,6 +1579,8 @@ async function init(){
   $$('#sess .three button').forEach(b=>b.addEventListener('click',()=>{ const g=active; if(!g||!g.sim) return; const n=+b.dataset.n; const bet=g.simBet?g.simBet():1000; let bal=wallet.balance,w=0,r=0; const arr=[bal]; for(let i=0;i<n;i++){ bal-=bet; w+=bet; const pay=g.sim(bet); bal+=pay; r+=pay; arr.push(bal); } simPts=arr; renderSess();
     $('#sess-simres').innerHTML=`${fmt(n)} виртуальных раундов по ${fmt(bet)}: поставлено <b>${fmt(w)}</b>, вернулось <b>${fmt(r)}</b>, RTP факт <b>${pct(r/w)}</b> при теории ${pct(cfg.rtp)}. Баланс стал бы <b>${fmt(bal)}</b>${bal<=0?' — мозг кончился':''}.`; audio.click(); }));
   drawSpark();
+  /* на мобильном во время раунда панель сворачивается до главной кнопки (таймер, а не rAF — работает и в фоне) */
+  setInterval(()=>{ const b=!!(active&&active.busy()); $('.main').classList.toggle('busy',b); },150);
   /* мини-виджет движка на главной: U ~ U(0,1), порог P, выплата RTP/P */
   const ed={P:0.3,U:0.5,shown:0.5,win:null,n:0,bet:0,ret:0,cv:$('#edemo')};
   function edDraw(){ const cv=ed.cv; if(!cv) return; const x=cv.getContext('2d'); const W=cv.width,H=cv.height; x.clearRect(0,0,W,H);
