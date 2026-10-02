@@ -297,7 +297,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
 .gloss div{background:rgba(0,0,0,.22);border-radius:12px;padding:10px 12px}
 .gloss dt{font-family:'Russo One',sans-serif;color:var(--yellow);font-weight:400;font-size:13px;margin-bottom:3px}
 .gloss dd{margin:0;font-size:13px;color:#eadfff;line-height:1.45;font-weight:700}
-.gloss code{font-family:ui-monospace,Consolas,monospace;background:rgba(0,0,0,.35);padding:1px 5px;border-radius:5px;color:var(--yellow);font-size:11.5px}
+.gloss code,.src code{font-family:ui-monospace,Consolas,monospace;background:rgba(0,0,0,.35);padding:1px 5px;border-radius:5px;color:var(--yellow);font-size:11.5px}
 .src{font-size:12.5px;color:var(--muted);line-height:1.55;font-weight:700;padding-left:18px;margin:0}
 .src li{margin-bottom:4px}
 .analytics{margin-top:36px}
@@ -396,6 +396,10 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
 .bar.neg .fill{background:var(--red)}.bar.neg .dv{color:var(--red)}
 .bar .dv{text-align:right;font-family:'Russo One',sans-serif;color:#fff;font-size:13px;white-space:nowrap}
 .sens-cap{font-size:12px;color:var(--muted);font-weight:800;margin:10px 0 0;line-height:1.5}
+.rowlab.scen{margin-top:16px}.rowlab span{text-transform:none;letter-spacing:0;font-weight:800}
+.presets{margin-top:6px}
+.kpinote{font-size:12px;color:var(--muted);font-weight:800;margin:0 0 6px;line-height:1.5}
+.treecap p{margin:0 0 4px}.treecap ul{margin:0 0 6px;padding-left:18px}.treecap li{margin:2px 0}
 .src a{color:var(--cyan)}
 code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 @media (max-width:900px){
@@ -534,13 +538,15 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
           <p class="ycap" id="an-you-cap">Кофе здесь бесплатный. В настоящем казино каждый ☕ был бы депозитом, а муха — строкой в когорте.</p>
         </div>
 
+        <div class="rowlab scen">Сценарии <span>— то же казино, другие условия</span></div>
         <div class="presets" id="an-presets">
-          <button type="button" data-preset="default">По умолчанию</button>
+          <button type="button" data-preset="default">Базовый</button>
           <button type="button" data-preset="uk">Великобритания: 40% GGR</button>
           <button type="button" data-preset="de">Германия: 5,3% с оборота</button>
-          <button type="button" data-preset="me">Моя муха</button>
+          <button type="button" data-preset="crypto">Криптоказино: без налога, RTP 90%</button>
         </div>
         <p class="preset-note" id="an-preset-note"></p>
+        <p class="kpinote">Упрощённая модель: она не учитывает операционные расходы, полную бонусную нагрузку и регуляторные затраты. Цифры условные и показывают механику — посчитать по ним экономику настоящего казино нельзя.</p>
 
         <div class="kpis" id="an-kpis">
           <div><abbr class="t" title="Return on investment — (доход − вложения) / вложения. Здесь — окупаемость привлечения.">ROI</abbr><b data-k="roi">—</b></div>
@@ -555,7 +561,16 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
         <div class="tree" id="an-tree"></div>
 
         <div class="cohort" id="an-cohort"><span>когорта<span class="choice" data-choice="cohort"><button type="button" data-v="100">100</button><button type="button" data-v="1000">1&nbsp;000</button><button type="button" data-v="10000">10&nbsp;000</button><button type="button" data-v="100000">100&nbsp;000</button></span></span><span>оборот<b data-c="turnover">—</b></span><span>GGR<b data-c="ggr">—</b></span><span>NGR<b data-c="ngr">—</b></span><span>маркетинг<b data-c="marketing">—</b></span><span>прибыль<b data-c="profit">—</b></span></div>
-        <p class="treecap">Это учебная схема. В настоящей компании дерево глубже: сегменты игроков, каналы привлечения, продукты, страны и валюты. Удержание считают кривыми по когортам, а не одним числом, а состав NGR и LTV отличается от компании к компании и даже от договора к договору.</p>
+        <div class="treecap">
+          <p>Это упрощённая учебная модель. Она не учитывает всех активностей и расходов казино:</p>
+          <ul>
+            <li>операционные — зарплаты, поддержка, инфраструктура, антифрод, <abbr class="t" title="Отмена платежа через банк или платёжную систему: деньги возвращаются игроку, а казино ещё и платит комиссию.">чарджбэки</abbr>;</li>
+            <li>бонусную нагрузку целиком — здесь это одна строка в процентах от GGR, а в жизни она складывается из приветственных бонусов, фриспинов, <abbr class="t" title="Возврат части чистого проигрыша игрока за период.">кешбэка</abbr>, <abbr class="t" title="Возврат части преимущества казино с каждой ставки, независимо от результата. Популярен в криптоказино.">рейкбека</abbr>, VIP-программ и условий отыгрыша;</li>
+            <li>регуляторные — лицензии и сборы, комплаенс, проверки <abbr class="t" title="Проверка личности игрока и контроль происхождения денег. Обязательны в регулируемых юрисдикциях.">KYC/AML</abbr>, инструменты ответственной игры, штрафы;</li>
+            <li>маркетинг сверх привлечения — бренд, спонсорство, промоакции и CRM-кампании, выплаты партнёрам по <abbr class="t" title="Модель оплаты партнёров: они получают долю NGR приведённых игроков, пока те играют.">rev share</abbr>.</li>
+          </ul>
+          <p>Настоящее дерево ещё и глубже: сегменты игроков, каналы, продукты, страны и валюты. Удержание считают кривыми по когортам, а состав NGR и LTV отличается от компании к компании.</p>
+        </div>
 
         <div class="sens"><b>Что сдвинет ROI сильнее: каждый рычаг на 10% в пользу казино</b><div id="an-sens"></div><p class="sens-cap" id="an-sens-cap"></p></div>
 
@@ -570,7 +585,6 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
         <h3>Те же данные — другие вопросы</h3>
         <p class="ptext">Таблицы, по которым считают удержание, показывают и обратную сторону: депозиты растут неделя к неделе, сессии сдвигаются на ночь, ставка повышается после проигрыша, карта отклоняется раз за разом, от лимитов игрок отказывается. Это <abbr class="t" title="Признаки в данных, по которым оператор замечает, что игра стала для человека проблемой.">маркеры вреда</abbr>. В Великобритании с 31&nbsp;октября 2023&nbsp;года онлайн-операторы обязаны отслеживать как минимум такие признаки и реагировать на них.</p>
         <p class="ptext">Технически это те же события в том же хранилище. Маркер вреда можно сделать <abbr class="t" title="Метрика, которая не должна ухудшиться, даже если основная выросла. По-английски guardrail.">ограничивающей метрикой</abbr> A/B-теста: вариант, который поднял оборот вместе с долей ночных сессий, не выкатывают. Какую метрику считать главной — оборот на игрока или долю игроков с маркерами вреда, — решают компания и регулятор.</p>
-        <p class="ptext next"><a data-home="harm">Где это становится проблемой ↓</a></p>
       </div>
       <div class="harm" id="harm">
         <h2>Где это становится проблемой</h2>
@@ -600,9 +614,6 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
           <div><dt>Near miss</dt><dd>«Почти выигрыш»: исход, похожий на выигрыш, но им не являющийся. Усиливает желание продолжить.</dd></div>
           <div><dt>Вариативное подкрепление</dt><dd>Награда приходит непредсказуемо. Поведение при таком режиме дольше не угасает, чем при регулярной награде.</dd></div>
           <div><dt>Додеп</dt><dd>Повторное пополнение баланса после проигрыша. Здесь — кнопка ☕.</dd></div>
-        </div>
-        <h3>Метрики казино</h3>
-        <div class="gloss">
           <div><dt>Оборот</dt><dd>Сумма всех ставок за период. В ставках на спорт его называют handle.</dd></div>
           <div><dt>Маржа (hold)</dt><dd>Доля оборота, которая остаётся у казино: GGR / оборот. В слотах примерно равна 1&nbsp;−&nbsp;RTP.</dd></div>
           <div><dt>GGR</dt><dd>Gross gaming revenue — ставки минус выплаты. Со стороны игроков это их чистый проигрыш.</dd></div>
@@ -619,6 +630,11 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
           <div><dt>ROI</dt><dd>Return on investment — (доход − вложения) / вложения. Здесь — окупаемость привлечения.</dd></div>
           <div><dt>A/B-тест</dt><dd>Эксперимент: игрокам случайно показывают разные варианты и сравнивают метрики.</dd></div>
           <div><dt>Фриспины</dt><dd>Бесплатные вращения слота, которые казино дарит как бонус.</dd></div>
+          <div><dt>Кешбэк</dt><dd>Возврат части чистого проигрыша игрока за период.</dd></div>
+          <div><dt>Рейкбек</dt><dd>Возврат части преимущества казино с каждой ставки, независимо от результата. Популярен в криптоказино.</dd></div>
+          <div><dt>Чарджбэк</dt><dd>Отмена платежа через банк или платёжную систему: деньги возвращаются игроку, а казино ещё и платит комиссию.</dd></div>
+          <div><dt>KYC/AML</dt><dd>Проверка личности игрока и контроль происхождения денег. Обязательны в регулируемых юрисдикциях.</dd></div>
+          <div><dt>Офшорная лицензия</dt><dd>Лицензия юрисдикции с низкими налогами и мягким надзором, выданная компании, которая работает на игроков из других стран.</dd></div>
           <div><dt>Ограничивающая метрика</dt><dd>Метрика, которая не должна ухудшиться, даже если основная выросла. По-английски guardrail.</dd></div>
           <div><dt>Маркеры вреда</dt><dd>Признаки в данных, по которым оператор замечает, что игра стала для человека проблемой.</dd></div>
         </div>
@@ -637,9 +653,12 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
           <li>Германия: налог 5,3% со ставок в виртуальных автоматах с 2021 года и снижение RTP операторами. <a href="https://www.igaming.com/igamingcare/lower-rtps-and-their-impact-on-players-and-operators-in-germany/" target="_blank" rel="noopener">igaming.com</a></li>
           <li>Версии RTP одной игры у провайдеров (Play'n GO, Pragmatic Play и др.). <a href="https://highrtp.com/guides/why-rtp-changes/" target="_blank" rel="noopener">highrtp.com</a></li>
           <li>Отраслевые ориентиры по роялти, комиссиям и вычетам NGR — обзоры <a href="https://hub88.io/blog/blog/post/ggr-vs-ngr/" target="_blank" rel="noopener">Hub88</a> и <a href="https://track360.io/blog/online-casino-business-model-economics-ggr-ngr-2026" target="_blank" rel="noopener">Track360</a>; это ориентиры, не стандарт.</li>
+          <li>Математика всех пяти игр — в кнопке <a data-info="info-mines">«ⓘ математика»</a> внизу экрана. Случайность: <code>crypto.getRandomValues</code>.</li>
+          <li>Код открыт: <a href="https://github.com/cosmiksoul/fly-casino" target="_blank" rel="noopener">github.com/cosmiksoul/fly-casino</a>.</li>
+          <li>Откуда муха: эксплейнер <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">«Муха в машине»</a>.</li>
         </ul>
       </div>
-      <p class="homefoot">Вся математика — в кнопке «ⓘ математика» внизу. Случайность: <code>crypto.getRandomValues</code>. Код открыт: <a href="https://github.com/cosmiksoul/fly-casino" target="_blank" rel="noopener">github.com/cosmiksoul/fly-casino</a>. Откуда муха: эксплейнер <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">«Муха в машине»</a>.</p>
+      <p class="homefoot">Автор — Константин Гупалов · <a href="https://www.linkedin.com/in/konstantin-gupalov/" target="_blank" rel="noopener">LinkedIn</a></p>
     </section>
 
     <!-- ===== ТАПОК (mines) ===== -->
@@ -1786,9 +1805,11 @@ const AN_SENS=[
   {t:'legal',name:()=>'Налог −10%',v:q=>{ q.tax*=0.9; }},
   {t:'legal',name:()=>'Роялти −10%',v:q=>{ q.royalty*=0.9; }},
 ];
+const AN_SCEN={default:{},uk:{tax:0.40,taxBase:'ggr'},de:{tax:0.053,taxBase:'turnover'},crypto:{tax:0,taxBase:'ggr',rtp:0.90}};
 const AN_PRESET_NOTE={
-  default:'',
-  uk:'С апреля 2026 года налог на онлайн-казино в Великобритании вырос с 21% до 40% GGR. Сравните ROI до и после.',
+  default:'Условное казино: налог 20% GGR, RTP 95%, бонусы 15%, роялти 20%. От него считаются остальные сценарии.',
+  uk:'С апреля 2026 года налог на онлайн-казино в Великобритании вырос с 21% до 40% GGR.',
+  crypto:'Многие криптоказино работают по <abbr class="t" title="Лицензия юрисдикции с низкими налогами и мягким надзором, выданная компании, которая работает на игроков из других стран.">офшорной лицензии</abbr> с низкими налогами или вовсе без налога на игорный доход. Надзор там мягче, и казино может выбрать у провайдера низкую версию RTP слота. Здесь — налог 0 и RTP 90%. Прибыль с игрока вырастает почти в 8 раз, а средний игрок за год проигрывает вдвое больше: ≈ 133 000 нейронов вместо ≈ 66 700.',
   de:'С 2021 года Германия берёт 5,3% с каждой ставки в онлайн-слотах — с оборота, а не с GGR. При RTP выше 94,7% налог больше всей маржи, и казино теряет на каждой ставке ещё до бонусов и роялти. Поэтому операторы в Германии снизили RTP слотов до 92–93% и ниже. Попробуйте сдвинуть RTP вниз.',
 };
 let analytics=null;
@@ -1840,21 +1861,23 @@ function createAnalytics(){
   function flashPath(id){ let k=id; while(k){ const el=rowEl[k]; if(el) el.classList.add('hl'); k=AN_PARENT[k]; } clearTimeout(hlT); hlT=setTimeout(()=>$$('.hl',root).forEach(e=>e.classList.remove('hl')),400); }
   const presetActive=name=>$$('#an-presets button',root).forEach(b=>b.classList.toggle('active',b.dataset.preset===name));
   const note=(before,after,text)=>{ $('#an-preset-note',root).innerHTML=`<b>ROI: было ${before} → стало ${after}.</b> ${text||''}`; };
+  const clearNote=()=>{ $('#an-preset-note',root).innerHTML=''; };
   function applyMe(){ if(!session.rounds){ toast('Сыграйте несколько раундов в любой игре — здесь появится ваша сессия глазами казино'); return false; }
     const before=roiShort(); const avg=session.wagered/session.rounds;
     p.bet=clamp(Math.round(avg/100)*100,100,10000); p.rounds=clamp(Math.round(session.rounds/10)*10,20,500); p.rtp=cfg.rtp;
-    syncInputs(); compute(); presetActive('me'); ['bet','rounds','rtp'].forEach(flashPath);
+    syncInputs(); compute(); presetActive(null); ['bet','rounds','rtp'].forEach(flashPath);
     note(before,roiShort(),`Ставка ${anInt(p.bet)}, раундов за сессию ${p.rounds} и RTP ${anPct(p.rtp)} — из вашей сессии, остальное без изменений.`); audio.click(); return true; }
-  function preset(name){ if(name==='me') return applyMe(); const before=roiShort();
-    if(name==='default') Object.assign(p,AN_DEFAULTS); else if(name==='uk'){ p.tax=0.40; p.taxBase='ggr'; } else if(name==='de'){ p.tax=0.053; p.taxBase='turnover'; }
-    syncInputs(); compute(); presetActive(name); flashPath(name==='default'?'roi':'tax'); note(before,roiShort(),AN_PRESET_NOTE[name]); audio.click(); return true; }
+  const baseRoi=anSignPct(anModel(AN_DEFAULTS).roi);
+  function preset(name){ const sc=AN_SCEN[name]; if(!sc) return false; Object.assign(p,AN_DEFAULTS,sc);
+    syncInputs(); compute(); presetActive(name); flashPath(name==='default'?'roi':sc.rtp?'rtp':'tax'); if(sc.tax!==undefined&&name!=='default') flashPath('tax');
+    $('#an-preset-note',root).innerHTML=(name==='default'?`<b>ROI базового сценария: ${baseRoi}.</b> `:`<b>ROI при остальных значениях по умолчанию: ${baseRoi} → ${roiShort()}.</b> `)+(AN_PRESET_NOTE[name]||''); audio.click(); return true; }
   function refreshYou(){ const g=$('#an-you-grid',root), cap=$('#an-you-cap',root), btn=$('#an-apply',root); const r=session.rounds;
     if(!r){ g.innerHTML='<div class="empty">Сыграйте несколько раундов в любой игре — здесь появится ваша сессия глазами казино.</div>'; btn.disabled=true; cap.style.display='none'; return; }
     const w=session.wagered, won=session.won, ggr=w-won; btn.disabled=false; cap.style.display='';
     g.innerHTML=`<div>раундов<b>${fmt(r)}</b></div><div>оборот<b>${fmt(w)}</b></div><div>вернулось<b>${fmt(won)}</b></div><div>GGR казино<b class="${ggr<0?'badv':''}">${anInt(ggr)}</b></div><div>маржа факт<b>${w?anPct(ggr/w):'—'}</b></div><div>средняя ставка<b>${fmt(w/r)}</b></div><div>додепы ☕<b>${fmt(session.refills)}</b></div>`; }
-  root.addEventListener('input',e=>{ const inp=e.target.closest('input[data-in]'); if(!inp) return; const id=inp.dataset.in, n=AN_INP[id]; const v=+inp.value; p[id]=n.pct?v/100:v; presetActive(null); compute(); flashPath(id); });
+  root.addEventListener('input',e=>{ const inp=e.target.closest('input[data-in]'); if(!inp) return; const id=inp.dataset.in, n=AN_INP[id]; const v=+inp.value; p[id]=n.pct?v/100:v; presetActive(null); clearNote(); compute(); flashPath(id); });
   root.addEventListener('click',e=>{
-    const cb=e.target.closest('.choice button'); if(cb){ const key=cb.closest('.choice').dataset.choice, v=cb.dataset.v; if(key==='taxBase'){ if(p.taxBase!==v){ p.taxBase=v; p.tax=v==='ggr'?0.20:0.053; } } else p[key]=+v; presetActive(null); syncInputs(); compute(); flashPath(key==='taxBase'?'tax':key); audio.click(); return; }
+    const cb=e.target.closest('.choice button'); if(cb){ const key=cb.closest('.choice').dataset.choice, v=cb.dataset.v; if(key==='taxBase'){ if(p.taxBase!==v){ p.taxBase=v; p.tax=v==='ggr'?0.20:0.053; } } else p[key]=+v; presetActive(null); clearNote(); syncInputs(); compute(); flashPath(key==='taxBase'?'tax':key); audio.click(); return; }
     const nn=e.target.closest('.nn[data-tip]'); if(nn){ nn.closest('.node,.leaf').classList.toggle('open'); return; }
     const pb=e.target.closest('#an-presets button'); if(pb){ preset(pb.dataset.preset); return; }
     if(e.target.closest('#an-apply')) applyMe();
