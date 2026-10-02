@@ -218,6 +218,7 @@ kbd{font-family:ui-monospace,Consolas,monospace;background:rgba(255,255,255,.12)
 .hero{max-width:1240px;margin:0 auto 26px}
 .hero h1{font-family:'Russo One',sans-serif;font-size:clamp(28px,4vw,46px);margin:0 0 10px;color:#fff;text-shadow:0 4px 0 var(--pink3),0 10px 30px rgba(255,79,163,.4);line-height:1.1}
 .hero h1 b{color:var(--yellow);font-weight:400;text-shadow:0 4px 0 var(--yellow3)}
+.hero h1.h1s{font-size:clamp(24px,3.3vw,40px);line-height:1.18;margin-bottom:14px}
 .hero .sub2{font-family:'Russo One',sans-serif;font-size:clamp(17px,2.1vw,25px);color:#fff;margin:-2px 0 14px;line-height:1.3;text-shadow:0 2px 0 rgba(0,0,0,.35)}
 .hero p{font-size:16px;line-height:1.5;color:#eadfff;margin:0}
 .hero .risk{color:#ff6b8a;font-weight:900}
@@ -329,7 +330,6 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
   <header class="top">
     <div class="brand">
       <div class="logo">МУХО<b>ЛОВКА</b> <span class="fly">🪰</span></div>
-      <div class="tag">как устроены азартные игры и почему казино всегда в плюсе</div>
     </div>
     <nav class="tabs">
       <button data-game="mines">🩴 <span>Тапок</span></button>
@@ -349,8 +349,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
     <!-- ===== ГЛАВНАЯ ===== -->
     <section id="home">
       <div class="hero">
-        <h1>МУХО<b>ЛОВКА</b></h1>
-        <p class="sub2">Как устроены азартные игры и почему казино всегда в плюсе.</p>
+        <h1 class="h1s">Как устроены азартные игры и <b>почему казино всегда в плюсе</b>.</h1>
         <p>Маленькая <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">оцифрованная муха</a> — та самая, которую научили играть в&nbsp;Doom, — попала в маленькое цифровое казино и пошла тратить свои маленькие цифровые нейроны на азартные игры. Настоящих денег у неё нет, но <b class="risk">она серьёзно рискует проиграть всё, что у неё есть</b>.</p>
         <p>Если без шуток — это учебный проект. Мы с коллегой решили: раз все обсуждают муху, которая играет в Doom, ей нужен свой слот. А мне стало интересно, насколько тяжело собрать азартную игру с нуля и как она устроена. Спойлер: математика любой азартной игры — одна строка, <code>×&nbsp;=&nbsp;RTP&nbsp;/&nbsp;P</code>. Всё остальное — обёртка, и вся работа уходит на неё. Ставим ненастоящую валюту «нейроны», <b>а вот вероятности — настоящие.</b> Каждая игра показывает свой <abbr class="t" title="Return to player — доля ставок, которая в среднем возвращается игрокам. RTP 95% = в среднем минус 5% с каждой ставки">RTP</abbr>, <abbr class="t" title="Разброс результатов вокруг среднего: низкая — часто и помалу, высокая — редко и помногу. На среднее не влияет">волатильность</abbr> и формулу, а «📈&nbsp;Сессия» рисует, как тает баланс.</p>
       </div>
