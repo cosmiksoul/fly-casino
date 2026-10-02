@@ -363,11 +363,11 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
 .tree .sub:empty{display:none}
 .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
 .stag{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--muted);background:rgba(255,255,255,.08);padding:2px 6px;border-radius:999px;font-style:normal}
-.chip{font-size:10.5px;font-weight:900;padding:2px 7px;border-radius:999px;font-style:normal;border:1px solid;white-space:nowrap}
-.chip.design{color:var(--pink);border-color:rgba(255,79,163,.55)}
-.chip.crm{color:var(--cyan);border-color:rgba(53,230,255,.5)}
-.chip.math{color:var(--yellow);border-color:rgba(255,210,63,.55)}
-.chip.legal{color:var(--muted);border-color:rgba(205,191,255,.45)}
+.lchip{font-size:10.5px;font-weight:900;padding:2px 7px;border-radius:999px;font-style:normal;border:1px solid;white-space:nowrap}
+.lchip.design{color:var(--pink);border-color:rgba(255,79,163,.55)}
+.lchip.crm{color:var(--cyan);border-color:rgba(53,230,255,.5)}
+.lchip.math{color:var(--yellow);border-color:rgba(255,210,63,.55)}
+.lchip.legal{color:var(--muted);border-color:rgba(205,191,255,.45)}
 .tree .tip{display:none;font-size:12.5px;color:#eadfff;font-weight:700;line-height:1.45;background:rgba(53,230,255,.08);border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:8px 12px;margin:-2px 0 8px}
 .tree .open>.tip{display:block}
 .tree .hl>.nrow,.tree .hl>.lrow{background:rgba(255,210,63,.16);border-color:rgba(255,210,63,.7)}
@@ -743,6 +743,7 @@ code{overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-br
     <span class="spacer"></span>
     <span class="rtpseg" id="rtp-seg"><button data-v="0.99">RTP 99%</button><button data-v="0.97">97%</button><button data-v="0.95" class="active">95%</button><button data-v="0.9">90%</button><button data-v="0.8" class="bad">80%</button><button data-v="0.7" class="bad">70%</button><button data-v="0.4" class="bad">40%</button></span>
     <button class="link" id="sess-btn">📈 сессия</button>
+    <button class="link" id="calc-btn" data-home="analytics">🧮 калькулятор</button>
     <button class="link" id="info-btn">ⓘ математика</button>
     <button class="link" id="sound-btn">🔊 звук</button>
   </footer>
@@ -1795,7 +1796,7 @@ function createAnalytics(){
   const root=$('#analytics'); if(!root) return null;
   const p={...AN_DEFAULTS,rtp:cfg.rtp};
   const TAGS=t=>t.map(x=>`<i class="stag">${x}</i>`).join('');
-  const CHIPS=c=>(c||[]).map(([k,x])=>`<i class="chip ${k}">${x}</i>`).join('');
+  const CHIPS=c=>(c||[]).map(([k,x])=>`<i class="lchip ${k}">${x}</i>`).join('');
   function leafHTML(id){ const n=AN_INP[id]; const r=id==='tax'?AN_TAX_RANGE[p.taxBase]:n;
     const ctrl=n.choices?`<div class="choice" data-choice="${id}">${n.choices.map(c=>`<button type="button" data-v="${c}">${fmt(c)}</button>`).join('')}</div>`:`<input type="range" data-in="${id}" min="${r.min}" max="${r.max}" step="${r.step}" aria-label="${n.name}">`;
     const tog=n.toggle?`<div class="choice base" data-choice="taxBase"><button type="button" data-v="ggr">с&nbsp;GGR</button><button type="button" data-v="turnover">с&nbsp;оборота</button></div>`:'';
@@ -1890,10 +1891,10 @@ function setGame(key){
   $$('.tabs button').forEach(b=>{ const on=b.dataset.game===key; b.classList.toggle('active',on); if(on&&innerWidth<=900) b.scrollIntoView({inline:'center',block:'nearest'}); });
   $$('.panel').forEach(p=>p.classList.toggle('active',p.id==='p-'+key));
   $$('.stage').forEach(p=>p.classList.toggle('active',p.id==='s-'+key));
-  history.replaceState(null,'','#'+key); canvas.style.cursor=''; hideHome();
+  history.replaceState(null,'','#'+key); canvas.style.cursor=''; canvas.style.visibility=''; hideHome();
 }
 function hideHome(){ $('#home').classList.remove('active'); }
-function showHome(){ if(active&&active.busy()){ toast('Доиграй раунд — муха занята'); return; } if(active){ active.exit(); active.labels.domElement.style.display='none'; active=null; } $$('.tabs button').forEach(b=>b.classList.remove('active')); $$('.panel').forEach(p=>p.classList.remove('active')); $$('.stage').forEach(p=>p.classList.remove('active')); $('#home').classList.add('active'); history.replaceState(null,'','#home'); canvas.style.cursor=''; analytics&&analytics.refresh(); }
+function showHome(){ if(active&&active.busy()){ toast('Доиграй раунд — муха занята'); return; } if(active){ active.exit(); active.labels.domElement.style.display='none'; active=null; } $$('.tabs button').forEach(b=>b.classList.remove('active')); $$('.panel').forEach(p=>p.classList.remove('active')); $$('.stage').forEach(p=>p.classList.remove('active')); $('#home').classList.add('active'); history.replaceState(null,'','#home'); canvas.style.cursor=''; canvas.style.visibility='hidden'; analytics&&analytics.refresh(); }
 /* превью для главной: рендерим каждую сцену в миниатюру настоящим рендерером */
 function snapshot(g){ const w=480,h=300; renderer.setSize(w,h,false); g.camera.aspect=w/h; g.camera.zoom=1; g.camera.clearViewOffset(); g.camera.updateProjectionMatrix(); g.update(0.016); g.camera.updateProjectionMatrix(); renderer.render(g.scene,g.camera); return renderer.domElement.toDataURL('image/jpeg',0.82); }
 function viewShift(){ return innerWidth>900?{x:-Math.round((400-22)/2),y:0}:{x:0,y:Math.round(innerHeight*0.1)}; }
@@ -1939,7 +1940,7 @@ async function init(){
   setInterval(ironyNext,25000);
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-info]'); if(!a) return; $('#info').classList.add('open'); const h=document.getElementById(a.dataset.info); if(h) h.scrollIntoView({block:'start',behavior:'smooth'}); });
   $$('.modal').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m||e.target.closest('.close')) m.classList.remove('open'); }); });
-  document.addEventListener('click',e=>{ const a=e.target.closest('a[data-home]'); if(!a) return; $$('.modal').forEach(m=>m.classList.remove('open')); showHome(); if($('#home').classList.contains('active')){ const h=document.getElementById(a.dataset.home); if(h) setTimeout(()=>h.scrollIntoView({block:'start',behavior:'smooth'}),60); } });
+  document.addEventListener('click',e=>{ const a=e.target.closest('[data-home]'); if(!a) return; audio.resume(); $$('.modal').forEach(m=>m.classList.remove('open')); showHome(); if($('#home').classList.contains('active')){ const h=document.getElementById(a.dataset.home); if(h) setTimeout(()=>h.scrollIntoView({block:'start',behavior:'smooth'}),60); } });
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-sess]'); if(!a) return; openSess(); });
   document.addEventListener('click',e=>{ const a=e.target.closest('a[data-game]'); if(!a) return; audio.resume(); audio.click(); setGame(a.dataset.game); });
   document.addEventListener('click',e=>{ const a=e.target.closest('abbr.t'); if(!a) return; const t=document.getElementById('terms'); if(t&&$('#home').classList.contains('active')) t.scrollIntoView({block:'start',behavior:'smooth'}); });
