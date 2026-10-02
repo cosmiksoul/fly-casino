@@ -4,6 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Мухаказик — азартные игры для дрозофилы</title>
+<meta name="description" content="Учебный проект про математику азартных игр: пять механик — тапок (mines), мухобойка (crash), мухогача, гонки и гусь — с честным и нечестным RTP, живыми вероятностями и графиком, как тает баланс. Нейроны не настоящие, вероятности настоящие.">
+<meta name="theme-color" content="#1a0d3d">
+<link rel="canonical" href="https://cosmiksoul.github.io/fly-casino/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Мухаказик">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Мухаказик — азартные игры для дрозофилы">
+<meta property="og:description" content="Как устроена любая азартная игра: генератор, вероятность, проверка. Пять механик, RTP от 40 до 99%, формулы и вероятности прямо в игре. Нейроны не настоящие, вероятности настоящие.">
+<meta property="og:url" content="https://cosmiksoul.github.io/fly-casino/">
+<meta property="og:image" content="https://cosmiksoul.github.io/fly-casino/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Мухаказик: муха, гусь и автомат с капсулами на фоне казино">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Мухаказик — азартные игры для дрозофилы">
+<meta name="twitter:description" content="Учебный проект про математику азартных игр. Пять механик, честный и нечестный RTP, вероятности и формулы в каждой игре.">
+<meta name="twitter:image" content="https://cosmiksoul.github.io/fly-casino/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a0d3d'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle'%3E%F0%9F%AA%B0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
@@ -342,7 +361,7 @@ abbr.t{text-decoration:underline dotted;text-underline-offset:3px;cursor:help;bo
       </div>
       <div class="why">
         <h2>Чем это отличается от игр, в которые вы играли</h2>
-        <p class="lead">В <a href="https://cosmiksoul.github.io/fly-brain-explainer/" target="_blank" rel="noopener">Doom</a>, Mario и даже в три в ряд результат зависит от того, что вы делаете. Здесь — нет.</p>
+        <p class="lead">В Doom, Mario и даже в три в ряд результат зависит от того, что вы делаете. Здесь — нет.</p>
         <div class="engine">
           <h3>Как устроена любая азартная игра</h3>
           <div class="skins">🩴 Тапок · 🏓 Мухобойка · 🎰 Мухогача · 🏁 Гонки · 🦆 Гусь · 🎰 слот · 📦 лутбокс · ✈️ краш<span>дизайн и контент — меняются</span></div>
@@ -1602,7 +1621,7 @@ async function init(){
     /* для сходимости: показываем один бросок, в счётчик идёт пачка из 30 */
     for(let k=0;k<30;k++){ const uu=k===0?u:rand(); ed.n++; ed.bet+=1; if(uu<ed.P) ed.ret+=cfg.rtp/ed.P; } tween({tag:'edemo',dur:420,ease:E.outCubic,update:e=>{ ed.shown=lerp(from,u,e); edDraw(); }}); }
   edDraw(); setInterval(edRound,1100);
-  window.__muha={games,setGame,wallet,audio,session,renderer,get active(){ return active; }};
+  window.__muha={games,setGame,wallet,audio,session,get active(){ return active; }};
   $('#loader').classList.add('hide'); requestAnimationFrame(loop);
 }
 init().catch(err=>{ console.error(err); const l=$('#loader'); l.classList.add('err'); l.innerHTML=`<div class="fly-big">💀</div><div>Не завелось: ${err.message}<br><br>Нужен интернет — three.js и шрифты грузятся с CDN.</div>`; });
